@@ -2,7 +2,9 @@
 
 # 前端开发手册(v0.1)
 
-## 1. 项目目录结构
+## 1. 开发约定
+
+### 1.1 项目目录结构
 
 /src下目录结构如下
 
@@ -28,7 +30,7 @@
 
 组件开发在```/components/${YOUR_COMPONENT_NAME}/index.tsx```下，相关的样式文件等也放在该文件夹中。
 
-```/utils```目录下抽象公共方法，例如网络请求方法等。
+```/utils```目录下抽象常用公共方法，例如网络请求方法等。
 
 后续慢慢补充。
 
@@ -64,12 +66,7 @@ const userNameList = users.map((user) => {
 })
 ```
 
-
-
 NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
-
-
-
 ## 3. 样式及组件分工
 
 * 参考lunchclub https://lunchclub.com
@@ -93,9 +90,7 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 #### 3.3.1 Sidebar侧边导航栏
 
 
-
 #### 3.3.2 UserCard用户卡片
-
 
 
 #### 3.3.3 UserCardList用户卡片列表
@@ -141,5 +136,11 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 - 周 3.1
 
 实时更新。
+
+## 5. 解决方案记录
+### 5.1 包管理
+报错```Could not find a declaration file for module 'react'```
+解决方法: 运行```yarn add@types/react```
+常见于项目从JavaScript迁移到TypeScript过程中.
 
 
