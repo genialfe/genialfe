@@ -150,19 +150,12 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 - 设定页面UI 汤
 - 用户匹配页面UI
 - 联调同步进行
+- 导航栏路由
 
 **下个sprint（2020.12.26 - 2020.12.31）计划** 
 - 已有UI组件逻辑完善
 - 联调
 - 打包上线
-
-
-
-
-
-**有时间再说** 
-- 导航栏路由（待定）
-
 
 
 ## 5. 解决方案记录
@@ -171,4 +164,17 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 解决方法: 运行```yarn add@types/react```
 常见于项目从JavaScript迁移到TypeScript过程中.
 
+### 5.2 mobx状态管理
+文档： https://mobx.js.org/observable-state.html
+
+不使用装饰器函数，而是在类的构造函数中定义该类及其属性、方法的可观察状态：
+```typescript
+  constructor(props: IWhateverProps) {
+    super(props)
+    makeObservable(this, { 
+      current: observable,  // 定义该属性为observable 该属性改变会更新ui
+      setCurrent: action    // 定义该方法为action 更改observable属性必须用action装饰过的方法
+    })
+  }
+```
 
