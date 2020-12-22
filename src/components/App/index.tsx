@@ -3,14 +3,13 @@ import { action, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { Button, Switch } from 'antd'
 import bind from '../../utils/bind'
+import Profile from '../Profile'
 
 import './style.css'
-import Profile from '../Profile'
 
 export interface IAppProps {
 
 }
-
 @observer
 export default class App extends React.Component<IAppProps, any> {
 
@@ -42,7 +41,7 @@ export default class App extends React.Component<IAppProps, any> {
           <Profile 
             name='马斯克' 
             location='上海' 
-            introduction='测试' 
+            introduction='测试沃尔福德功夫大师风格很得瑟啊认为是非得失' 
             interests={['天使投资', '数据挖掘']}
             connections={0}
           />

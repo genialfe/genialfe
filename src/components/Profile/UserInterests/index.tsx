@@ -7,6 +7,8 @@ export interface IUserInterestProps {
 
 }
 
+// 标签自己封装一个
+
 export default class UserInterests extends React.Component <IUserInterestProps, any> {
 
   get tagList() {

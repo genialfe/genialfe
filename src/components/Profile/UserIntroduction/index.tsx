@@ -10,7 +10,7 @@ export default class UserIntroduction extends React.Component <IUserIntroduction
   render() {
     const { content } = this.props
     return (
-      <div className='container'>
+      <div className='introContainer'>
         <p className='title'>简介</p>
         <p className='content'>{content}</p>
       </div>

@@ -1,0 +1,24 @@
+.desc {
+  text-align: center;
+  padding-top: 80px;
+  background-color: rgb(246, 246, 247);
+  padding: 80px 100px;
+}
+
+.expTitle {
+  font-family: "Martel Sans Black";
+  font-size: 48px;
+  line-height: 1.4;
+  color: rgb(91, 91, 91);
+  margin: 0px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.expText {
+  font-family: "Martel Sans SemiBold";
+  font-size: 20px;
+  line-height: 1.4;
+  color: rgb(91, 91, 91);
+  margin-top: 98px;
+}

@@ -1,0 +1,20 @@
+.startPageContainer {
+  display: flex;
+}
+
+.startPageCover {
+  display: block;
+  width: 80%;
+  height: auto;
+}
+
+.logoHeader {
+  padding: 60px 128px;
+  margin-bottom: 30px;
+}
+
+.signUpBlock {
+  padding-left: 128px;
+  padding-top: 40px;
+}
+

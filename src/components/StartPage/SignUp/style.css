@@ -1,0 +1,45 @@
+.slogan {
+  font-family: "Martel Sans Black";
+  font-size: 50px;
+  line-height: 1.4;
+  color: '#333366';
+  margin: 0px;
+  text-align: left;
+}
+
+.subSlogan {
+  font-family: "Martel Sans Black";
+  font-size: 28px;
+  line-height: 1.4;
+  color: '#333366';
+  padding-top: 28px;
+  margin: 0px;
+  text-align: left;
+}
+
+.memberTip {
+  margin-bottom: 24px;
+  font-family: "Martel Sans Regular";
+  font-size: 16px;
+  text-align: left;
+  color: rgb(91, 91, 91);
+  margin-top: 20px;
+}
+
+.phoneNumberInput {
+  padding-top: 40px;
+  padding-right: 40px;
+}
+
+.verifyCodeInput {
+  padding-top: 20px;
+  padding-right: 40px;
+}
+
+/* .info {
+  font-family: "Martel Sans Light";
+  font-size: 30px;
+  line-height: 1.35;
+  color: rgb(91, 91, 91);
+  margin: 24px 0px;
+} */
