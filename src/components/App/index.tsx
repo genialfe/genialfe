@@ -57,4 +57,3 @@ export default class App extends React.Component<IAppProps, any> {
     )
   }
 }
-
