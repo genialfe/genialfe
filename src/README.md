@@ -125,17 +125,38 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 
 ## 4. 开发日程
 
-**当前sprint（2020.12.1 - 2020.12.4）** 
+**sprint_1（2020.12.1 - 2020.12.4）** 
 
 开发任务：组件ui开发
 
 具体分工：
 
-- 刘 3.3.2 & 3.3.3
-- 汤 3.2
-- 周 3.1
+- 刘 3.3.2 & 3.3.3 
+- 汤 3.2 
+- 周 3.1 
 
 实时更新。
+
+
+**sprint_2（2020.12.7 - 2020.12.11）** 
+- profile组件字体/标签优化  汤
+- 导航栏样式优化（图标：icon-font） 汤
+- mock 以及文档  周
+- Login页面（UI）  刘
+
+**当前sprint（2020.12.21 - 2020.12.25）** 
+- 注册/登陆流程(UI & 逻辑)  周
+- meetings卡片组件 刘
+- 设定页面UI 汤
+- 用户匹配页面UI
+- 联调同步进行
+- 导航栏路由
+
+**下个sprint（2020.12.26 - 2020.12.31）计划** 
+- 已有UI组件逻辑完善
+- 联调
+- 打包上线
+
 
 ## 5. 解决方案记录
 ### 5.1 包管理
@@ -143,4 +164,17 @@ NOTE:  后续会通过 ```eslint``` & `prettier	` 格式化
 解决方法: 运行```yarn add@types/react```
 常见于项目从JavaScript迁移到TypeScript过程中.
 
+### 5.2 mobx状态管理
+文档： https://mobx.js.org/observable-state.html
+
+不使用装饰器函数，而是在类的构造函数中定义该类及其属性、方法的可观察状态：
+```typescript
+  constructor(props: IWhateverProps) {
+    super(props)
+    makeObservable(this, { 
+      current: observable,  // 定义该属性为observable 该属性改变会更新ui
+      setCurrent: action    // 定义该方法为action 更改observable属性必须用action装饰过的方法
+    })
+  }
+```
 

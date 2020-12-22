@@ -22,6 +22,10 @@
     "experimentalDecorators": true
   },
   "include": [
-    "src"
+    "src",
+    "node_modules/@types",
+    "types",
+    "test",
+    "mock"
   ]
 }
