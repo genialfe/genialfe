@@ -9,10 +9,10 @@ const { Meta } = Card;
 const { Title, Paragraph, Link } = Typography;
 
 export interface IUserCardProps {
-    userAvatarLink:string;
-    userName:string;
-    userDescription:string;
-    userDetails:string
+  userAvatarLink:string;
+  userName:string;
+  userDescription:string;
+  userDetails:string
 }
 
 export default class Usercard extends React.Component <IUserCardProps, any> {

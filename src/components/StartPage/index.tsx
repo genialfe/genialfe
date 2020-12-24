@@ -1,10 +1,10 @@
 import React from 'react'
 import { Col, Row } from 'antd'
+import startPageCover from '../../static/startPageCover.svg'
 import SignUp from './SignUp'
-import startPageCover from './static/startPageCover.svg'
+import Explain from './Explain'
 
 import './style.css'
-import Explain from './Explain'
 
 export interface IStartPageProps {
 
@@ -21,7 +21,7 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
         <Row>
           <Col span={8}>
             <div className='logoHeader'>
-              <h2>Genial</h2>
+              <p className='logoTitle'>Genial</p>
             </div>
           </Col>
         </Row>

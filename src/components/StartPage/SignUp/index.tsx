@@ -3,7 +3,6 @@ import { Input, message } from 'antd'
 import { observer } from 'mobx-react'
 import { makeObservable, observable } from 'mobx'
 
-
 import './style.css'
 
 
@@ -44,7 +43,7 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
         console.log("phoneNumber:", number)
         this.switchHasSentMsg()
         // eslint-disable-next-line no-restricted-globals
-        location.pathname = '/login'
+        location.pathname = '/register'
       }else{
         this.illegalPhoneNumberAlert()
       }
