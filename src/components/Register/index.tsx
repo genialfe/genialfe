@@ -1,10 +1,10 @@
 import React from 'react'
 import { Row, Col, Input, Steps, Button, message } from 'antd'
-// import { MessageOutlined, UserOutlined } from '@ant-design/icons'
+import { MessageOutlined, UserOutlined, HighlightOutlined, CoffeeOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
-import { makeObservable, observable, action } from 'mobx'
-
-// import cityCover from '../../static/cities-graphic.svg'
+import { makeObservable, observable, action, computed } from 'mobx'
+import Objectives from './Objectives'
+import { IUserProfile } from './model'
 
 import './style.css'
 
@@ -14,22 +14,16 @@ export interface IRegisterProps {
 
 }
 
-export interface IUserProfile {
-  userName: string
-  objectives: string[]
-  interests: string[]
-}
-
 @observer
 export default class Register extends React.Component<IRegisterProps, any> {
   /**
    * 0: 短信验证码
    * 1: 姓名
-   * 2: 目标
    */
   currentStep: number = 0
   verifyCode: string = ''
   userName: string = ''
+  objectives: string[] = []
   userProfile?: IUserProfile
 
   increCurrentStep() {
@@ -57,8 +51,28 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   handleSubmitName() {
-    console.log("name, vrode:", this.userName, this.verifyCode)
-    setTimeout(() => this.increCurrentStep(),200)
+    if(!this.userName.length) {
+      message.info('你的名字不能为空!')
+    }else{
+      sessionStorage.setItem('name', this.userName)
+      // mock internet request
+      setTimeout(() => this.increCurrentStep(),200)
+    }
+  }
+
+  handleGetStarted() {
+    // 组装参数
+    // const phoneNumber = sessionStorage.getItem('phoneNumber')
+    // const userName = this.userName
+
+    
+
+    // eslint-disable-next-line no-restricted-globals
+    location.pathname='/home'
+  }
+
+  get subTitle() {
+    return this.currentStep < 2 ? '准备开始!' : this.currentStep < 3 ?'告诉我们更多...' : ''
   }
 
   get inputContent() {
@@ -103,10 +117,13 @@ export default class Register extends React.Component<IRegisterProps, any> {
 
   constructor(props: IRegisterProps) {
     super(props)
+    this.increCurrentStep = this.increCurrentStep.bind(this)
     makeObservable(this, {
       currentStep: observable,
       userName: observable,
       userProfile: observable,
+      objectives: observable.ref,
+      inputContent: computed,
       increCurrentStep: action,
       setVerifyCode: action,
       setUserName: action
@@ -114,25 +131,52 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
   
   componentDidMount() {
-    message.info('我们已经向您的手机发送了一条带有验证码的短信')
+    if(sessionStorage.getItem('phoneNumber')){
+      message.info('我们已经向您的手机发送了一条带有验证码的短信')
+      // sessionStorage.removeItem('phoneNumber')
+    }
   }
 
   render() {
     return (
       <div className='registerContainer'>
         <p className='registerTitle'>Genial</p>
-        <p className='registerSubTitle'>准备开始!</p>
+        <p className='registerSubTitle'>{this.subTitle}</p>
         {/* <img src={cityCover} alt=''></img> */}
-        <Steps progressDot current={this.currentStep}>
-          <Step title="查收短信验证码" />
-          <Step title="完善基本信息" />
-          <Step title="做一些自我介绍" />
-          <Step title="Waiting" />
+        <Steps current={this.currentStep}>
+          <Step title="查收短信验证码" icon={<MessageOutlined />} />
+          <Step title="完善基本信息" icon={<UserOutlined />} />
+          <Step title="做一些自我介绍" icon={<HighlightOutlined />} />
+          <Step title="一切就绪" icon={<CoffeeOutlined />} />
         </Steps>
         {(this.currentStep < 2) &&
           <>
             {this.inputContent}
           </>}
+        {(this.currentStep === 2) &&
+          <div className='selfInfoContainer'>
+            <Objectives
+              increCurrentStep={this.increCurrentStep} 
+            />
+          </div>}
+        {(this.currentStep === 3) &&
+          <div className='readyContentContainer'>
+            <p className='readyTitle'>我们如何运作?</p>
+            <Row>
+              <Col>
+                <div>
+
+                </div>
+              </Col>
+            </Row>
+            <Button
+              type='primary'
+              size='large'
+              onClick={() => {this.handleGetStarted()}}
+            >
+              现在开始
+            </Button>
+          </div>}
       </div>
     )
   }

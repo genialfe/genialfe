@@ -7,14 +7,14 @@ import Usercard from '../Usercard'
 const data = [
   {
     userAvatarLink:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    userName:"userName",
-    userDescription:"userDescription",
-    userDetails:"userDetails"
+    userName:"MockUser",
+    userDescription:"Match interests",
+    userDetails:"Mock user is a software engineer at Tesla"
   },
   {
     userAvatarLink:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
     userName:"用户名字",
-    userDescription:"用户描述",
+    userDescription:"匹配原因",
     userDetails:"用户详细信息"
   }
 ]

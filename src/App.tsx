@@ -6,6 +6,7 @@ import NavBar from './components/Navbar'
 import Usercardlist from './components/Usercardlist'
 import Login from './components/Login'
 import Register from './components/Register'
+import ProfileWrapper from './components/Profile/wrapper'
 
 export interface IAppProps {
 
@@ -22,6 +23,7 @@ export default class App extends React.Component<IAppProps, any> {
           <Route path='/userCard' component={Usercardlist} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/profile' component={ProfileWrapper} />
         </Router>
       </>
     )

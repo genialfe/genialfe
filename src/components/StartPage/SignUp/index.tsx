@@ -40,8 +40,9 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
     const onSubmitPhoneNumber = (number: string) => {
       if(this.isPhoneNumber(number)){
         // ......
-        console.log("phoneNumber:", number)
         this.switchHasSentMsg()
+        sessionStorage.setItem('phoneNumber', number)
+
         // eslint-disable-next-line no-restricted-globals
         location.pathname = '/register'
       }else{
@@ -53,7 +54,7 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
     // }
     return (
       <>
-        <p className='slogan'>开始和行业大咖建立你们之间的联系吧</p>
+        <p className='slogan'>开始和行业精英建立你们之间的联系吧</p>
         <p className='subSlogan'>帮助你1:1精准匹配</p>
         {/* <p className='info'>第一步：使用手机号注册/登陆</p> */}
         <Search
@@ -63,7 +64,7 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
           size="large"
           color='blue'
           onSearch={onSubmitPhoneNumber}
-        />
+        /> 
         <p className='memberTip'>
           已经是Genial会员？
           <a href='/login'>点击登陆</a>

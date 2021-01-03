@@ -1,0 +1,18 @@
+.interestsTitle {
+  margin-bottom: 0px;
+  font-family: "Mukta Mahee Bold";
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.interestsExp {
+  margin-bottom: 12px;
+  font-family: "Mukta Mahee Light";
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgb(172, 172, 172);
+}
+
+.interestsContainer {
+  padding-bottom: 60px;
+}

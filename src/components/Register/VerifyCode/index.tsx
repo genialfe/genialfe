@@ -33,8 +33,6 @@ export default class VerifyCode extends React.Component <IVerifyCodeProps, any> 
           </Col>
         </Row>
       </div>
-
     )
   }
-
 }
