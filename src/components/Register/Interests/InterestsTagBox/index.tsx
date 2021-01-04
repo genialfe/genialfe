@@ -25,7 +25,10 @@ export interface IInterestsTagBoxProps {
 }
 
 @observer
-export default class InterestsTagBox extends React.Component<IInterestsTagBoxProps, any> {
+export default class InterestsTagBox extends React.Component<
+  IInterestsTagBoxProps,
+  any
+> {
   selectedTags: string[] = []
   stateMap: number[] = []
 
@@ -48,24 +51,22 @@ export default class InterestsTagBox extends React.Component<IInterestsTagBoxPro
     const { category } = this.props
     sessionStorage.setItem(category, JSON.stringify(this.stateMap))
   }
- 
+
   get tagBox() {
     const { items } = this.props
-    return (
-      items.map((item, index) => {
-        return (
-          <div 
-            className={this.stateMap[index] ? 'tagSelected' : 'tag'}
-            onClick={() => {
-              this.switchTagSelected(index)
-            }}
-            key={index}
-          >
-            {item.desc}
-          </div>
-        )
-      }) 
-    )
+    return items.map((item, index) => {
+      return (
+        <div
+          className={this.stateMap[index] ? 'tagSelected' : 'tag'}
+          onClick={() => {
+            this.switchTagSelected(index)
+          }}
+          key={index}
+        >
+          {item.desc}
+        </div>
+      )
+    })
   }
 
   componentDidMount() {
@@ -75,20 +76,20 @@ export default class InterestsTagBox extends React.Component<IInterestsTagBoxPro
 
   constructor(props: IInterestsTagBoxProps) {
     super(props)
-    makeObservable(this,{
+    makeObservable(this, {
       selectedTags: observable,
       stateMap: observable,
       switchTagSelected: action,
       setInitStateMap: action,
       tagBox: computed
-    }) 
-  } 
-  
+    })
+  }
+
   render() {
     const { title } = this.props
     return (
-      <div className='tagBoxContainer'>
-        <p className='interestsTagBoxTitle'>{title}</p>
+      <div className="tagBoxContainer">
+        <p className="interestsTagBoxTitle">{title}</p>
         {this.tagBox}
       </div>
     )

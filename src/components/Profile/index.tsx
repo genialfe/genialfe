@@ -15,25 +15,16 @@ export interface IProfileProps {
   connections?: number
 }
 
-export default class Profile extends React.Component <IProfileProps, any> {
-
+export default class Profile extends React.Component<IProfileProps, any> {
   render() {
-    const { introduction, interests, connections, ...restProps} = this.props
+    const { introduction, interests, connections, ...restProps } = this.props
     return (
-      <div className='container'>
+      <div className="container">
         <Card>
-          <UserAvatar 
-            {...restProps}
-          />
-          <UserIntroduction
-            content={introduction}
-           />
-          <UserInterests
-            interests={interests}
-          />
-          <ConnectionBar
-            connectionNum={connections}
-          />
+          <UserAvatar {...restProps} />
+          <UserIntroduction content={introduction} />
+          <UserInterests interests={interests} />
+          <ConnectionBar connectionNum={connections} />
         </Card>
       </div>
     )

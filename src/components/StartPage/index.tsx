@@ -6,12 +6,9 @@ import Explain from './Explain'
 
 import './style.css'
 
-export interface IStartPageProps {
-
-}
+export interface IStartPageProps {}
 
 export default class StartPage extends React.Component<IStartPageProps, any> {
-
   render() {
     // const coverContainerStyle = {
     //   width
@@ -20,23 +17,23 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
       <>
         <Row>
           <Col span={8}>
-            <div className='logoHeader'>
-              <p className='logoTitle'>Genial</p>
+            <div className="logoHeader">
+              <p className="logoTitle">Genial</p>
             </div>
           </Col>
         </Row>
-        <Row gutter={[0,68]}>
+        <Row gutter={[0, 68]}>
           <Col span={12}>
-            <div className='signUpBlock'>
+            <div className="signUpBlock">
               <SignUp />
             </div>
           </Col>
           <Col span={12}>
-            <img className='startPageCover' src={startPageCover} alt=''></img>
+            <img className="startPageCover" src={startPageCover} alt=""></img>
           </Col>
           <Col span={1}></Col>
         </Row>
-        <Row gutter={[0,68]}>
+        <Row gutter={[0, 68]}>
           <Col span={24}>
             <Explain />
           </Col>

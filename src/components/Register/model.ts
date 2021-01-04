@@ -3,7 +3,7 @@ export interface IObjCardItem {
   name: string
   src: string
   desc: string
-  selected: boolean  // 是否被用户选中
+  selected: boolean // 是否被用户选中
 }
 
 export interface IObjectives {

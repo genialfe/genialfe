@@ -5,19 +5,16 @@ import { makeObservable, observable } from 'mobx'
 
 import './style.css'
 
-
-export interface ISignUpProps {
-
-}
+export interface ISignUpProps {}
 
 const { Search } = Input
 
 @observer
-export default class SignUp extends React.Component <ISignUpProps, any> {
+export default class SignUp extends React.Component<ISignUpProps, any> {
   hasSentMsg: boolean = false
 
   isPhoneNumber(number: string) {
-    const reg =/^0?1[3|4|5|6|7|8][0-9]\d{8}$/
+    const reg = /^0?1[3|4|5|6|7|8][0-9]\d{8}$/
     return reg.test(number)
   }
 
@@ -32,20 +29,20 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
   constructor(props: ISignUpProps) {
     super(props)
     makeObservable(this, {
-      hasSentMsg: observable,
+      hasSentMsg: observable
     })
   }
 
   render() {
     const onSubmitPhoneNumber = (number: string) => {
-      if(this.isPhoneNumber(number)){
+      if (this.isPhoneNumber(number)) {
         // ......
         this.switchHasSentMsg()
         sessionStorage.setItem('phoneNumber', number)
 
         // eslint-disable-next-line no-restricted-globals
         location.pathname = '/register'
-      }else{
+      } else {
         this.illegalPhoneNumberAlert()
       }
     }
@@ -54,20 +51,20 @@ export default class SignUp extends React.Component <ISignUpProps, any> {
     // }
     return (
       <>
-        <p className='slogan'>开始和行业精英建立你们之间的联系吧</p>
-        <p className='subSlogan'>帮助你1:1精准匹配</p>
+        <p className="slogan">开始和行业精英建立你们之间的联系吧</p>
+        <p className="subSlogan">帮助你1:1精准匹配</p>
         {/* <p className='info'>第一步：使用手机号注册/登陆</p> */}
         <Search
-          className='phoneNumberInput'
-          placeholder='你的中国大陆手机号'
-          enterButton='开始'
+          className="phoneNumberInput"
+          placeholder="你的中国大陆手机号"
+          enterButton="开始"
           size="large"
-          color='blue'
+          color="blue"
           onSearch={onSubmitPhoneNumber}
-        /> 
-        <p className='memberTip'>
+        />
+        <p className="memberTip">
           已经是Genial会员？
-          <a href='/login'>点击登陆</a>
+          <a href="/login">点击登陆</a>
           {/* <Button>
             点击登陆
           </Button> */}

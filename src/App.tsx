@@ -8,25 +8,21 @@ import Login from './components/Login'
 import Register from './components/Register'
 import ProfileWrapper from './components/Profile/wrapper'
 
-export interface IAppProps {
-
-}
+export interface IAppProps {}
 @observer
 export default class App extends React.Component<IAppProps, any> {
-
   render() {
     return (
       <>
         <Router>
-          <Route path='/' exact component={StartPage} />
-          <Route path='/nav' component={NavBar} />
-          <Route path='/userCard' component={Usercardlist} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/profile' component={ProfileWrapper} />
+          <Route path="/" exact component={StartPage} />
+          <Route path="/nav" component={NavBar} />
+          <Route path="/userCard" component={Usercardlist} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/profile" component={ProfileWrapper} />
         </Router>
       </>
     )
   }
 }
-

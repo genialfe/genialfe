@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Button} from 'antd'
+import { Row, Col, Button } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { IObjCardItem, IObjectives } from '../model'
@@ -25,11 +25,14 @@ export interface IObjectivesProps {
    * 向前推进步骤条步骤的方法
    */
   increCurrentStep: () => void
+  /**
+   * 返回步骤条的上一步骤
+   */
+  decreCurrentStep: () => void
 }
 
 @observer
 export default class Objectives extends React.Component<IObjectivesProps, any> {
-
   currentSubStep: number = 0
 
   items: IObjCardItem[] = [
@@ -109,28 +112,32 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       src: Mentor,
       desc: '指导别人',
       selected: false
-    }, 
+    },
     {
       key: 11,
       name: 'team',
       src: Team,
       desc: '发展团队',
       selected: false
-    },
+    }
   ]
-  
+
   objectives: IObjectives = {
     items: []
   }
 
   addObjective(objective: string) {
-    if(this.objectives.items.indexOf(objective) === -1) {
+    if (this.objectives.items.indexOf(objective) === -1) {
       this.objectives.items.push(objective)
     }
   }
 
   increCurrentSubStep() {
-    this.currentSubStep ++
+    this.currentSubStep++
+  }
+
+  decreCurrentSubStep() {
+    this.currentSubStep--
   }
 
   switchObjectiveSelected(key: number) {
@@ -139,10 +146,10 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   }
 
   handleSubmitObjectives() {
-    console.log("objectives:", this.objectives.items)
+    console.log('objectives:', this.objectives.items)
     let objectives: string[] = []
     this.items.forEach(item => {
-      if(item.selected) {
+      if (item.selected) {
         objectives.push(item.name)
       }
     })
@@ -150,43 +157,47 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     this.increCurrentSubStep()
   }
 
-  get objectivesCardList() {
-    return(
-      this.items.map((item, index) => {
-        const handleClickObjCard = () => {
-          this.addObjective(item.name)
-          this.switchObjectiveSelected(item.key)
-          console.log('objectives:', this.objectives.items)
-        }
-        return (
-          <>
-            <Col span={6}>
-              <div 
-                className={item.selected ? 'objCardSelected' : 'objCard'} 
-                onClick={handleClickObjCard}
-                key={index}
-              >
-                <img src={item.src} alt={item.name} />
-                <p className='objCardDesc'>{item.desc}</p>
-              </div>
-            </Col>
-          </>
-        )
-      }) 
-    )
+  returnPreviousStep() {
+    const { decreCurrentStep } = this.props
+    decreCurrentStep()
   }
 
-  constructor(props:IObjectivesProps) {
+  get objectivesCardList() {
+    return this.items.map((item, index) => {
+      const handleClickObjCard = () => {
+        this.addObjective(item.name)
+        this.switchObjectiveSelected(item.key)
+        console.log('objectives:', this.objectives.items)
+      }
+      return (
+        <>
+          <Col span={6}>
+            <div
+              className={item.selected ? 'objCardSelected' : 'objCard'}
+              onClick={handleClickObjCard}
+              key={index}
+            >
+              <img src={item.src} alt={item.name} />
+              <p className="objCardDesc">{item.desc}</p>
+            </div>
+          </Col>
+        </>
+      )
+    })
+  }
+
+  constructor(props: IObjectivesProps) {
     super(props)
-    // const { increCurrentStep } = this.props
+
     this.increCurrentSubStep = this.increCurrentSubStep.bind(this)
-    // increCurrentStep =
-    // this.increCurrentSubStep = this.increCurrentSubStep.bind(this)
-    makeObservable(this,{
+    this.decreCurrentSubStep = this.decreCurrentSubStep.bind(this)
+
+    makeObservable(this, {
       objectives: observable,
       items: observable,
       currentSubStep: observable,
       increCurrentSubStep: action,
+      decreCurrentSubStep: action,
       addObjective: action,
       switchObjectiveSelected: action
     })
@@ -195,38 +206,43 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   render() {
     return (
       <>
-        {(this.currentSubStep === 0) &&
-          <div className='objectivesContainer'>
-            <p className='objectivesHeader'>你的目标是什么?</p>
-            <p className='objectivesExp'>
-              最多选择三个目标。你的目标不会展示给他人，但是能够帮助我们找到适合你的匹配对象。
+        {this.currentSubStep === 0 && (
+          <div className="objectivesContainer">
+            <p className="objectivesHeader">你的目标是什么?</p>
+            <p className="objectivesExp">
+              你的目标不会展示给他人，但是能够帮助我们找到适合你的匹配对象。
             </p>
-            <Row gutter={[8, 8]}>
-              {this.objectivesCardList}
-            </Row>
+            <Row gutter={[8, 8]}>{this.objectivesCardList}</Row>
 
             <Button
-              className='objButton'
-              type='primary'
-              size='large'
+              className="objButton"
+              type="primary"
+              onClick={() => this.returnPreviousStep()}
+            >
+              上一步
+            </Button>
+
+            <Button
+              className="objButton"
+              type="primary"
               onClick={() => this.handleSubmitObjectives()}
             >
               下一步
             </Button>
           </div>
-        }
-        {
-          (this.currentSubStep === 1) &&
-          <Interests 
-            onStepChange={this.increCurrentSubStep}
+        )}
+        {this.currentSubStep === 1 && (
+          <Interests
+            increStep={this.increCurrentSubStep}
+            returnPreviousStep={this.decreCurrentSubStep}
           />
-        }
-        {
-          (this.currentSubStep === 2) &&
-          <SelfIntroduction 
+        )}
+        {this.currentSubStep === 2 && (
+          <SelfIntroduction
             increCurrentStep={this.props.increCurrentStep}
+            returnPreviousStep={this.decreCurrentSubStep}
           />
-        }
+        )}
       </>
     )
   }

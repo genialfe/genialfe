@@ -1,6 +1,6 @@
-import { IInterestsTag } from "../model"
+import { IInterestsTag } from '../model'
 
-export const business:IInterestsTag[] = [
+export const business: IInterestsTag[] = [
   {
     name: 'angelInvesting',
     desc: '天使投资'
@@ -103,10 +103,10 @@ export const sciTech: IInterestsTag[] = [
   {
     name: 'quantFinance',
     desc: '量化金融'
-  },
+  }
 ]
 
-export const  social: IInterestsTag[] = [
+export const social: IInterestsTag[] = [
   {
     name: 'socialImpact',
     desc: '社会影响'

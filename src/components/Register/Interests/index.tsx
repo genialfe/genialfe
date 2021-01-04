@@ -5,38 +5,44 @@ import { observer } from 'mobx-react'
 import InterestsTagBox from './InterestsTagBox'
 import { business, sciTech, social } from './constants'
 
-import './style.css'
+import './style.less'
 
 export interface IInterestsProps {
-  onStepChange: () => void
+  /**
+   * 推进步骤 回调函数
+   */
+  increStep: () => void
+  /**
+   * 返回上一个步骤
+   */
+  returnPreviousStep: () => void
 }
 
 @observer
 export default class Interests extends React.Component<IInterestsProps, any> {
-
   interests: string[] = []
 
   // stateArray为01数组 对应constants中引入的business/sciTech/social中每一项的状态
   stateArrayToList(category: string) {
     const stateArray: string[] = JSON.parse(sessionStorage.getItem(category)!)
-    switch(category) {
+    switch (category) {
       case 'business':
-        for(let i=0; i<stateArray.length; i++) {
-          if(stateArray[i]){
+        for (let i = 0; i < stateArray.length; i++) {
+          if (stateArray[i]) {
             this.interests.push(business[i].name)
           }
         }
         break
       case 'sciTech':
-        for(let i=0; i<stateArray.length; i++) {
-          if(stateArray[i]){
+        for (let i = 0; i < stateArray.length; i++) {
+          if (stateArray[i]) {
             this.interests.push(sciTech[i].name)
           }
         }
         break
       case 'social':
-        for(let i=0; i<stateArray.length; i++) {
-          if(stateArray[i]){
+        for (let i = 0; i < stateArray.length; i++) {
+          if (stateArray[i]) {
             this.interests.push(social[i].name)
           }
         }
@@ -55,13 +61,18 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     this.stateArrayToList('social')
     sessionStorage.setItem('interests', JSON.stringify(this.interests))
 
-    const { onStepChange } = this.props
-    onStepChange()
+    const { increStep } = this.props
+    increStep()
+  }
+
+  returnPreviousStep() {
+    const { returnPreviousStep } = this.props
+    returnPreviousStep()
   }
 
   constructor(props: IInterestsProps) {
     super(props)
-    makeObservable(this,{
+    makeObservable(this, {
       interests: observable,
       setInterests: action
     })
@@ -69,28 +80,31 @@ export default class Interests extends React.Component<IInterestsProps, any> {
 
   render() {
     return (
-      <div className='interestsContainer'>
-        <p className='interestsTitle'>你对什么感兴趣?</p>
-        <p className='interestsExp'>从下面的列表中选择。</p>
+      <div className="interestsContainer">
+        <p className="interestsTitle">你对什么感兴趣?</p>
+        <p className="interestsExp">从下面的列表中选择。</p>
+        <InterestsTagBox category="business" title="商业" items={business} />
         <InterestsTagBox
-          category='business'
-          title='商业'
-          items={business}
-        />
-        <InterestsTagBox 
-          category='sciTech'
-          title='科学与技术'
+          category="sciTech"
+          title="科学与技术"
           items={sciTech}
         />
-        <InterestsTagBox 
-          category='social'
-          title='社会活动'
-          items={social}
-        />
+        <InterestsTagBox category="social" title="社会活动" items={social} />
         <Button
-          className='objButton'
-          type='primary'
-          onClick={() => {this.submitInterests()}}       
+          className="objButton"
+          type="primary"
+          onClick={() => {
+            this.returnPreviousStep()
+          }}
+        >
+          上一步
+        </Button>
+        <Button
+          className="objButton"
+          type="primary"
+          onClick={() => {
+            this.submitInterests()
+          }}
         >
           下一步
         </Button>

@@ -8,19 +8,16 @@ export interface IAvatarProps {
   avatar?: string
   name?: string
   location?: string
-
 }
 
-export default class UserAvatar extends React.Component <IAvatarProps, any> {
+export default class UserAvatar extends React.Component<IAvatarProps, any> {
   render() {
     const { name, location } = this.props
     return (
-      <div className='avatarContainer'>
+      <div className="avatarContainer">
         <Avatar size={64} icon={<UserOutlined />} />
-        <p className='userName'>{name}</p>
-        <p className='userLocation'>{location}</p>
-
-        
+        <p className="userName">{name}</p>
+        <p className="userLocation">{location}</p>
       </div>
     )
   }

@@ -1,4 +1,4 @@
-import { extend, get } from "lodash"
+import { extend, get } from 'lodash'
 
 export interface IExtraOptions {
   includeCredentials?: boolean

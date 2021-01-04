@@ -5,13 +5,10 @@ import { MailOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { action, makeObservable, observable } from 'mobx'
 // import bind from '../../utils/bind'
 
-export interface INavBarProps {
-
-}
+export interface INavBarProps {}
 
 @observer
-export default class NavBar extends React.Component <INavBarProps, any> {
-
+export default class NavBar extends React.Component<INavBarProps, any> {
   current: string = ''
 
   setCurrent(t: string) {
@@ -21,7 +18,7 @@ export default class NavBar extends React.Component <INavBarProps, any> {
   handleClick = (e: any) => {
     console.log('click ', e)
     this.setCurrent(e.key)
-    console.log("this.curretn:", this.current)
+    console.log('this.curretn:', this.current)
   }
 
   constructor(props: INavBarProps) {
@@ -35,7 +32,11 @@ export default class NavBar extends React.Component <INavBarProps, any> {
 
   render() {
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.current]} mode="horizontal">
+      <Menu
+        onClick={this.handleClick}
+        selectedKeys={[this.current]}
+        mode="horizontal"
+      >
         <Menu.Item key="mail" icon={<MailOutlined />}>
           Navigation One
         </Menu.Item>
@@ -45,5 +46,4 @@ export default class NavBar extends React.Component <INavBarProps, any> {
       </Menu>
     )
   }
-
 }

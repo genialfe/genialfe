@@ -1,5 +1,5 @@
 .slogan {
-  font-family: "Martel Sans Black";
+  font-family: 'Martel Sans Black';
   font-size: 50px;
   line-height: 1.4;
   color: '#333366';
@@ -8,7 +8,7 @@
 }
 
 .subSlogan {
-  font-family: "Martel Sans Black";
+  font-family: 'Martel Sans Black';
   font-size: 28px;
   line-height: 1.4;
   color: '#333366';
@@ -19,7 +19,7 @@
 
 .memberTip {
   margin-bottom: 24px;
-  font-family: "Martel Sans Regular";
+  font-family: 'Martel Sans Regular';
   font-size: 16px;
   text-align: left;
   color: rgb(91, 91, 91);
