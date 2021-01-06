@@ -76,6 +76,11 @@ export default class Register extends React.Component<IRegisterProps, any> {
     location.pathname = '/home'
   }
 
+  redirectToStartPage() {
+    // eslint-disable-next-line no-restricted-globals
+    location.pathname = '/'
+  }
+
   get subTitle() {
     return this.currentStep < 2
       ? '准备开始!'
@@ -150,7 +155,14 @@ export default class Register extends React.Component<IRegisterProps, any> {
   render() {
     return (
       <div className="registerContainer">
-        <p className="registerTitle">Genial</p>
+        <p
+          className="registerTitle"
+          onClick={() => {
+            this.redirectToStartPage()
+          }}
+        >
+          Genial
+        </p>
         <p className="registerSubTitle">{this.subTitle}</p>
         {/* <img src={cityCover} alt=''></img> */}
         <Steps current={this.currentStep}>

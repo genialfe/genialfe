@@ -4,29 +4,34 @@ import UserAvatar from './UserAvatar'
 import UserIntroduction from './UserIntroduction'
 import UserInterests from './UserInterests'
 
-import './style.css'
+import './style.less'
 import ConnectionBar from './ConnectionBar'
 
 export interface IProfileProps {
   name?: string
   location?: string
-  introduction?: string
+  selfIntroduction?: string
   interests?: string[]
   connections?: number
 }
 
 export default class Profile extends React.Component<IProfileProps, any> {
   render() {
-    const { introduction, interests, connections, ...restProps } = this.props
+    const {
+      selfIntroduction,
+      interests,
+      connections,
+      ...restProps
+    } = this.props
     return (
-      <div className="container">
+      <>
         <Card>
           <UserAvatar {...restProps} />
-          <UserIntroduction content={introduction} />
+          <UserIntroduction content={selfIntroduction} />
           <UserInterests interests={interests} />
           <ConnectionBar connectionNum={connections} />
         </Card>
-      </div>
+      </>
     )
   }
 }

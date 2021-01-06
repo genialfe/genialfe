@@ -1,0 +1,37 @@
+.card {
+  width: 560px;
+  text-align: left;
+}
+
+.meetButtonBase {
+  width: 100%;
+  display: inline;
+  margin: 0px auto;
+  max-width: 100%;
+  padding: 0px 16px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  border: none;
+  height: 40px;
+  font-family: 'Mukta Mahee SemiBold';
+  font-size: 16px;
+  transition: all 0.2s ease 0s;
+}
+
+.meetButton {
+  .meetButtonBase();
+  color: #333366;
+  box-shadow: rgb(71, 82, 162) 0px 0px 0px 1px inset;
+  cursor: pointer;
+}
+
+.meetButtonClicked {
+  .meetButtonBase();
+  color: grey;
+  box-shadow: grey 0px 0px 0px 1px inset;
+  cursor: default;
+}
+
+.meetButton:hover {
+  background-color: rgb(237, 237, 248);
+}

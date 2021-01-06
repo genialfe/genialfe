@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { isPhoneNumber } from '../../utils/validate'
 import LoginPic from '../../static/cities-graphic.svg'
 
-import './style.css'
+import './style.less'
 
 export interface ILoginProps {}
 
@@ -62,6 +62,13 @@ export default class Login extends React.Component<ILoginProps, any> {
 
   handleSubmitVerifyCode() {
     console.log('verifyCode:', this.verifyCode)
+    // eslint-disable-next-line no-restricted-globals
+    location.pathname = '/home'
+  }
+
+  redirectToStartPage() {
+    // eslint-disable-next-line no-restricted-globals
+    location.pathname = '/'
   }
 
   constructor(props: ILoginProps) {
@@ -81,7 +88,9 @@ export default class Login extends React.Component<ILoginProps, any> {
       <div className="loginContainer">
         <Row gutter={[0, 36]}>
           <Col span={24}>
-            <p className="logo">Genial</p>
+            <p className="logo" onClick={() => this.redirectToStartPage()}>
+              Genial
+            </p>
           </Col>
         </Row>
         <Row gutter={[0, 36]}>

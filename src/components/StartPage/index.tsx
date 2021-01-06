@@ -4,15 +4,12 @@ import startPageCover from '../../static/startPageCover.svg'
 import SignUp from './SignUp'
 import Explain from './Explain'
 
-import './style.css'
+import './style.less'
 
 export interface IStartPageProps {}
 
 export default class StartPage extends React.Component<IStartPageProps, any> {
   render() {
-    // const coverContainerStyle = {
-    //   width
-    // }
     return (
       <>
         <Row>

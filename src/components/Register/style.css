@@ -9,6 +9,7 @@
   color: #333366;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  cursor: pointer;
 }
 
 .registerSubTitle {
@@ -21,7 +22,7 @@
 .infoInputContainer,
 .basicInfoContainer,
 .selfInfoContainer {
-  margin-top: 68px;
+  margin-top: 3.8em;
 }
 
 .selfInfoContainer {

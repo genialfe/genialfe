@@ -1,8 +1,9 @@
 import React from 'react'
+import { observer } from 'mobx-react'
+import { action, makeObservable, observable } from 'mobx'
+import { Typography, Card, Avatar, message } from 'antd'
 
-import { Typography, Card, Avatar, Button } from 'antd'
-
-import './style.css'
+import './style.less'
 
 const { Meta } = Card
 
@@ -11,18 +12,39 @@ const { Title, Paragraph, Link } = Typography
 export interface IUserCardProps {
   userAvatarLink: string
   userName: string
-  userDescription: string
+  location: string
   userDetails: string
 }
 
+@observer
 export default class Usercard extends React.Component<IUserCardProps, any> {
+  isClicked: boolean = false
+
+  setButtonClicked(clicked: boolean) {
+    this.isClicked = clicked
+  }
+
+  handleClickMeetButton() {
+    const hide = message.loading('提交中...')
+    // mock web request
+    setTimeout(() => {
+      this.setButtonClicked(true)
+      hide()
+    },1000)
+    
+    // push web request here...
+  }
+
+  constructor(props: IUserCardProps) {
+    super(props)
+    makeObservable(this, {
+      isClicked: observable,
+      setButtonClicked: action
+    })
+  }
+
   render() {
-    const {
-      userAvatarLink,
-      userName,
-      userDescription,
-      userDetails
-    } = this.props
+    const { userAvatarLink, userName, location, userDetails } = this.props
 
     return (
       <div>
@@ -30,17 +52,22 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
           <Meta
             avatar={<Avatar size="large" src={userAvatarLink} />}
             title={userName}
-            description={userDescription}
+            description={location}
+            className="cardMeta"
           />
           <Typography style={{ marginTop: 16 }}>
             <Title level={5}>
-              希望认识 <Link>{userName}</Link>
+              想要匹配像<Link>{userName}</Link>的人?
             </Title>
             <Paragraph>{userDetails}</Paragraph>
           </Typography>
-          <Button size="large" block>
-            希望认识{userName}
-          </Button>
+          <button
+            className={this.isClicked ? 'meetButtonClicked' : 'meetButton'}
+            onClick={() => this.handleClickMeetButton()}
+            disabled={this.isClicked}
+          >
+            {this.isClicked ? `我们会帮你寻找更多像${userName}的人!` : `希望认识${userName}`}
+          </button>
         </Card>
       </div>
     )

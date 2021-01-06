@@ -1,49 +1,32 @@
-import React from 'react'
-import { Menu } from 'antd'
-import { observer } from 'mobx-react'
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons'
-import { action, makeObservable, observable } from 'mobx'
-// import bind from '../../utils/bind'
+import React, { FC } from 'react'
+import {
+  Nav,
+  NavLink,
+  Bars,
+  NavMenu
+  // NavBtn,
+  // NavBtnLink
+} from './NavBarElements'
 
-export interface INavBarProps {}
+import './style.less'
 
-@observer
-export default class NavBar extends React.Component<INavBarProps, any> {
-  current: string = ''
-
-  setCurrent(t: string) {
-    this.current = t
-  }
-
-  handleClick = (e: any) => {
-    console.log('click ', e)
-    this.setCurrent(e.key)
-    console.log('this.curretn:', this.current)
-  }
-
-  constructor(props: INavBarProps) {
-    super(props)
-    makeObservable(this, {
-      current: observable,
-      setCurrent: action
-    })
-    // this.current = current
-  }
-
-  render() {
-    return (
-      <Menu
-        onClick={this.handleClick}
-        selectedKeys={[this.current]}
-        mode="horizontal"
-      >
-        <Menu.Item key="mail" icon={<MailOutlined />}>
-          Navigation One
-        </Menu.Item>
-        <Menu.Item key="app" icon={<AppstoreOutlined />}>
-          Navigation Two
-        </Menu.Item>
-      </Menu>
-    )
-  }
+const Navbar: FC = () => {
+  return (
+    <>
+      <Nav>
+        <NavLink to="/home">
+          <p className="logo">Genial</p>
+        </NavLink>
+        <Bars />
+        <NavMenu>
+          <NavLink to="/home">主页</NavLink>
+          <NavLink to="/meetings">会议</NavLink>
+          <NavLink to="/profile">个人</NavLink>
+          <NavLink to="/settings">设置</NavLink>
+        </NavMenu>
+      </Nav>
+    </>
+  )
 }
+
+export default Navbar
