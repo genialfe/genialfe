@@ -30,8 +30,8 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
     setTimeout(() => {
       this.setButtonClicked(true)
       hide()
-    },1000)
-    
+    }, 1000)
+
     // push web request here...
   }
 
@@ -66,7 +66,9 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
             onClick={() => this.handleClickMeetButton()}
             disabled={this.isClicked}
           >
-            {this.isClicked ? `我们会帮你寻找更多像${userName}的人!` : `希望认识${userName}`}
+            {this.isClicked
+              ? `我们会帮你寻找更多像${userName}的人!`
+              : `希望认识${userName}`}
           </button>
         </Card>
       </div>

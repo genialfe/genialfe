@@ -43,9 +43,11 @@ export default class ProfileWrapper extends React.Component {
 
   render() {
     return (
-      <div className="profileContainer">
-        <Profile {...this.profile} />
-      </div>
+      <>
+        <div className="profileContainer">
+          <Profile {...this.profile} />
+        </div>
+      </>
     )
   }
 }

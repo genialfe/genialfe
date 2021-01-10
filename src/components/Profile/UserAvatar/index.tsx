@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 
-import './style.css'
+import './style.less'
 
 export interface IAvatarProps {
   avatar?: string

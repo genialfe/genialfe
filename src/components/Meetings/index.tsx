@@ -4,7 +4,8 @@ import { ViewState } from '@devexpress/dx-react-scheduler'
 import {
   Scheduler,
   MonthView,
-  Appointments
+  Appointments,
+  AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui'
 import { appointments } from './mockData'
 
@@ -23,6 +24,10 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
             <ViewState currentDate={currentDate} />
             <MonthView />
             <Appointments />
+            <AppointmentTooltip
+              showCloseButton
+              // showOpenButton
+            />
           </Scheduler>
         </Paper>
       </div>
