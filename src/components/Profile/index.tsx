@@ -9,6 +9,7 @@ import UserInterests from './UserInterests'
 
 import './style.less'
 import ConnectionBar from './ConnectionBar'
+import EditProfile from './EditProfile'
 
 export interface IProfileProps {
   name?: string
@@ -20,7 +21,6 @@ export interface IProfileProps {
 
 @observer
 export default class Profile extends React.Component<IProfileProps, any> {
-
   isEditMode: boolean = false
 
   setEditMode(value: boolean) {
@@ -28,31 +28,31 @@ export default class Profile extends React.Component<IProfileProps, any> {
   }
 
   onClickOperation(e: any) {
-    if(e.key === 'logout') {
+    if (e.key === 'logout') {
       // eslint-disable-next-line no-restricted-globals
       location.pathname = '/'
-    }else if(e.key === 'edit') {
+    } else if (e.key === 'edit') {
       this.setEditMode(true)
     }
   }
 
   get operationMenu() {
     return (
-      <Menu onClick={(e) => this.onClickOperation(e)}>
+      <Menu onClick={e => this.onClickOperation(e)}>
         <Menu.Item key="edit">修改信息</Menu.Item>
         <Menu.Item key="logout">退出登录</Menu.Item>
       </Menu>
     )
   }
 
-  constructor (props: IProfileProps) {
+  constructor(props: IProfileProps) {
     super(props)
-    makeObservable(this,{
+    this.setEditMode = this.setEditMode.bind(this)
+    makeObservable(this, {
       isEditMode: observable,
       setEditMode: action
     })
   }
-
 
   render() {
     const {
@@ -64,15 +64,20 @@ export default class Profile extends React.Component<IProfileProps, any> {
     return (
       <>
         <Card>
-            <Dropdown
-              overlay={this.operationMenu}
-            >
-              <MenuUnfoldOutlined />
-            </Dropdown>
-            <UserAvatar {...restProps} />
-            <UserIntroduction content={selfIntroduction} />
-            <UserInterests interests={interests} />
-            <ConnectionBar connectionNum={connections} />
+          {!this.isEditMode && (
+            <>
+              <Dropdown overlay={this.operationMenu} trigger={['click']}>
+                <MenuUnfoldOutlined />
+              </Dropdown>
+              <UserAvatar {...restProps} />
+              <UserIntroduction content={selfIntroduction} />
+              <UserInterests interests={interests} />
+              <ConnectionBar connectionNum={connections} />
+            </>
+          )}
+          {this.isEditMode && (
+            <EditProfile onFinishEditting={this.setEditMode} />
+          )}
         </Card>
       </>
     )
