@@ -1,12 +1,12 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import StartPage from './components/StartPage'
+import StartPage from './modules/StartPage'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import Usercardlist from './components/Usercardlist'
-import Login from './components/Login'
-import Register from './components/Register'
+import Usercardlist from './modules/Usercardlist'
+import Login from './modules/Login'
+import Register from './modules/Register'
 // import ProfileWrapper from './components/Profile/wrapper'
-import MainApp from './components/MainApp'
+import MainApp from './modules/MainApp'
 
 export interface IAppProps {}
 @observer
