@@ -4,6 +4,7 @@ import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 
 import './style.less'
+import moment from 'moment'
 
 export interface IWeeklyProps {}
 
@@ -69,13 +70,16 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     })
     console.log('map:', selectedTimes)
     // location.pathname = 'meetings'
+
+    // eslint-disable-next-line no-restricted-globals
+    location.pathname = '/home'
   }
 
   get timeSelectTitle() {
     const titleRow = [
       {
         day: '星期一',
-        date: '1-11'
+        date: '1月11日'
       },
       {
         day: '星期二',
@@ -158,15 +162,16 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   render() {
+    const time = moment().format('llll')
+    console.log('time:', time)
     return (
       <div className="weeklyContainer">
         <p className="weeklyTitle">为你的会议安排时间</p>
         <p className="weeklyExp">
-          在下面的表格中选择你有空的时间段，点击即可选中。
+          在下面的表格中选择下周你有空的时间段(可以多选)。
         </p>
-        <p className="weeklyExp">
-          你可以选择任意多个时间段，但是我们根据你选择的时间只会为你安排一场会议。
-        </p>
+        <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p>
+        {/* 你可以选择任意多个时间段，但是 */}
         <div className="timePickerContainer">
           {this.timeSelectTitle}
           {this.timeSelectArea}

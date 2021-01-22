@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import { Typography, Card, Avatar, message } from 'antd'
+import { EHomeItemType } from '../..'
 
 import './style.less'
 
@@ -14,6 +15,7 @@ export interface IUserCardProps {
   userName: string
   location: string
   userDetails: string
+  type?: EHomeItemType
 }
 
 @observer

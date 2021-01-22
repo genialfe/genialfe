@@ -1,5 +1,49 @@
-.userListContainer {
+.homeContainer {
   margin: 30px auto;
-  width: 500px;
+}
+
+.userListContainer {
   padding-bottom: 40px;
+}
+
+.sideBarContainer {
+  padding-top: 16px;
+}
+
+.sideButtonBase {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: 5px;
+  transition: all 0.2s ease 0s;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0px;
+  text-align: center;
+  font-size: larger;
+  font-weight: 600;
+}
+
+.sideButton {
+  .sideButtonBase();
+  color: rgb(172, 172, 172);
+}
+
+.sideButtonSelected {
+  .sideButtonBase();
+  color: #333366;
+}
+
+.buttonTextBase {
+  font-size: 18px;
+  color: rgb(172, 172, 172);
+}
+
+.buttonText {
+  .buttonTextBase();
 }

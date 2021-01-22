@@ -16,6 +16,16 @@ export interface IUserProfile {
   interests: string[]
 }
 
+export interface IUserStatus {
+  goalIds: string[]
+  id: string
+  interestIds: string[]
+  introduction: string
+  phone: string
+  userName: string
+  userStatus: number
+}
+
 export interface IInterestsTag {
   name: string
   desc: string

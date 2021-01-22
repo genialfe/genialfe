@@ -25,26 +25,19 @@ export interface IMeeting {
 }
 
 export default class Meetings extends React.Component<IMeetingsProps, any> {
-
   meetings: IMeeting[] = []
 
   getListData(value: any) {
     let listData
     switch (value.date()) {
       case 8:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' }
-        ]
+        listData = [{ type: 'warning', content: 'This is warning event.' }]
         break
       case 10:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' }
-        ]
+        listData = [{ type: 'warning', content: 'This is warning event.' }]
         break
       case 15:
-        listData = [
-          { type: 'warning', content: 'This is warning event' }
-        ]
+        listData = [{ type: 'warning', content: 'This is warning event' }]
         break
       default:
     }
@@ -56,9 +49,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
     return (
       <ul className="events">
         {listData.map(item => (
-          <li key={item.content}>
-            {item.content}
-          </li>
+          <li key={item.content}>{item.content}</li>
         ))}
       </ul>
     )
@@ -67,9 +58,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
   render() {
     return (
       <div className="meetingsContainer">
-        <Calendar
-          dateCellRender={(value) => this.dateCellRender(value)}
-        />
+        <Calendar dateCellRender={value => this.dateCellRender(value)} />
       </div>
     )
   }

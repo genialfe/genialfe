@@ -15,7 +15,7 @@ export default class DescBlock extends React.Component {
           <Col span={8}>
             <div>
               <img src={Weekly} alt="" />
-              <p className="exp">每周登陆来获得匹配</p>
+              <p className="exp">每周登录来获得匹配</p>
             </div>
           </Col>
           <Col span={8}>

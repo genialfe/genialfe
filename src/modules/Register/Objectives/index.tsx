@@ -17,6 +17,7 @@ import StartCompany from '../../../static/objectives/startCompany.svg'
 import Team from '../../../static/objectives/team.svg'
 import Interests from '../Interests'
 import SelfIntroduction from '../SelfIntroduction'
+import { getObjectivesList } from '../apis'
 
 import './style.less'
 
@@ -184,6 +185,15 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
         </>
       )
     })
+  }
+
+  async getObjectives() {
+    const list = await getObjectivesList()
+    console.log('list:', list)
+  }
+
+  componentDidMount() {
+    this.getObjectives()
   }
 
   constructor(props: IObjectivesProps) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Row, Col, Input, Steps, Button, message } from 'antd'
 import {
@@ -10,7 +11,12 @@ import { observer } from 'mobx-react'
 import { makeObservable, observable, action, computed } from 'mobx'
 import Objectives from './Objectives'
 import DescBlock from './DescBlock'
-import { IUserProfile } from './model'
+import { IUserStatus } from './model'
+import {
+  checkVerificationCode,
+  getUserStatus,
+  IVerificationCodeData
+} from './apis'
 
 import './style.css'
 
@@ -27,8 +33,10 @@ export default class Register extends React.Component<IRegisterProps, any> {
   currentStep: number = 0
   verifyCode: string = ''
   userName: string = ''
+  userId: string = ''
   objectives: string[] = []
-  userProfile?: IUserProfile
+  userStatus?: IUserStatus
+  phoneNumber: string = ''
 
   increCurrentStep() {
     this.currentStep++
@@ -46,14 +54,37 @@ export default class Register extends React.Component<IRegisterProps, any> {
     this.userName = name
   }
 
-  handleSubmitVC() {
-    console.log('vrCode:', this.verifyCode)
+  setPhoneNumber(number: string) {
+    this.phoneNumber = number
+  }
 
-    // post request and verify in if
-    if (true) {
+  setUserStatus(data: IUserStatus) {
+    this.userStatus = data
+  }
+
+  async checkVerificationCode(data: IVerificationCodeData) {
+    const res = await checkVerificationCode(data)
+    if (res.code === 200) {
+      this.getUserStatus(this.phoneNumber)
       this.increCurrentStep()
     } else {
-      message.info('请输入正确的验证码')
+      message.info('请输入正确的验证码·')
+    }
+  }
+
+  async getUserStatus(phone: string) {
+    const res = await getUserStatus(phone)
+    console.log('statusRes:', res)
+    const { data } = res
+    this.setUserStatus(data as IUserStatus)
+    console.log('this.userStatus:', this.userStatus)
+  }
+
+  handleSubmitVC() {
+    const phone = sessionStorage.getItem('phoneNumber')
+    const code = this.verifyCode
+    if (phone) {
+      this.checkVerificationCode({ phone, code })
     }
   }
 
@@ -62,8 +93,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
       message.info('你的名字不能为空!')
     } else {
       sessionStorage.setItem('name', this.userName)
-      // mock internet request
-      setTimeout(() => this.increCurrentStep(), 200)
+      this.increCurrentStep()
     }
   }
 
@@ -72,12 +102,10 @@ export default class Register extends React.Component<IRegisterProps, any> {
     // const phoneNumber = sessionStorage.getItem('phoneNumber')
     // const userName = this.userName
 
-    // eslint-disable-next-line no-restricted-globals
-    location.pathname = '/home'
+    location.pathname = '/weekly'
   }
 
   redirectToStartPage() {
-    // eslint-disable-next-line no-restricted-globals
     location.pathname = '/'
   }
 
@@ -135,19 +163,24 @@ export default class Register extends React.Component<IRegisterProps, any> {
     makeObservable(this, {
       currentStep: observable,
       userName: observable,
-      userProfile: observable,
+      userStatus: observable,
+      phoneNumber: observable,
       objectives: observable.ref,
       inputContent: computed,
       increCurrentStep: action,
       decreCurrentStep: action,
       setVerifyCode: action,
-      setUserName: action
+      setUserName: action,
+      setPhoneNumber: action,
+      setUserStatus: action
     })
   }
 
   componentDidMount() {
-    if (sessionStorage.getItem('phoneNumber')) {
+    const phone = sessionStorage.getItem('phoneNumber')
+    if (phone) {
       message.info('我们已经向您的手机发送了一条带有验证码的短信')
+      this.setPhoneNumber(phone)
       // sessionStorage.removeItem('phoneNumber')
     }
   }

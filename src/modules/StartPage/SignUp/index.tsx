@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Input, message } from 'antd'
 import { observer } from 'mobx-react'
 import { makeObservable, observable } from 'mobx'
+import { sendVerificationCode } from '../../Register/apis'
 
-import './style.css'
+import './style.less'
 
 export interface ISignUpProps {}
 
@@ -26,6 +28,21 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
     this.hasSentMsg = true
   }
 
+  async handleSendMsg(number: string) {
+    const res = await sendVerificationCode({
+      phone: number,
+      type: 1
+    })
+    const status = res.data.status
+    if (status === 1) {
+      location.pathname = '/register'
+    } else if (status === 2) {
+      message.info('验证码发送失败，请稍后重试。')
+    } else if (status === 3) {
+      message.info('发送过于频繁，请稍后再试。')
+    }
+  }
+
   constructor(props: ISignUpProps) {
     super(props)
     makeObservable(this, {
@@ -36,24 +53,18 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
   render() {
     const onSubmitPhoneNumber = (number: string) => {
       if (this.isPhoneNumber(number)) {
-        // ......
-        this.switchHasSentMsg()
         sessionStorage.setItem('phoneNumber', number)
-
-        // eslint-disable-next-line no-restricted-globals
-        location.pathname = '/register'
+        this.handleSendMsg(number)
+        this.switchHasSentMsg()
       } else {
         this.illegalPhoneNumberAlert()
       }
     }
-    // const onLogin = (code: string) => {
-    //   console.log("code:", code)
-    // }
+
     return (
       <>
         <p className="slogan">开始和行业精英建立你们之间的联系吧</p>
         <p className="subSlogan">帮助你1:1精准匹配</p>
-        {/* <p className='info'>第一步：使用手机号注册/登陆</p> */}
         <Search
           className="phoneNumberInput"
           placeholder="你的中国大陆手机号"
@@ -64,7 +75,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
         />
         <p className="memberTip">
           已经是Genial会员？
-          <a href="/login">点击登陆</a>
+          <a href="/login">点击登录</a>
           {/* <Button>
             点击登陆
           </Button> */}

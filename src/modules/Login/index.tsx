@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Button, Col, Divider, Input, message, Row } from 'antd'
 import { makeObservable, observable, action, computed } from 'mobx'
 import { observer } from 'mobx-react'
 import { isPhoneNumber } from '../../utils/validate'
 import LoginPic from '../../static/cities-graphic.svg'
+import { getUserStatus, sendVerificationCode } from '../Register/apis'
 
 import './style.less'
 
@@ -30,7 +32,7 @@ export default class Login extends React.Component<ILoginProps, any> {
         type="primary"
         className="loginButton"
         size="large"
-        onClick={() => this.handleSendVerifyCode()}
+        onClick={() => this.handleSendVerificationCode()}
       >
         发送验证码
       </Button>
@@ -49,25 +51,37 @@ export default class Login extends React.Component<ILoginProps, any> {
     this.verifyCode = code
   }
 
-  handleSendVerifyCode() {
-    if (isPhoneNumber(this.phoneNumber)) {
-      console.log('phoneNum:', this.phoneNumber)
-      message.info(`已向 ${this.phoneNumber} 发送验证码`)
-      this.setHasSentVerifyCode(true)
+  async handleSendVerificationCode() {
+    const phone = this.phoneNumber
+    if (isPhoneNumber(phone)) {
+      const userStatus = await getUserStatus(phone)
+      if (userStatus.data.userStatus !== 1) {
+        // status为1 为已注册用户
+        message.info('请先去注册')
+      } else {
+        // 发送登陆验证码流程
+        const res = await sendVerificationCode({
+          type: 2,
+          phone
+        })
+        if (res.data.status === 1) {
+          message.info(`已向 ${phone} 发送验证码`)
+          this.setHasSentVerifyCode(true)
+        } else {
+          message.info('出错了，请检查后重试')
+        }
+      }
     } else {
       message.info('请输入合法的中国大陆手机号')
-      console.log('ao')
     }
   }
 
   handleSubmitVerifyCode() {
     console.log('verifyCode:', this.verifyCode)
-    // eslint-disable-next-line no-restricted-globals
     location.pathname = '/home'
   }
 
   redirectToStartPage() {
-    // eslint-disable-next-line no-restricted-globals
     location.pathname = '/'
   }
 
@@ -95,7 +109,7 @@ export default class Login extends React.Component<ILoginProps, any> {
         </Row>
         <Row gutter={[0, 36]}>
           <Col span={24}>
-            <h3 className="loginSlogan">登陆</h3>
+            <h3 className="loginSlogan">登录</h3>
             <img src={LoginPic} alt="login"></img>
           </Col>
         </Row>

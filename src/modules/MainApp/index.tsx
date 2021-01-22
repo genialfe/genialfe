@@ -21,7 +21,7 @@ export default class MainApp extends React.Component<IHomeProps, any> {
             <Route path="/meetings" component={Meetings} />
             <Route path="/weekly" component={Weekly} />
             <Route path="/profile" component={ProfileWrapper} />
-            <Route path='/settings' component={Settings}  />
+            <Route path="/settings" component={Settings} />
           </Switch>
         </div>
       </Router>

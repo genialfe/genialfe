@@ -1,6 +1,7 @@
 import React from 'react'
 import { List } from 'antd'
 import Usercard from './Usercard'
+import { EHomeItemType } from '..'
 
 const data = [
   {
@@ -36,7 +37,14 @@ const data = [
 ]
 
 export interface IUserCardListProps {
+  /**
+   * 用户列表数据
+   */
   UserData?: Array<any>
+  /**
+   * 卡片列表类型
+   */
+  type: EHomeItemType
 }
 
 export default class Usercardlist extends React.Component<
@@ -45,23 +53,27 @@ export default class Usercardlist extends React.Component<
 > {
   render() {
     // const { UserData } = this.props
+    const { type } = this.props
     return (
       <div>
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          split={false}
-          renderItem={item => (
-            <List.Item>
-              <Usercard
-                userAvatarLink={item.userAvatarLink}
-                userName={item.userName}
-                location={item.location}
-                userDetails={item.userDetails}
-              />
-            </List.Item>
-          )}
-        />
+        {
+          type === EHomeItemType.Explore &&
+          <List
+            itemLayout="horizontal"
+            dataSource={data}
+            split={false}
+            renderItem={item => (
+              <List.Item>
+                <Usercard
+                  userAvatarLink={item.userAvatarLink}
+                  userName={item.userName}
+                  location={item.location}
+                  userDetails={item.userDetails}
+                />
+              </List.Item>
+            )}
+          />
+        }
       </div>
     )
   }

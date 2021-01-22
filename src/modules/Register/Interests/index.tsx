@@ -4,6 +4,7 @@ import { Button } from 'antd'
 import { observer } from 'mobx-react'
 import InterestsTagBox from './InterestsTagBox'
 import { business, sciTech, social } from './constants'
+import { getInterestsList } from '../apis'
 
 import './style.less'
 
@@ -68,6 +69,15 @@ export default class Interests extends React.Component<IInterestsProps, any> {
   returnPreviousStep() {
     const { returnPreviousStep } = this.props
     returnPreviousStep()
+  }
+
+  async getInterestsList() {
+    const list = await getInterestsList()
+    console.log('inter list:', list)
+  }
+
+  componentDidMount() {
+    this.getInterestsList()
   }
 
   constructor(props: IInterestsProps) {
