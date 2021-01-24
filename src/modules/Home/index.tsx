@@ -43,13 +43,13 @@ export default class Home extends React.Component<IHomeProps, any> {
         <Row>
           <Col span={2} offset={6}>
             <div className="sideBarContainer">
-              <div 
-                className={this.getButtonClassName(EHomeItemType.Explore)} 
+              <div
+                className={this.getButtonClassName(EHomeItemType.Explore)}
                 onClick={() => this.setSelectedItem(EHomeItemType.Explore)}
               >
                 发现
               </div>
-              <div 
+              <div
                 className={this.getButtonClassName(EHomeItemType.Connection)}
                 onClick={() => this.setSelectedItem(EHomeItemType.Connection)}
               >
@@ -59,9 +59,7 @@ export default class Home extends React.Component<IHomeProps, any> {
           </Col>
           <Col span={8}>
             <div className="userListContainer">
-              <Usercardlist
-                type={this.selectedItem} 
-              />
+              <Usercardlist type={this.selectedItem} />
             </div>
           </Col>
         </Row>

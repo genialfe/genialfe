@@ -56,8 +56,7 @@ export default class Usercardlist extends React.Component<
     const { type } = this.props
     return (
       <div>
-        {
-          type === EHomeItemType.Explore &&
+        {type === EHomeItemType.Explore && (
           <List
             itemLayout="horizontal"
             dataSource={data}
@@ -73,7 +72,7 @@ export default class Usercardlist extends React.Component<
               </List.Item>
             )}
           />
-        }
+        )}
       </div>
     )
   }

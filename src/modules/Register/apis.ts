@@ -66,3 +66,36 @@ export function getUserStatus(phone: string) {
     method: 'GET'
   })
 }
+
+export interface IUserData {
+  /**
+   * 目标id列表 形如'1,2,3,4'
+   */
+  goalIds?: string
+  /**
+   * 用户id 通过status获取
+   */
+  id: string
+  /**
+   * 兴趣列表
+   */
+  interest?: string
+  /**
+   * 兴趣id列表 形如'1,2'
+   */
+  interestIds?: string
+  /**
+   * 用户自我介绍
+   */
+  introduction?: string
+  /**
+   * 用户姓名
+   */
+  userName?: string
+}
+
+export function register(data: IUserData) {
+  return fetch(`${API_PREFIX}/user/register`, {
+    method: 'POST'
+  })
+}

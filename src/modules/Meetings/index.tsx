@@ -29,6 +29,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
 
   getListData(value: any) {
     let listData
+    console.log(value.month())
     switch (value.date()) {
       case 8:
         listData = [{ type: 'warning', content: 'This is warning event.' }]

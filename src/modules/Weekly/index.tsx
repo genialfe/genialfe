@@ -72,34 +72,34 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     // location.pathname = 'meetings'
 
     // eslint-disable-next-line no-restricted-globals
-    location.pathname = '/home'
+    // location.pathname = '/home'
   }
 
   get timeSelectTitle() {
     const titleRow = [
       {
         day: '星期一',
-        date: '1月11日'
+        date: '1月25日'
       },
       {
         day: '星期二',
-        date: '1-12'
+        date: '1月26日'
       },
       {
         day: '星期三',
-        date: '1-13'
+        date: '1月27日'
       },
       {
         day: '星期四',
-        date: '1-14'
+        date: '1月28日'
       },
       {
         day: '星期五',
-        date: '1-15'
+        date: '1月29日'
       },
       {
         day: '星期六',
-        date: '1-16'
+        date: '1月30日'
       }
     ]
     return (
@@ -146,7 +146,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
         size="large"
         onClick={() => this.handleSubmitTime()}
       >
-        提交
+        {this.selectedTimeMap.length ? '提交' : '跳过这周'}
       </Button>
     )
   }
@@ -162,13 +162,11 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   render() {
-    const time = moment().format('llll')
-    console.log('time:', time)
     return (
       <div className="weeklyContainer">
         <p className="weeklyTitle">为你的会议安排时间</p>
         <p className="weeklyExp">
-          在下面的表格中选择下周你有空的时间段(可以多选)。
+          在下面的表格中选择下周你有空的时间段(最多选择七个)。
         </p>
         <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p>
         {/* 你可以选择任意多个时间段，但是 */}
