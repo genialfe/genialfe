@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import SampleIntros from './SampleIntros'
@@ -28,18 +28,26 @@ export default class SelfIntroduction extends React.Component<
   }
 
   async handleSubmitIntro() {
-    sessionStorage.setItem('selfIntroduction', this.selfIntroduction)
+    sessionStorage.setItem('introduction', this.selfIntroduction)
     const id = sessionStorage.getItem('id')
+    const goalIds = sessionStorage.getItem('goalIds')!
+    const interest = sessionStorage.getItem('interest')!
+    const interestIds = sessionStorage.getItem('interestIds')!
+    const userName = sessionStorage.getItem('userName')!
+    const introduction = this.selfIntroduction
     if(id) {
       const res = await register({
-        id,
-        introduction: this.selfIntroduction
+        id, introduction, interest, goalIds, interestIds, userName
       })
-      // if(res.data.status)
-      console.log("res:", res)
+      const status = res.data.status
+      if(status === 2){
+        const { increCurrentStep } = this.props
+        increCurrentStep()
+      }else if(status === 5){
+        message.info('注册失败，请尝试重新注册')
+      }
     }
-    const { increCurrentStep } = this.props
-    increCurrentStep()
+
   }
 
   returnPreviousStep() {
@@ -56,7 +64,7 @@ export default class SelfIntroduction extends React.Component<
   }
 
   render() {
-    const userName = sessionStorage.getItem('name')
+    const userName = sessionStorage.getItem('userName')
     return (
       <div className="selfIntroContainer">
         <p className="selfIntroHeader">你想怎么样描述你自己?</p>

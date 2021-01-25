@@ -1,6 +1,7 @@
 import { extend, get } from 'lodash'
-// import Cookies from 'js-cookie'
+import Cookies from 'universal-cookie'
 
+const cookies = new Cookies()
 export interface IExtraOptions {
   includeCredentials?: boolean
   disableParseJSON?: boolean
@@ -13,12 +14,10 @@ export enum EFetchType {
 }
 
 export function getFetchHeaders() {
-  // const token = tokenService.token
-  // const token = Cookies.get('token')
+  const token = cookies.get('token')
   return {
     'content-type': 'application/json',
-    // 'X-Pandora-Language': languageService.locale,
-    // Authorization: token ? token : '',
+    Authorization: token ? token : '',
     'X-Csrf-Token': localStorage.getItem('X-Csrf-Token') || ''
   }
 }

@@ -74,12 +74,15 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     this.stateArrayToList('business')
     this.stateArrayToList('sciTech')
     this.stateArrayToList('social')
-    sessionStorage.setItem('interests', JSON.stringify(this.interests))
-    console.log("interests , inids:", this.interestIds, this.interests)
+
+    const interest = this.interests.join()
+    const interestIds = this.interestIds.join()
+    sessionStorage.setItem('interest', interest)
+    sessionStorage.setItem('interestIds', interestIds)
 
     const params = {
-      interest: this.interests.join(),
-      interestIds: this.interestIds.join(),
+      interest,
+      interestIds,
       id: sessionStorage.getItem('id')!
     }
     const res = await register(params)

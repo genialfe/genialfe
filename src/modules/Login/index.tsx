@@ -3,13 +3,27 @@ import React from 'react'
 import { Button, Col, Divider, Input, message, Row } from 'antd'
 import { makeObservable, observable, action, computed } from 'mobx'
 import { observer } from 'mobx-react'
+import Cookies from 'universal-cookie'
 import { isPhoneNumber } from '../../utils/validate'
 import LoginPic from '../../static/cities-graphic.svg'
 import { getUserStatus, sendVerificationCode } from '../Register/apis'
+import { login } from './api'
 
 import './style.less'
 
+const cookies = new Cookies()
+
 export interface ILoginProps {}
+
+export interface IUserProfile {
+  goalIds: string
+  headImg: string
+  interest: string
+  interestIds: string
+  introduction: string
+  point: number
+  userName: string
+}
 
 @observer
 export default class Login extends React.Component<ILoginProps, any> {
@@ -61,14 +75,17 @@ export default class Login extends React.Component<ILoginProps, any> {
       } else {
         // 发送登陆验证码流程
         const res = await sendVerificationCode({
-          type: 2,
+          type: 2,  // 登录type为2
           phone
         })
-        if (res.data.status === 1) {
+        const status = res.data.status
+        if (status === 1) {
           message.info(`已向 ${phone} 发送验证码`)
           this.setHasSentVerifyCode(true)
-        } else {
-          message.info('出错了，请检查后重试')
+        } else if(status === 2) {
+          message.info('已发送过验证码，请勿重复操作')
+        } else if(status === 3) {
+          message.info('出错了，请稍后重试')
         }
       }
     } else {
@@ -76,9 +93,25 @@ export default class Login extends React.Component<ILoginProps, any> {
     }
   }
 
-  handleSubmitVerifyCode() {
+  async handleSubmitVerifyCode() {
     console.log('verifyCode:', this.verifyCode)
-    location.pathname = '/home'
+    const code = this.verifyCode
+    const phone = this.phoneNumber
+    const loginRes = await login({code, phone})
+
+    const { loginStatus, token, ...userProfile } = loginRes.data
+    console.log(loginStatus, token, userProfile)
+
+    if(loginStatus === 1){  // 成功登陆
+      sessionStorage.setItem('profile', JSON.stringify(userProfile))
+      sessionStorage.setItem('login', '1')
+      cookies.set('token', token)
+      location.pathname = '/home'
+    }else if (loginStatus === 2) {
+      message.info('验证码已过期')
+    } else if (loginStatus === 3) {
+      message.info('验证码错误')
+    }
   }
 
   redirectToStartPage() {

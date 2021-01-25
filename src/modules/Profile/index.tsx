@@ -1,15 +1,19 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Card, Dropdown, Menu } from 'antd'
 import { MenuUnfoldOutlined } from '@ant-design/icons'
 import { observable, action, makeObservable } from 'mobx'
 import { observer } from 'mobx-react'
+import Cookies from 'universal-cookie'
 import UserAvatar from './UserAvatar'
 import UserIntroduction from './UserIntroduction'
 import UserInterests from './UserInterests'
-
-import './style.less'
 import ConnectionBar from './ConnectionBar'
 import EditProfile from './EditProfile'
+
+import './style.less'
+
+const cookies = new Cookies()
 
 export interface IProfileProps {
   name?: string
@@ -29,7 +33,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
 
   onClickOperation(e: any) {
     if (e.key === 'logout') {
-      // eslint-disable-next-line no-restricted-globals
+      cookies.remove('token')
       location.pathname = '/'
     } else if (e.key === 'edit') {
       this.setEditMode(true)

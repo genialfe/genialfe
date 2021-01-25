@@ -10,11 +10,11 @@ export interface IObjectives {
   items: string[]
 }
 
-export interface IUserProfile {
-  userName: string
-  objectives: string[]
-  interests: string[]
-}
+// export interface IUserProfile {
+//   userName: string
+//   objectives: string[]
+//   interests: string[]
+// }
 
 export interface IUserStatus {
   goalIds: string[]

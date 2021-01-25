@@ -10,6 +10,7 @@ export interface IStartPageProps {}
 
 export default class StartPage extends React.Component<IStartPageProps, any> {
   render() {
+    const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return (
       <>
         <Row>
@@ -19,17 +20,22 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
             </div>
           </Col>
         </Row>
-        <Row gutter={[0, 68]}>
-          <Col span={12}>
+        <div className='startPageRow' style={{marginBottom: '11em'}}>
+          <div className='col-12'>
             <div className="signUpBlock">
               <SignUp />
             </div>
-          </Col>
-          <Col span={12}>
+          </div>
+          <div className='col-12'>
             <img className="startPageCover" src={startPageCover} alt=""></img>
-          </Col>
-          <Col span={1}></Col>
-        </Row>
+          </div>
+        </div>
+
+        {isMobileScreen && 
+          <div>
+            1234
+          </div>
+        }
         <Row gutter={[0, 68]}>
           <Col span={24}>
             <Explain />

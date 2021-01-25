@@ -16,6 +16,7 @@ import {
   checkVerificationCode,
   getUserStatus,
   IVerificationCodeData,
+  loginAfterRegister,
   register
 } from './apis'
 
@@ -100,7 +101,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
     if (!userName.length) {
       message.info('你的名字不能为空!')
     } else {
-      sessionStorage.setItem('name', this.userName)
+      sessionStorage.setItem('userName', this.userName)
       // 发送提交用户姓名的请求
       const id = this.getUserId()
       if(id) {
@@ -120,12 +121,15 @@ export default class Register extends React.Component<IRegisterProps, any> {
     }
   }
 
-  handleGetStarted() {
+  async handleGetStarted() {
     // 组装参数
     // const phoneNumber = sessionStorage.getItem('phoneNumber')
     // const userName = this.userName
+    const res = await loginAfterRegister(this.phoneNumber)
 
-    location.pathname = '/weekly'
+    console.log("loginres:", res)
+
+    // location.pathname = '/weekly'
   }
 
   redirectToStartPage() {

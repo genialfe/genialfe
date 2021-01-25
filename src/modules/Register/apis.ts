@@ -100,3 +100,14 @@ export function register(data: IUserData) {
     body: JSON.stringify(data)
   })
 }
+
+/**
+ * 注册完直接登录 通过后端验证缓存
+ * @param phone 用户手机号
+ */
+export function loginAfterRegister(phone: string) {
+  return fetch(`${API_PREFIX}/user/login?phone=${phone}`, {
+    method: 'POST'
+  })
+}
+

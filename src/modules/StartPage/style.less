@@ -24,3 +24,27 @@
   padding-left: 8em;
   padding-top: 2.6em;
 }
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.startPageRow {
+  .row();
+}
+
+.col-12 {
+  display: block;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+@media screen and (max-width: 500px) {
+  .startPageCover {
+    display: none;
+  }
+  .startPageRow {
+    display: none;
+  }
+}

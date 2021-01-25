@@ -156,6 +156,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       }
     })
     const goalIds = ids.join()
+    sessionStorage.setItem('goalIds', goalIds)
     const id = sessionStorage.getItem('id')
     if(id) {
       const res = await register({
@@ -169,7 +170,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       message.info('出错了，请尝试重新注册')
     }
 
-    sessionStorage.setItem('objectives', JSON.stringify(objectives))
+    // sessionStorage.setItem('objectives', JSON.stringify(objectives))
   }
 
   returnPreviousStep() {
