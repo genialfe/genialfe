@@ -4,7 +4,6 @@ import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 
 import './style.less'
-import moment from 'moment'
 
 export interface IWeeklyProps {}
 

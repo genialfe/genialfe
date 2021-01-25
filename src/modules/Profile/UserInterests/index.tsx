@@ -1,6 +1,5 @@
 import React from 'react'
 import { Tag } from 'antd'
-import { business, sciTech, social } from '../../Register/Interests/constants'
 
 import './style.less'
 
@@ -13,17 +12,12 @@ export default class UserInterests extends React.Component<
   any
 > {
   get tagList() {
-    const allInterestsMap = [...business, ...sciTech, ...social]
     const { interests } = this.props
     return interests?.map((item, index) => {
-      const targetItem = allInterestsMap.find(mapItem => mapItem.name === item)
       return (
         <Tag color="#333366" key={index} className="tag">
-          {targetItem?.desc}
+          {item}
         </Tag>
-        // <div className='interestsTag'>
-        //   <p className='interests'>{item}</p>
-        // </div>
       )
     })
   }

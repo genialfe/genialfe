@@ -96,6 +96,7 @@ export interface IUserData {
 
 export function register(data: IUserData) {
   return fetch(`${API_PREFIX}/user/register`, {
-    method: 'POST'
+    method: 'POST',
+    body: JSON.stringify(data)
   })
 }

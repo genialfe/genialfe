@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import { observer } from 'mobx-react'
 import InterestsTagBox from './InterestsTagBox'
 import { business, sciTech, social } from './constants'
-import { getInterestsList } from '../apis'
+import { getInterestsList, register } from '../apis'
 
 import './style.less'
 
@@ -19,9 +19,19 @@ export interface IInterestsProps {
   returnPreviousStep: () => void
 }
 
+export interface IInterest {  // api拉取的兴趣列表
+  id: string
+  interest: string
+}
+
 @observer
 export default class Interests extends React.Component<IInterestsProps, any> {
   interests: string[] = []
+  interestIds: string[] = []
+
+  business: IInterest[] = []
+  sciTech: IInterest[] = []
+  social: IInterest[] = []
 
   // stateArray为01数组 对应constants中引入的business/sciTech/social中每一项的状态
   stateArrayToList(category: string) {
@@ -30,21 +40,25 @@ export default class Interests extends React.Component<IInterestsProps, any> {
       case 'business':
         for (let i = 0; i < stateArray.length; i++) {
           if (stateArray[i]) {
-            this.interests.push(business[i].name)
+             // in order to match the api, simply change .name into .id
+            this.interests.push(this.business[i].interest)
+            this.interestIds.push(this.business[i].id)
           }
         }
         break
       case 'sciTech':
         for (let i = 0; i < stateArray.length; i++) {
           if (stateArray[i]) {
-            this.interests.push(sciTech[i].name)
+            this.interests.push(this.sciTech[i].interest)
+            this.interestIds.push(this.sciTech[i].id)
           }
         }
         break
       case 'social':
         for (let i = 0; i < stateArray.length; i++) {
           if (stateArray[i]) {
-            this.interests.push(social[i].name)
+            this.interests.push(this.social[i].interest)
+            this.interestIds.push(this.social[i].id)
           }
         }
         break
@@ -55,15 +69,24 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     this.interests = interests
   }
 
-  submitInterests() {
+  async submitInterests() {
     this.setInterests([])
     this.stateArrayToList('business')
     this.stateArrayToList('sciTech')
     this.stateArrayToList('social')
     sessionStorage.setItem('interests', JSON.stringify(this.interests))
+    console.log("interests , inids:", this.interestIds, this.interests)
 
-    const { increStep } = this.props
-    increStep()
+    const params = {
+      interest: this.interests.join(),
+      interestIds: this.interestIds.join(),
+      id: sessionStorage.getItem('id')!
+    }
+    const res = await register(params)
+    if(res.data.status === 1) {
+      const { increStep } = this.props
+      increStep()
+    }
   }
 
   returnPreviousStep() {
@@ -71,19 +94,24 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     returnPreviousStep()
   }
 
-  async getInterestsList() {
+  async setInterestsList() {
     const list = await getInterestsList()
-    console.log('inter list:', list)
+    const { data } = list
+    this.business = data[0].list
+    this.sciTech = data[1].list
+    this.social = data[2].list   
   }
 
   componentDidMount() {
-    this.getInterestsList()
+    this.setInterestsList()
   }
 
   constructor(props: IInterestsProps) {
     super(props)
     makeObservable(this, {
-      interests: observable,
+      sciTech: observable,
+      social: observable,
+      business: observable,
       setInterests: action
     })
   }

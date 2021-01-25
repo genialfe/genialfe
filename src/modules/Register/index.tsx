@@ -15,7 +15,8 @@ import { IUserStatus } from './model'
 import {
   checkVerificationCode,
   getUserStatus,
-  IVerificationCodeData
+  IVerificationCodeData,
+  register
 } from './apis'
 
 import './style.css'
@@ -62,6 +63,14 @@ export default class Register extends React.Component<IRegisterProps, any> {
     this.userStatus = data
   }
 
+  getUserId() {
+    if(this.userStatus) {
+      const { id } = this.userStatus
+      return id ? id : undefined
+    }
+    return undefined
+  }
+
   async checkVerificationCode(data: IVerificationCodeData) {
     const res = await checkVerificationCode(data)
     if (res.code === 200) {
@@ -74,10 +83,8 @@ export default class Register extends React.Component<IRegisterProps, any> {
 
   async getUserStatus(phone: string) {
     const res = await getUserStatus(phone)
-    console.log('statusRes:', res)
     const { data } = res
     this.setUserStatus(data as IUserStatus)
-    console.log('this.userStatus:', this.userStatus)
   }
 
   handleSubmitVC() {
@@ -88,12 +95,28 @@ export default class Register extends React.Component<IRegisterProps, any> {
     }
   }
 
-  handleSubmitName() {
-    if (!this.userName.length) {
+  async handleSubmitName() {
+    const userName = this.userName
+    if (!userName.length) {
       message.info('你的名字不能为空!')
     } else {
       sessionStorage.setItem('name', this.userName)
-      this.increCurrentStep()
+      // 发送提交用户姓名的请求
+      const id = this.getUserId()
+      if(id) {
+        sessionStorage.setItem('id', id)
+        const params = {
+          id,
+          userName
+        }
+        const res = await register(params)
+        console.log("register res:", res)
+        if(res.data.status === 1) {   // 用户正在注册流程中
+          this.increCurrentStep()
+        }
+      }else{
+        message.info('出错了，请尝试重新注册')
+      }
     }
   }
 

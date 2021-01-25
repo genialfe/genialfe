@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Button, message } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { IObjCardItem, IObjectives } from '../model'
@@ -17,7 +17,7 @@ import StartCompany from '../../../static/objectives/startCompany.svg'
 import Team from '../../../static/objectives/team.svg'
 import Interests from '../Interests'
 import SelfIntroduction from '../SelfIntroduction'
-import { getObjectivesList } from '../apis'
+import { getObjectivesList, register } from '../apis'
 
 import './style.less'
 
@@ -38,84 +38,84 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
 
   items: IObjCardItem[] = [
     {
-      key: 0,
+      key: 1,
       name: 'advice',
       src: Advice,
       desc: '寻求建议',
       selected: false
     },
     {
-      key: 1,
+      key: 2,
       name: 'brainstorm',
       src: Brainstorm,
       desc: '头脑风暴',
       selected: false
     },
     {
-      key: 2,
+      key: 3,
       name: 'business',
       src: Business,
       desc: '业务发展',
       selected: false
     },
     {
-      key: 3,
+      key: 4,
       name: 'cofounder',
       src: Cofounder,
       desc: '寻找联合创始人',
       selected: false
     },
     {
-      key: 4,
+      key: 5,
       name: 'startCompany',
       src: StartCompany,
       desc: '创建公司',
       selected: false
     },
     {
-      key: 5,
+      key: 6,
       name: 'exploreCompanies',
       src: ExploreCompanies,
       desc: '探索其他公司',
       selected: false
     },
     {
-      key: 6,
+      key: 7,
       name: 'exploreProjects',
       src: ExploreProjects,
       desc: '探索新项目',
       selected: false
     },
     {
-      key: 7,
+      key: 8,
       name: 'funding',
       src: Funding,
       desc: '筹集资金',
       selected: false
     },
     {
-      key: 8,
+      key: 9,
       name: 'invest',
       src: Invest,
       desc: '投资',
       selected: false
     },
     {
-      key: 9,
+      key: 10,
       name: 'meetPeople',
       src: MeetPeople,
       desc: '遇见有趣的人',
       selected: false
     },
     {
-      key: 10,
+      key: 11,
       name: 'mentor',
       src: Mentor,
       desc: '指导别人',
       selected: false
     },
     {
-      key: 11,
+      key: 12,
       name: 'team',
       src: Team,
       desc: '发展团队',
@@ -141,21 +141,35 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     this.currentSubStep--
   }
 
-  switchObjectiveSelected(key: number) {
-    const target = !this.items[key].selected
-    this.items[key].selected = target
+  switchObjectiveSelected(key: number) {  // key 从1开始
+    const target = !this.items[key-1].selected
+    this.items[key-1].selected = target
   }
 
-  handleSubmitObjectives() {
-    console.log('objectives:', this.objectives.items)
+  async handleSubmitObjectives() {
     let objectives: string[] = []
+    let ids: number[] = []
     this.items.forEach(item => {
       if (item.selected) {
         objectives.push(item.name)
+        ids.push(item.key)
       }
     })
+    const goalIds = ids.join()
+    const id = sessionStorage.getItem('id')
+    if(id) {
+      const res = await register({
+        goalIds,
+        id
+      })
+      if(res.data.status === 1) {
+        this.increCurrentSubStep()
+      }
+    }else {
+      message.info('出错了，请尝试重新注册')
+    }
+
     sessionStorage.setItem('objectives', JSON.stringify(objectives))
-    this.increCurrentSubStep()
   }
 
   returnPreviousStep() {
@@ -168,7 +182,6 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       const handleClickObjCard = () => {
         this.addObjective(item.name)
         this.switchObjectiveSelected(item.key)
-        console.log('objectives:', this.objectives.items)
       }
       return (
         <>

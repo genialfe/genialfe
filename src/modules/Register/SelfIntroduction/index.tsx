@@ -5,6 +5,7 @@ import { action, makeObservable, observable } from 'mobx'
 import SampleIntros from './SampleIntros'
 
 import './style.less'
+import { register } from '../apis'
 
 export interface ISelfIntroProps {
   increCurrentStep: () => void
@@ -26,9 +27,18 @@ export default class SelfIntroduction extends React.Component<
     this.setSelfIntroduction(value)
   }
 
-  onSubmitIntro() {
-    const { increCurrentStep } = this.props
+  async handleSubmitIntro() {
     sessionStorage.setItem('selfIntroduction', this.selfIntroduction)
+    const id = sessionStorage.getItem('id')
+    if(id) {
+      const res = await register({
+        id,
+        introduction: this.selfIntroduction
+      })
+      // if(res.data.status)
+      console.log("res:", res)
+    }
+    const { increCurrentStep } = this.props
     increCurrentStep()
   }
 
@@ -75,7 +85,7 @@ export default class SelfIntroduction extends React.Component<
           className="introButton"
           type="primary"
           onClick={() => {
-            this.onSubmitIntro()
+            this.handleSubmitIntro()
           }}
         >
           下一步
