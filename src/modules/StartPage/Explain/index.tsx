@@ -4,7 +4,7 @@ import Step1 from '../../../static/step1.svg'
 import Step2 from '../../../static/step2.svg'
 import Step3 from '../../../static/step3.svg'
 
-import './style.css'
+import './style.less'
 
 export interface IExplainProps {}
 

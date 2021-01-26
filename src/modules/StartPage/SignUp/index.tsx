@@ -71,7 +71,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
     }
 
     return (
-      <>
+      <div className='signUpContainer'>
         <p className="slogan">开始和行业精英建立你们之间的联系吧</p>
         <p className="subSlogan">帮助你1:1精准匹配</p>
         <Search
@@ -89,7 +89,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
             点击登陆
           </Button> */}
         </p>
-      </>
+      </div>
     )
   }
 }

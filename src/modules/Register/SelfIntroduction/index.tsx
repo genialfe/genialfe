@@ -3,9 +3,9 @@ import { Button, message } from 'antd'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import SampleIntros from './SampleIntros'
+import { register } from '../apis'
 
 import './style.less'
-import { register } from '../apis'
 
 export interface ISelfIntroProps {
   increCurrentStep: () => void

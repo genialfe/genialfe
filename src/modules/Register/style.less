@@ -19,10 +19,14 @@
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.infoInputContainer,
 .basicInfoContainer,
 .selfInfoContainer {
   margin-top: 3.8em;
+}
+
+.infoInputContainer {
+  margin: 3.8em auto;
+  width: 25%;
 }
 
 .selfInfoContainer {
@@ -48,4 +52,19 @@
 
 .startButton {
   margin-top: 1.6em;
+}
+
+@media screen and (max-width: 500px) {
+  .registerContainer {
+    padding: 0 0 40px;
+  }
+
+  .infoInputContainer {
+    width: 80%;
+    margin: 3.8em auto;
+  }
+
+  .stepsContainer {
+    display: none;
+  }
 }

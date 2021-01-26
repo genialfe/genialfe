@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
-import { Row, Col, Input, Steps, Button, message } from 'antd'
+import { Input, Steps, Button, message } from 'antd'
 import {
   MessageOutlined,
   UserOutlined,
@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons'
 import { observer } from 'mobx-react'
 import { makeObservable, observable, action, computed } from 'mobx'
+import Cookies from 'universal-cookie'
 import Objectives from './Objectives'
 import DescBlock from './DescBlock'
 import { IUserStatus } from './model'
@@ -20,9 +21,10 @@ import {
   register
 } from './apis'
 
-import './style.css'
+import './style.less'
 
 const { Step } = Steps
+const cookies = new Cookies()
 
 export interface IRegisterProps {}
 
@@ -122,14 +124,15 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   async handleGetStarted() {
-    // 组装参数
-    // const phoneNumber = sessionStorage.getItem('phoneNumber')
-    // const userName = this.userName
-    const res = await loginAfterRegister(this.phoneNumber)
-
-    console.log("loginres:", res)
-
-    // location.pathname = '/weekly'
+    const loginRes = await loginAfterRegister(this.phoneNumber)
+    const { loginStatus, token, ...userProfile } = loginRes.data
+    if( loginStatus === 1) {
+      cookies.set('token', token)
+      sessionStorage.setItem('userProfile', JSON.stringify(userProfile))
+      location.pathname = '/home'
+    }else {
+      message.info('登录失败，请尝试去首页重新登录')
+    }
   }
 
   redirectToStartPage() {
@@ -149,36 +152,32 @@ export default class Register extends React.Component<IRegisterProps, any> {
     const isNameStage = this.currentStep === 1
     return (
       <div className="infoInputContainer">
-        <Row>
-          <Col span={6} offset={9}>
-            {isVCStage && (
-              <Input
-                type="primary"
-                size="large"
-                placeholder="输入验证码"
-                onChange={(e: any) => this.setVerifyCode(e.target.value)}
-              />
-            )}
-            {isNameStage && (
-              <Input
-                type="primary"
-                size="large"
-                placeholder="输入你的名字"
-                onChange={(e: any) => this.setUserName(e.target.value)}
-              />
-            )}
-            <Button
-              className="submitVCButton"
-              type="primary"
-              size="large"
-              onClick={() => {
-                isVCStage ? this.handleSubmitVC() : this.handleSubmitName()
-              }}
-            >
-              {isVCStage ? '提交验证码' : '下一步'}
-            </Button>
-          </Col>
-        </Row>
+        {isVCStage && (
+          <Input
+            type="primary"
+            size="large"
+            placeholder="输入验证码"
+            onChange={(e: any) => this.setVerifyCode(e.target.value)}
+          />
+        )}
+        {isNameStage && (
+          <Input
+            type="primary"
+            size="large"
+            placeholder="输入你的名字"
+            onChange={(e: any) => this.setUserName(e.target.value)}
+          />
+        )}
+        <Button
+          className="submitVCButton"
+          type="primary"
+          size="large"
+          onClick={() => {
+            isVCStage ? this.handleSubmitVC() : this.handleSubmitName()
+          }}
+        >
+          {isVCStage ? '提交验证码' : '下一步'}
+        </Button>
       </div>
     )
   }
@@ -225,12 +224,15 @@ export default class Register extends React.Component<IRegisterProps, any> {
         </p>
         <p className="registerSubTitle">{this.subTitle}</p>
         {/* <img src={cityCover} alt=''></img> */}
-        <Steps current={this.currentStep}>
-          <Step title="查收短信验证码" icon={<MessageOutlined />} />
-          <Step title="完善基本信息" icon={<UserOutlined />} />
-          <Step title="做一些自我介绍" icon={<HighlightOutlined />} />
-          <Step title="一切就绪" icon={<CoffeeOutlined />} />
-        </Steps>
+        <div className='stepsContainer'>
+          <Steps current={this.currentStep}>
+            <Step title="查收短信验证码" icon={<MessageOutlined />} />
+            <Step title="完善基本信息" icon={<UserOutlined />} />
+            <Step title="做一些自我介绍" icon={<HighlightOutlined />} />
+            <Step title="一切就绪" icon={<CoffeeOutlined />} />
+          </Steps>
+        </div>
+        
         {this.currentStep < 2 && <>{this.inputContent}</>}
         {this.currentStep === 2 && (
           <div className="selfInfoContainer">

@@ -100,7 +100,6 @@ export default class Login extends React.Component<ILoginProps, any> {
     const loginRes = await login({code, phone})
 
     const { loginStatus, token, ...userProfile } = loginRes.data
-    console.log(loginStatus, token, userProfile)
 
     if(loginStatus === 1){  // 成功登陆
       sessionStorage.setItem('profile', JSON.stringify(userProfile))
@@ -131,6 +130,7 @@ export default class Login extends React.Component<ILoginProps, any> {
   }
 
   render() {
+    // const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return (
       <div className="loginContainer">
         <Row gutter={[0, 36]}>
@@ -143,32 +143,27 @@ export default class Login extends React.Component<ILoginProps, any> {
         <Row gutter={[0, 36]}>
           <Col span={24}>
             <h3 className="loginSlogan">登录</h3>
-            <img src={LoginPic} alt="login"></img>
+            <img src={LoginPic} className='loginImg' alt="login"></img>
           </Col>
         </Row>
-        <Row gutter={[0, 36]}>
-          <Col span={6} offset={9}>
+        
+        <div className='loginInputContainer'>
+          <Input
+            onChange={(e: any) => this.setPhoneNumber(e.target.value)}
+            placeholder="你的中国大陆手机号"
+            size="large"
+          />
+          <Divider />
+          {this.hasSentVerifyCode && (
             <Input
-              onChange={(e: any) => this.setPhoneNumber(e.target.value)}
-              placeholder="你的中国大陆手机号"
+              className="verifyCodeInput"
+              onChange={(e: any) => this.setVerifyCode(e.target.value)}
+              placeholder="请输入验证码"
               size="large"
             />
-            <Divider />
-            {this.hasSentVerifyCode && (
-              <Input
-                className="verifyCodeInput"
-                onChange={(e: any) => this.setVerifyCode(e.target.value)}
-                placeholder="请输入验证码"
-                size="large"
-              />
-            )}
-          </Col>
-        </Row>
-        <Row>
-          <Col span={6} offset={9}>
-            {this.loginButton}
-          </Col>
-        </Row>
+          )}
+          {this.loginButton}
+        </div>
       </div>
     )
   }

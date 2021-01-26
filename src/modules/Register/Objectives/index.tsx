@@ -179,6 +179,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   }
 
   get objectivesCardList() {
+    const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return this.items.map((item, index) => {
       const handleClickObjCard = () => {
         this.addObjective(item.name)
@@ -186,13 +187,13 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       }
       return (
         <>
-          <Col span={6}>
+          <Col span={isMobileScreen ? 12 : 6}>
             <div
               className={item.selected ? 'objCardSelected' : 'objCard'}
               onClick={handleClickObjCard}
               key={index}
             >
-              <img src={item.src} alt={item.name} />
+              <img src={item.src} alt={item.name} className='goalImg' />
               <p className="objCardDesc">{item.desc}</p>
             </div>
           </Col>
