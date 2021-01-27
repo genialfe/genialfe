@@ -1,5 +1,7 @@
-import { Calendar } from 'antd'
 import React from 'react'
+import { Calendar } from 'antd'
+import Times from './Times'
+import Matches from './Matches'
 
 import './style.less'
 
@@ -7,21 +9,17 @@ export interface IMeetingsProps {}
 
 export interface IMeeting {
   /**
-   * 腾讯会议链接
+   * 当前用户id
    */
-  url: string
+  id: string
   /**
-   * 时间（时间戳）
+   * 匹配id
    */
-  time: number
+  matchId: string
   /**
-   * 对方的名字
+   * 会议时间
    */
-  userName: string
-  /**
-   * 会议号
-   */
-  meetingId: string
+  signTime: string
 }
 
 export default class Meetings extends React.Component<IMeetingsProps, any> {
@@ -58,9 +56,24 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
 
   render() {
     return (
-      <div className="meetingsContainer">
-        <Calendar dateCellRender={value => this.dateCellRender(value)} />
-      </div>
+      <>
+        {/* <div className="meetingsCalendarContainer">
+          <Calendar dateCellRender={value => this.dateCellRender(value)} />
+        </div> */}
+        <div className='meetingsBlockContainer'>
+          <div className='chosenTimeContainer'>
+            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已匹配完成的会议</p>
+            <Matches />
+          </div>
+        </div>
+
+        <div className='meetingsBlockContainer'>
+          <div className='chosenTimeContainer'>
+            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已选择的下周空闲时间段</p>
+            <Times />
+          </div>
+        </div>
+      </>
     )
   }
 }
