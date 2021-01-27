@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { Button, Timeline } from 'antd'
 import { makeObservable, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
@@ -44,6 +45,10 @@ export default class Times extends React.Component<ITimesProps, any> {
     this.setTimes(times)
   }
 
+  handleReSubmitTime() {
+    location.pathname = '/weekly'
+  }
+
   componentDidMount() {
     this.getAvailableTimes()
   }
@@ -62,7 +67,9 @@ export default class Times extends React.Component<ITimesProps, any> {
         <div className='timesContainer'>
           {this.bookedTimes}
         </div>
-        <Button>
+        <Button
+          onClick={this.handleReSubmitTime}
+        >
           修改时间
         </Button>
       </div>

@@ -69,7 +69,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
 
         <div className='meetingsBlockContainer'>
           <div className='chosenTimeContainer'>
-            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已选择的下周空闲时间段</p>
+            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已为下周选择的时间段</p>
             <Times />
           </div>
         </div>

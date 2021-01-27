@@ -1,5 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
-import { Button, Col, Row } from 'antd'
+import { Button, Col, message, Row } from 'antd'
 import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 import moment from 'moment'
@@ -100,7 +101,14 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     const times = selectedTimes.join()
     console.log('times:', times)
     const res = await setAvailableTimes(times)
-    console.log("res:", res)
+    if(res.code === 200) {
+      location.pathname = '/home'
+    } else if (res.code === 401) {
+      message.info('登录过期，请重新登录')
+      location.pathname = '/'
+    } else {
+      message.info('出错了，请检查后重试')
+    }
   }
 
   get timeSelectTitle() {
