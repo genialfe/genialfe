@@ -2,19 +2,46 @@ import React from 'react'
 import { Button, Col, Row } from 'antd'
 import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
+import moment from 'moment'
+import { setAvailableTimes } from './api'
 
 import './style.less'
 
 export interface IWeeklyProps {}
 
 export interface IAvailableTime {
+  /**
+   * 日期(几月几号)
+   */
+  date: string
+  /**
+   * 几点
+   */
+  hour: string 
+  /**
+   * 格式化后的日期(YYYY-MM-DD)
+   */
+  formatDate: string
+}
+
+export interface IWeekday {
+  /**
+   * 星期几
+   */
   day: string
-  hour: string
+  /**
+   * 日期(展示在顶部title)
+   */
+  date: string
+  /**
+   *  格式化后的日期 api用
+   */
+  formatDate: string
 }
 
 @observer
 export default class Weekly extends React.Component<IWeeklyProps, any> {
-  days: string[] = ['1', '2', '3', '4', '5', '6']
+  // days: string[] = ['1', '2', '3', '4', '5', '6']
   hours: string[] = [
     '09',
     // '10',
@@ -31,79 +58,77 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     '21'
   ]
 
+  days: IWeekday[] = []
+
   // 存储选中的时间段
   selectedTimeMap: IAvailableTime[] = []
 
   // 在selectedMap中设置时间段选中的状态
-  setDayHourSelectedState(day: string, hour: string) {
+  setDayHourSelectedState(date: string, formatDate: string, hour: string) {
     const index = this.selectedTimeMap.findIndex(item => {
-      return item.day === day && item.hour === hour
+      return item.date === date && item.hour === hour
     })
 
     if (index > -1) {
       // 该日该时间段已经被选择过
       this.selectedTimeMap.splice(index, 1)
     } else {
-      this.selectedTimeMap.push({ day, hour })
+      this.selectedTimeMap.push({ date, formatDate, hour })
     }
   }
 
+  setDays(days: IWeekday[]) {
+    this.days = days
+  }
+
   // 点击每一个button 选中对应的时间段
-  handleClickTimeButton(day: string, hour: string) {
-    this.setDayHourSelectedState(day, hour)
+  handleClickTimeButton(day: string, formatDate:string, hour: string) {
+    this.setDayHourSelectedState(day, formatDate, hour)
   }
 
   getButtonClassName(day: string, hour: string) {
     const isButtonSelected = this.selectedTimeMap.some(item => {
-      return item.day === day && item.hour === hour
+      return item.date === day && item.hour === hour
     })
     return isButtonSelected ? 'timeButtonSelected' : 'timeButton'
   }
 
-  handleSubmitTime() {
+  async handleSubmitTime() {
     const selectedTimes = this.selectedTimeMap.map(item => {
-      return {
-        day: item.day,
-        hour: item.hour
-      }
+      return `${item.formatDate} ${item.hour}:00:00`
     })
-    console.log('map:', selectedTimes)
-    // location.pathname = 'meetings'
-
-    // eslint-disable-next-line no-restricted-globals
-    // location.pathname = '/home'
+    const times = selectedTimes.join()
+    console.log('times:', times)
+    const res = await setAvailableTimes(times)
+    console.log("res:", res)
   }
 
   get timeSelectTitle() {
-    const titleRow = [
-      {
-        day: '星期一',
-        date: '1月25日'
-      },
-      {
-        day: '星期二',
-        date: '1月26日'
-      },
-      {
-        day: '星期三',
-        date: '1月27日'
-      },
-      {
-        day: '星期四',
-        date: '1月28日'
-      },
-      {
-        day: '星期五',
-        date: '1月29日'
-      },
-      {
-        day: '星期六',
-        date: '1月30日'
+    const week = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    const nextMonday = moment().startOf('isoWeek').add(1, 'week')
+    const weekdays = [{
+      date:nextMonday.format('MM月DD日'),
+      formatDate: nextMonday.format('YYYY-MM-DD')
+    }]
+    for(let i=0; i<5; i++) {  // 得到下周一至下周六的日期数组
+      const day = nextMonday.add(1, 'days')
+      const date = day.format('MM月DD日')
+      const formatDate = day.format('YYYY-MM-DD')
+      weekdays.push({date, formatDate})
+    }
+    const days = weekdays.map((item, index) => {
+      return {
+        day: week[index],   // 星期几
+        date: item.date,
+        formatDate: item.formatDate
       }
-    ]
+    })
+    console.log("days:", days)
+    this.setDays(days)
+
     return (
       <Row>
-        {titleRow.map((item, index) => {
+        {days.map((item, index) => {
           return (
             <Col span={4}>
               <div className="timeSelectTitle">
@@ -125,8 +150,8 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
             return (
               <Col span={4}>
                 <button
-                  className={this.getButtonClassName(day, hour)}
-                  onClick={() => this.handleClickTimeButton(day, hour)}
+                  className={this.getButtonClassName(day.date, hour)}
+                  onClick={() => this.handleClickTimeButton(day.date, day.formatDate, hour)}
                 >
                   {`${hour}:00`}
                 </button>
@@ -154,9 +179,11 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     super(props)
     makeObservable(this, {
       selectedTimeMap: observable,
+      days: observable,
       timeSelectArea: computed,
       timeSelectTitle: computed,
-      setDayHourSelectedState: action
+      setDayHourSelectedState: action,
+      setDays: action
     })
   }
 
