@@ -29,6 +29,10 @@ export const NavLink = styled(Link)`
   &.active {
     color: #333366;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+  }
 `
 
 export const Bars = styled(FaBars)`
