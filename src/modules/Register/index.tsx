@@ -22,6 +22,7 @@ import {
 } from './apis'
 
 import './style.less'
+import { Redirect } from 'react-router-dom'
 
 const { Step } = Steps
 const cookies = new Cookies()
@@ -67,7 +68,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   getUserId() {
-    if(this.userStatus) {
+    if (this.userStatus) {
       const { id } = this.userStatus
       return id ? id : undefined
     }
@@ -106,18 +107,19 @@ export default class Register extends React.Component<IRegisterProps, any> {
       sessionStorage.setItem('userName', this.userName)
       // 发送提交用户姓名的请求
       const id = this.getUserId()
-      if(id) {
+      if (id) {
         sessionStorage.setItem('id', id)
         const params = {
           id,
           userName
         }
         const res = await register(params)
-        console.log("register res:", res)
-        if(res.data.status === 1) {   // 用户正在注册流程中
+        console.log('register res:', res)
+        if (res.data.status === 1) {
+          // 用户正在注册流程中
           this.increCurrentStep()
         }
-      }else{
+      } else {
         message.info('出错了，请尝试重新注册')
       }
     }
@@ -126,11 +128,11 @@ export default class Register extends React.Component<IRegisterProps, any> {
   async handleGetStarted() {
     const loginRes = await loginAfterRegister(this.phoneNumber)
     const { loginStatus, token, ...userProfile } = loginRes.data
-    if( loginStatus === 1) {
+    if (loginStatus === 1) {
       cookies.set('token', token)
       sessionStorage.setItem('userProfile', JSON.stringify(userProfile))
       location.pathname = '/home'
-    }else {
+    } else {
       message.info('登录失败，请尝试去首页重新登录')
     }
   }
@@ -224,7 +226,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
         </p>
         <p className="registerSubTitle">{this.subTitle}</p>
         {/* <img src={cityCover} alt=''></img> */}
-        <div className='stepsContainer'>
+        <div className="stepsContainer">
           <Steps current={this.currentStep}>
             <Step title="查收短信验证码" icon={<MessageOutlined />} />
             <Step title="完善基本信息" icon={<UserOutlined />} />
@@ -232,7 +234,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
             <Step title="一切就绪" icon={<CoffeeOutlined />} />
           </Steps>
         </div>
-        
+
         {this.currentStep < 2 && <>{this.inputContent}</>}
         {this.currentStep === 2 && (
           <div className="selfInfoContainer">

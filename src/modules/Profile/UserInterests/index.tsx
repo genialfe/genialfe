@@ -4,7 +4,10 @@ import { Tag } from 'antd'
 import './style.less'
 
 export interface IUserInterestProps {
-  interests?: string[]
+  /**
+   * 用户兴趣
+   */
+  interests: string
 }
 
 export default class UserInterests extends React.Component<
@@ -13,7 +16,8 @@ export default class UserInterests extends React.Component<
 > {
   get tagList() {
     const { interests } = this.props
-    return interests?.map((item, index) => {
+    const interestsArray = interests.split(',')
+    return interestsArray.map((item, index) => {
       return (
         <Tag color="#333366" key={index} className="tag">
           {item}
@@ -25,7 +29,7 @@ export default class UserInterests extends React.Component<
   render() {
     return (
       <div className="container">
-        <p className="title">兴趣</p>
+        <p className="introTitle">兴趣</p>
         {this.tagList}
       </div>
     )

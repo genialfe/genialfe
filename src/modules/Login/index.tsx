@@ -75,16 +75,16 @@ export default class Login extends React.Component<ILoginProps, any> {
       } else {
         // 发送登陆验证码流程
         const res = await sendVerificationCode({
-          type: 2,  // 登录type为2
+          type: 2, // 登录type为2
           phone
         })
         const status = res.data.status
         if (status === 1) {
           message.info(`已向 ${phone} 发送验证码`)
           this.setHasSentVerifyCode(true)
-        } else if(status === 2) {
+        } else if (status === 2) {
           message.info('已发送过验证码，请勿重复操作')
-        } else if(status === 3) {
+        } else if (status === 3) {
           message.info('出错了，请稍后重试')
         }
       }
@@ -97,16 +97,17 @@ export default class Login extends React.Component<ILoginProps, any> {
     console.log('verifyCode:', this.verifyCode)
     const code = this.verifyCode
     const phone = this.phoneNumber
-    const loginRes = await login({code, phone})
+    const loginRes = await login({ code, phone })
 
     const { loginStatus, token, ...userProfile } = loginRes.data
 
-    if(loginStatus === 1){  // 成功登陆
+    if (loginStatus === 1) {
+      // 成功登陆
       sessionStorage.setItem('profile', JSON.stringify(userProfile))
       sessionStorage.setItem('login', '1')
       cookies.set('token', token)
       location.pathname = '/home'
-    }else if (loginStatus === 2) {
+    } else if (loginStatus === 2) {
       message.info('验证码已过期')
     } else if (loginStatus === 3) {
       message.info('验证码错误')
@@ -143,11 +144,11 @@ export default class Login extends React.Component<ILoginProps, any> {
         <Row gutter={[0, 36]}>
           <Col span={24}>
             <h3 className="loginSlogan">登录</h3>
-            <img src={LoginPic} className='loginImg' alt="login"></img>
+            <img src={LoginPic} className="loginImg" alt="login"></img>
           </Col>
         </Row>
-        
-        <div className='loginInputContainer'>
+
+        <div className="loginInputContainer">
           <Input
             onChange={(e: any) => this.setPhoneNumber(e.target.value)}
             placeholder="你的中国大陆手机号"

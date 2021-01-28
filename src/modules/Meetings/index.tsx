@@ -56,24 +56,28 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
 
   render() {
     return (
-      <>
+      <div className="meetingsContainer">
         {/* <div className="meetingsCalendarContainer">
           <Calendar dateCellRender={value => this.dateCellRender(value)} />
         </div> */}
-        <div className='meetingsBlockContainer'>
-          <div className='chosenTimeContainer'>
-            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已匹配完成的会议</p>
+        <div className="meetingsBlockContainer">
+          <div className="chosenTimeContainer">
+            <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
+              已匹配完成的会议
+            </p>
             <Matches />
           </div>
         </div>
 
-        <div className='meetingsBlockContainer'>
-          <div className='chosenTimeContainer'>
-            <p style={{fontSize: '18px', fontWeight: 'bold'}}>已为下周选择的时间段</p>
+        <div className="meetingsBlockContainer">
+          <div className="chosenTimeContainer">
+            <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
+              已为下周选择的时间段
+            </p>
             <Times />
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

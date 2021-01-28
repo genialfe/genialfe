@@ -48,7 +48,7 @@
   display: block;
   flex: 0 0 8.33333333%;
   max-width: 8.33333333%;
-  margin-left: 25%
+  margin-left: 25%;
 }
 
 .col-content {
@@ -57,10 +57,17 @@
   max-width: 33.33333333%;
 }
 
+.mobile-col-content {
+  width: 100%;
+}
+
 .mobileNavbar {
   display: flex;
   justify-content: center;
-  width:100%;
+  width: 100%;
+}
+.ant-list-item {
+  padding: 0 0 12px !important;
 }
 
 @media screen and (max-width: 500px) {
@@ -74,7 +81,8 @@
     display: none;
   }
 
-  .sideButton, .sideButtonSelected {
+  .sideButton,
+  .sideButtonSelected {
     margin: 0 8px;
   }
 }

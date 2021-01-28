@@ -2,6 +2,7 @@ import React from 'react'
 import { List } from 'antd'
 import Usercard from './Usercard'
 import { EHomeItemType } from '..'
+import EndCard from '../../../components/EndCard'
 
 const data = [
   {
@@ -73,6 +74,7 @@ export default class Usercardlist extends React.Component<
             )}
           />
         )}
+        {type === EHomeItemType.Connection && <EndCard />}
       </div>
     )
   }

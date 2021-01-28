@@ -8,29 +8,23 @@ import './style.less'
 @observer
 export default class ProfileWrapper extends React.Component {
   profile: IProfileProps = {
-    name: '',
-    location: '',
-    selfIntroduction: '',
-    interests: [''],
-    connections: 0
+    headImg: '',
+    interest: '',
+    introduction: '',
+    point: 5,
+    userName: ''
   }
 
-  setProfile() {
-    const name = sessionStorage.getItem('name')
-    this.profile.name = name ? name : ''
-
-    const location = sessionStorage.getItem('location')
-    this.profile.location = location ? location : ''
-
-    const selfIntroduction = sessionStorage.getItem('selfIntroduction')
-    this.profile.selfIntroduction = selfIntroduction ? selfIntroduction : ''
-
-    const interests = sessionStorage.getItem('interests')
-    this.profile.interests = interests ? JSON.parse(interests) : undefined
+  setProfile(profile: IProfileProps) {
+    this.profile = profile
   }
 
   componentDidMount() {
-    this.setProfile()
+    const rawUserProfile = sessionStorage.getItem('profile')
+    if (rawUserProfile) {
+      const { goalIds, interestIds, ...profile } = JSON.parse(rawUserProfile)
+      this.setProfile(profile)
+    }
   }
 
   constructor(props: any) {

@@ -30,13 +30,14 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
 
   async handleSendMsg(number: string) {
     const statusRes = await getUserStatus(number)
-    console.log("status", statusRes)
+    console.log('status', statusRes)
     const userStatus = statusRes.data.userStatus
-    if(userStatus === 1){
+    if (userStatus === 1) {
       message.info('已经是注册用户，请去登录')
-    }else if(userStatus === 2) {
+    } else if (userStatus === 2) {
       message.info('账号已禁用')
-    }else {   // 用户在注册中
+    } else {
+      // 用户在注册中
       const res = await sendVerificationCode({
         phone: number,
         type: 1
@@ -71,8 +72,8 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
     }
 
     return (
-      <div className='signUpContainer'>
-        <p className="slogan">开始和行业精英建立你们之间的联系吧</p>
+      <div className="signUpContainer">
+        <p className="slogan">开始和精英建立你们之间的联系吧</p>
         <p className="subSlogan">帮助你1:1精准匹配</p>
         <Search
           className="phoneNumberInput"

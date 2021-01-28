@@ -110,4 +110,3 @@ export function loginAfterRegister(phone: string) {
     method: 'POST'
   })
 }
-

@@ -10,7 +10,7 @@ export interface ILoginParam {
  * 用户登录
  */
 export function login(param: ILoginParam) {
-  const {phone, code} = param
+  const { phone, code } = param
   return fetch(`${API_PREFIX}/user/login?phone=${phone}&code=${code}`, {
     method: 'POST'
   })

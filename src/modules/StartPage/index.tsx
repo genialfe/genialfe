@@ -16,31 +16,30 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
         <div className="logoHeader">
           <p className="logoTitle">Genial</p>
         </div>
-        <div className='startPageRow' style={{marginBottom: '11em'}}>
-          <div className='col-12'>
+        <div className="startPageRow" style={{ marginBottom: '11em' }}>
+          <div className="col-12">
             <div className="signUpBlock">
               <SignUp />
             </div>
           </div>
-          <div className='col-12'>
+          <div className="col-12">
             <img className="startPageCover" src={startPageCover} alt=""></img>
           </div>
         </div>
 
-        {isMobileScreen && 
-          <div className='mobileSignUpContainer'>
+        {isMobileScreen && (
+          <div className="mobileSignUpContainer">
             <SignUp />
             <img src={startPageCover} width={330} height={250} alt=""></img>
           </div>
-        }
-        {!isMobileScreen &&
+        )}
+        {!isMobileScreen && (
           <Row gutter={[0, 68]}>
             <Col span={24}>
               <Explain />
             </Col>
           </Row>
-        }
-        
+        )}
       </>
     )
   }

@@ -40,8 +40,8 @@ export default class Home extends React.Component<IHomeProps, any> {
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return (
       <div className="homeContainer">
-        <div className='row'>
-          <div className='col-sidebar'>
+        <div className="row">
+          <div className="col-sidebar">
             <div className="sideBarContainer">
               <div
                 className={this.getButtonClassName(EHomeItemType.Explore)}
@@ -57,9 +57,8 @@ export default class Home extends React.Component<IHomeProps, any> {
               </div>
             </div>
           </div>
-          {
-            isMobileScreen &&
-            <div className='mobileNavbar'>
+          {isMobileScreen && (
+            <div className="mobileNavbar">
               <div
                 className={this.getButtonClassName(EHomeItemType.Explore)}
                 onClick={() => this.setSelectedItem(EHomeItemType.Explore)}
@@ -73,8 +72,10 @@ export default class Home extends React.Component<IHomeProps, any> {
                 联系
               </div>
             </div>
-          }
-          <div className={isMobileScreen ? '' : 'col-content'}>
+          )}
+          <div
+            className={isMobileScreen ? 'mobile-col-content' : 'col-content'}
+          >
             <div className="userListContainer">
               <Usercardlist type={this.selectedItem} />
             </div>

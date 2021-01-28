@@ -15,7 +15,7 @@ export interface IMatch {
 @observer
 export default class Matches extends React.Component<IMatchesProps, any> {
   hasNoMatch: boolean = false
-  matches: IMatch[] = []  // 根据api
+  matches: IMatch[] = [] // 根据api
 
   setMatches(matches: IMatch[]) {
     this.matches = matches
@@ -27,12 +27,13 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   async getMatches() {
     const matchRes = await getMatchesMonthly()
-    console.log("matchResL:", matchRes)
-    if(matchRes.code === 200) {
+    console.log('matchResL:', matchRes)
+    if (matchRes.code === 200) {
       const { data } = matchRes
-      if(!data.length) {  // 目前还没有匹配
+      if (!data.length) {
+        // 目前还没有匹配
         this.setHasNoMatch(true)
-      }else {
+      } else {
         this.setHasNoMatch(false)
         this.setMatches(data)
       }
@@ -52,20 +53,11 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       setHasNoMatch: action
     })
   }
-  
+
   render() {
     return (
       <div>
-        {
-          this.hasNoMatch &&
-          <Empty 
-            description={
-              <span>
-                暂时还没有匹配
-              </span>
-            }
-          />
-        }
+        {this.hasNoMatch && <Empty description={<span>暂时还没有匹配</span>} />}
       </div>
     )
   }

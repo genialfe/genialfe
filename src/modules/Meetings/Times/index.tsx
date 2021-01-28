@@ -10,33 +10,21 @@ import './style.less'
 
 const { Item } = Timeline
 
-export interface ITimesProps {
-
-}
+export interface ITimesProps {}
 
 @observer
 export default class Times extends React.Component<ITimesProps, any> {
-
   times: string[] = []
 
-  setTimes( times: string[]) {
+  setTimes(times: string[]) {
     this.times = times
   }
 
   get bookedTimes() {
-    const timesContent = this.times.map((time) => {
-      return (
-        <Item dot={<ClockCircleOutlined />}>
-          {time}
-        </Item>
-      )
+    const timesContent = this.times.map(time => {
+      return <Item dot={<ClockCircleOutlined />}>{time}</Item>
     })
-    return (
-      <Timeline>
-        {timesContent}
-      </Timeline>
-
-    )
+    return <Timeline>{timesContent}</Timeline>
   }
 
   async getAvailableTimes() {
@@ -55,7 +43,7 @@ export default class Times extends React.Component<ITimesProps, any> {
 
   constructor(props: ITimesProps) {
     super(props)
-    makeObservable(this,{
+    makeObservable(this, {
       times: observable,
       setTimes: action
     })
@@ -64,14 +52,8 @@ export default class Times extends React.Component<ITimesProps, any> {
   render() {
     return (
       <div>
-        <div className='timesContainer'>
-          {this.bookedTimes}
-        </div>
-        <Button
-          onClick={this.handleReSubmitTime}
-        >
-          修改时间
-        </Button>
+        <div className="timesContainer">{this.bookedTimes}</div>
+        <Button onClick={this.handleReSubmitTime}>修改时间</Button>
       </div>
     )
   }

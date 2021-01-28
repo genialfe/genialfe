@@ -1,7 +1,7 @@
 import { Divider } from 'antd'
 import React from 'react'
 
-import './style.css'
+import './style.less'
 
 export interface IConnectionBarProps {
   connectionNum?: number
@@ -16,8 +16,8 @@ export default class ConnectionBar extends React.Component<
     return (
       <div className="connectionContainer">
         <Divider />
+        <p className="connectionTitle">你的邀请码</p>
         <p className="connectionNum">{connectionNum}</p>
-        <p className="connectionTitle">现有联系数</p>
       </div>
     )
   }

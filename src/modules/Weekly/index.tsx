@@ -18,7 +18,7 @@ export interface IAvailableTime {
   /**
    * 几点
    */
-  hour: string 
+  hour: string
   /**
    * 格式化后的日期(YYYY-MM-DD)
    */
@@ -83,7 +83,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   // 点击每一个button 选中对应的时间段
-  handleClickTimeButton(day: string, formatDate:string, hour: string) {
+  handleClickTimeButton(day: string, formatDate: string, hour: string) {
     this.setDayHourSelectedState(day, formatDate, hour)
   }
 
@@ -101,8 +101,8 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     const times = selectedTimes.join()
     console.log('times:', times)
     const res = await setAvailableTimes(times)
-    if(res.code === 200) {
-      location.pathname = '/home'
+    if (res.code === 200) {
+      location.pathname = '/meetings'
     } else if (res.code === 401) {
       message.info('登录过期，请重新登录')
       location.pathname = '/'
@@ -114,24 +114,27 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   get timeSelectTitle() {
     const week = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
     const nextMonday = moment().startOf('isoWeek').add(1, 'week')
-    const weekdays = [{
-      date:nextMonday.format('MM月DD日'),
-      formatDate: nextMonday.format('YYYY-MM-DD')
-    }]
-    for(let i=0; i<5; i++) {  // 得到下周一至下周六的日期数组
+    const weekdays = [
+      {
+        date: nextMonday.format('MM月DD日'),
+        formatDate: nextMonday.format('YYYY-MM-DD')
+      }
+    ]
+    for (let i = 0; i < 5; i++) {
+      // 得到下周一至下周六的日期数组
       const day = nextMonday.add(1, 'days')
       const date = day.format('MM月DD日')
       const formatDate = day.format('YYYY-MM-DD')
-      weekdays.push({date, formatDate})
+      weekdays.push({ date, formatDate })
     }
     const days = weekdays.map((item, index) => {
       return {
-        day: week[index],   // 星期几
+        day: week[index], // 星期几
         date: item.date,
         formatDate: item.formatDate
       }
     })
-    console.log("days:", days)
+    console.log('days:', days)
     this.setDays(days)
 
     return (
@@ -159,7 +162,9 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
               <Col span={4}>
                 <button
                   className={this.getButtonClassName(day.date, hour)}
-                  onClick={() => this.handleClickTimeButton(day.date, day.formatDate, hour)}
+                  onClick={() =>
+                    this.handleClickTimeButton(day.date, day.formatDate, hour)
+                  }
                 >
                   {`${hour}:00`}
                 </button>
@@ -203,7 +208,6 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
           在下面的表格中选择下周你有空的时间段(最多选择七个)。
         </p>
         <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p>
-        {/* 你可以选择任意多个时间段，但是 */}
         <div className="timePickerContainer">
           {this.timeSelectTitle}
           {this.timeSelectArea}

@@ -35,19 +35,23 @@ export default class SelfIntroduction extends React.Component<
     const interestIds = sessionStorage.getItem('interestIds')!
     const userName = sessionStorage.getItem('userName')!
     const introduction = this.selfIntroduction
-    if(id) {
+    if (id) {
       const res = await register({
-        id, introduction, interest, goalIds, interestIds, userName
+        id,
+        introduction,
+        interest,
+        goalIds,
+        interestIds,
+        userName
       })
       const status = res.data.status
-      if(status === 2){
+      if (status === 2) {
         const { increCurrentStep } = this.props
         increCurrentStep()
-      }else if(status === 5){
+      } else if (status === 5) {
         message.info('注册失败，请尝试重新注册')
       }
     }
-
   }
 
   returnPreviousStep() {

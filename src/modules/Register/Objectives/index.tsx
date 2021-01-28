@@ -141,9 +141,10 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     this.currentSubStep--
   }
 
-  switchObjectiveSelected(key: number) {  // key 从1开始
-    const target = !this.items[key-1].selected
-    this.items[key-1].selected = target
+  switchObjectiveSelected(key: number) {
+    // key 从1开始
+    const target = !this.items[key - 1].selected
+    this.items[key - 1].selected = target
   }
 
   async handleSubmitObjectives() {
@@ -158,15 +159,15 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     const goalIds = ids.join()
     sessionStorage.setItem('goalIds', goalIds)
     const id = sessionStorage.getItem('id')
-    if(id) {
+    if (id) {
       const res = await register({
         goalIds,
         id
       })
-      if(res.data.status === 1) {
+      if (res.data.status === 1) {
         this.increCurrentSubStep()
       }
-    }else {
+    } else {
       message.info('出错了，请尝试重新注册')
     }
 
@@ -193,7 +194,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
               onClick={handleClickObjCard}
               key={index}
             >
-              <img src={item.src} alt={item.name} className='goalImg' />
+              <img src={item.src} alt={item.name} className="goalImg" />
               <p className="objCardDesc">{item.desc}</p>
             </div>
           </Col>

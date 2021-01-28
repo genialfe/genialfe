@@ -19,7 +19,8 @@ export interface IInterestsProps {
   returnPreviousStep: () => void
 }
 
-export interface IInterest {  // api拉取的兴趣列表
+export interface IInterest {
+  // api拉取的兴趣列表
   id: string
   interest: string
 }
@@ -40,7 +41,7 @@ export default class Interests extends React.Component<IInterestsProps, any> {
       case 'business':
         for (let i = 0; i < stateArray.length; i++) {
           if (stateArray[i]) {
-             // in order to match the api, simply change .name into .id
+            // in order to match the api, simply change .name into .id
             this.interests.push(this.business[i].interest)
             this.interestIds.push(this.business[i].id)
           }
@@ -86,7 +87,7 @@ export default class Interests extends React.Component<IInterestsProps, any> {
       id: sessionStorage.getItem('id')!
     }
     const res = await register(params)
-    if(res.data.status === 1) {
+    if (res.data.status === 1) {
       const { increStep } = this.props
       increStep()
     }
@@ -102,7 +103,7 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     const { data } = list
     this.business = data[0].list
     this.sciTech = data[1].list
-    this.social = data[2].list   
+    this.social = data[2].list
   }
 
   componentDidMount() {
