@@ -1,5 +1,4 @@
 import React from 'react'
-import { Row, Col } from 'antd'
 import { observer } from 'mobx-react'
 import { makeObservable, observable, action } from 'mobx'
 import Feedback from './Feedback'
@@ -12,7 +11,8 @@ export interface ISettingsProps {}
 export enum EMoreItemType {
   Settings = 'settings',
   QA = 'qa',
-  Feedback = 'feedback'
+  Feedback = 'feedback',
+  Mailbox = 'mailbox'
 }
 
 @observer
@@ -44,10 +44,11 @@ export default class Settings extends React.Component<ISettingsProps, any> {
   }
 
   render() {
+    const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return (
       <div className="settingsContainer">
-        <Row>
-          <Col span={2} offset={4}>
+        <div className='row'>
+          <div className='col-sidebar-settings'>
             <div className="sideBarContainer">
               <div
                 className={this.getButtonClassName(EMoreItemType.QA)}
@@ -61,18 +62,28 @@ export default class Settings extends React.Component<ISettingsProps, any> {
               >
                 反馈
               </div>
-              {/* <div 
-              className={this.getButtonClassName(EMoreItemType.Settings)}
-              onClick={() => this.setSelectedItem(EMoreItemType.Settings)}
-            >
-              设置
-            </div> */}
             </div>
-          </Col>
-          <Col span={12}>
+          </div>
+          {isMobileScreen && (
+            <div className="mobileNavbar">
+              <div
+                className={this.getButtonClassName(EMoreItemType.QA)}
+                onClick={() => this.setSelectedItem(EMoreItemType.QA)}
+              >
+                帮助
+              </div>
+              <div
+                className={this.getButtonClassName(EMoreItemType.Feedback)}
+                onClick={() => this.setSelectedItem(EMoreItemType.Feedback)}
+              >
+                反馈
+              </div>
+            </div>
+          )}
+          <div className='col-content-settings'>
             <div className="settingsContentContainer">{this.content}</div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     )
   }
