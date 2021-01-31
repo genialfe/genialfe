@@ -7,7 +7,7 @@ import { observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
 import UserAvatar from './UserAvatar'
 import UserInterests from './UserInterests'
-import ConnectionBar from './ConnectionBar'
+import ConnectionBar from './InvitationCodeBar'
 import EditProfile from './EditProfile'
 
 import './style.less'
@@ -81,7 +81,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
       point,
       ...restProps
     } = this.props
-    const pointsTootip = <span>你的积分数</span>
+    const pointsTootip = <span>我的积分数</span>
     return (
       <>
         <Card>
@@ -122,7 +122,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
                 <p className="introContent">{introduction}</p>
               </div>
               <UserInterests interests={interest} />
-              <ConnectionBar connectionNum={point} />
+              <ConnectionBar />
             </>
           )}
           {this.isEditMode && (

@@ -1,7 +1,10 @@
 import React from 'react'
 import { Calendar } from 'antd'
+import { observer } from 'mobx-react'
+import { action, makeObservable, observable } from 'mobx'
 import Times from './Times'
 import Matches from './Matches'
+import VideoCall, { IVideoCallProps } from './VideoCall'
 
 import './style.less'
 
@@ -22,8 +25,22 @@ export interface IMeeting {
   signTime: string
 }
 
+@observer
 export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
+  isVideoCallMethod: boolean = false
+  videoCallParams: IVideoCallProps = {
+    token: '',
+    channel: ''
+  }
+
+  setIsVideoCallMethod(value: boolean) {
+    this.isVideoCallMethod = value
+  }
+
+  setVideoCallParams(params: IVideoCallProps) {
+    this.videoCallParams = params
+  }
 
   getListData(value: any) {
     let listData
@@ -54,29 +71,49 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
     )
   }
 
+  constructor(props: IMeetingsProps) {
+    super(props)
+    this.setIsVideoCallMethod = this.setIsVideoCallMethod.bind(this)
+    this.setVideoCallParams = this.setVideoCallParams.bind(this)
+    makeObservable(this, {
+      isVideoCallMethod: observable,
+      videoCallParams: observable,
+      setIsVideoCallMethod: action,
+      setVideoCallParams: action
+    })
+  }
+
   render() {
     return (
       <div className="meetingsContainer">
         {/* <div className="meetingsCalendarContainer">
           <Calendar dateCellRender={value => this.dateCellRender(value)} />
         </div> */}
-        <div className="meetingsBlockContainer">
-          <div className="chosenTimeContainer">
-            <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
-              已匹配完成的会议
-            </p>
-            <Matches />
-          </div>
-        </div>
+        {!this.isVideoCallMethod && (
+          <>
+            <div className="meetingsBlockContainer">
+              <div className="chosenTimeContainer">
+                <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                  已匹配完成的会议
+                </p>
+                <Matches
+                  setIsVideoCallMethod={this.setIsVideoCallMethod}
+                  setVideoCallParams={this.setVideoCallParams}
+                />
+              </div>
+            </div>
 
-        <div className="meetingsBlockContainer">
-          <div className="chosenTimeContainer">
-            <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
-              已为下周选择的时间段
-            </p>
-            <Times />
-          </div>
-        </div>
+            <div className="meetingsBlockContainer">
+              <div className="chosenTimeContainer">
+                <p style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                  已为下周选择的时间段
+                </p>
+                <Times />
+              </div>
+            </div>
+          </>
+        )}
+        {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />}
       </div>
     )
   }

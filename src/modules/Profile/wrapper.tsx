@@ -11,7 +11,7 @@ export default class ProfileWrapper extends React.Component {
     headImg: '',
     interest: '',
     introduction: '',
-    point: 5,
+    point: 0,
     userName: ''
   }
 

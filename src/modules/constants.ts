@@ -1,1 +1,1 @@
-export const API_PREFIX = 'http://www.genial.ltd'
+export const API_PREFIX = 'https://www.genial.ltd'

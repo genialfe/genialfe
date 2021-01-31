@@ -22,7 +22,6 @@ import {
 } from './apis'
 
 import './style.less'
-import { Redirect } from 'react-router-dom'
 
 const { Step } = Steps
 const cookies = new Cookies()

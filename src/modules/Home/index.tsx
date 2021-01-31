@@ -1,7 +1,11 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { observer } from 'mobx-react'
 import { observable, action, makeObservable } from 'mobx'
-import Usercardlist from './UsercardList'
+import { message } from 'antd'
+import Usercardlist, { IUserData } from './UsercardList'
+import { getAvailableTimes } from '../Meetings/api'
+import { getMatchedUserlist, getRecommendUserlist } from './api'
 
 import './style.less'
 
@@ -15,25 +19,60 @@ export enum EHomeItemType {
 @observer
 export default class Home extends React.Component<IHomeProps, any> {
   selectedItem: EHomeItemType = EHomeItemType.Explore
+  userlist: IUserData[] = []
 
   setSelectedItem(value: EHomeItemType) {
     this.selectedItem = value
+    this.getHomeUserlist(value)
+  }
+
+  setUserlist(userlist: IUserData[]) {
+    this.userlist = userlist
   }
 
   getButtonClassName(type: EHomeItemType) {
-    if (type === this.selectedItem) {
-      return 'sideButtonSelected'
-    } else {
-      return 'sideButton'
+    return type === this.selectedItem ? 'sideButtonSelected' : 'sideButton'
+  }
+
+  async checkMeetingReserved() {
+    const res = await getAvailableTimes()
+    if (!res.data.length) {
+      // 还没预约过会议
+      message.info('请先选择下周空闲的时间段')
+      location.pathname = 'weekly'
     }
+  }
+
+  async getHomeUserlist(type: EHomeItemType) {
+    let userlist = []
+    if (type === EHomeItemType.Connection) {
+      const connectionRes = await getMatchedUserlist()
+      console.log('connectionRes:', connectionRes)
+      userlist = connectionRes.data
+    } else if (type === EHomeItemType.Explore) {
+      const exploreRes = await getRecommendUserlist()
+      console.log('exploreRes:', exploreRes)
+      userlist = exploreRes.data
+    }
+
+    this.setUserlist(userlist as IUserData[])
+  }
+
+  componentDidMount() {
+    this.getHomeUserlist(this.selectedItem)
   }
 
   constructor(props: IHomeProps) {
     super(props)
     makeObservable(this, {
       selectedItem: observable,
-      setSelectedItem: action
+      userlist: observable.ref,
+      setSelectedItem: action,
+      setUserlist: action
     })
+
+    // 查看用户是否选择过下一周的空闲时间段
+    this.checkMeetingReserved()
   }
 
   render() {
@@ -77,7 +116,7 @@ export default class Home extends React.Component<IHomeProps, any> {
             className={isMobileScreen ? 'mobile-col-content' : 'col-content'}
           >
             <div className="userListContainer">
-              <Usercardlist type={this.selectedItem} />
+              <Usercardlist type={this.selectedItem} userlist={this.userlist} />
             </div>
           </div>
         </div>

@@ -47,8 +47,8 @@ export default class Settings extends React.Component<ISettingsProps, any> {
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return (
       <div className="settingsContainer">
-        <div className='row'>
-          <div className='col-sidebar-settings'>
+        <div className="row">
+          <div className="col-sidebar-settings">
             <div className="sideBarContainer">
               <div
                 className={this.getButtonClassName(EMoreItemType.QA)}
@@ -80,7 +80,7 @@ export default class Settings extends React.Component<ISettingsProps, any> {
               </div>
             </div>
           )}
-          <div className='col-content-settings'>
+          <div className="col-content-settings">
             <div className="settingsContentContainer">{this.content}</div>
           </div>
         </div>

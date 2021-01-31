@@ -18,3 +18,12 @@ export function getMatchesMonthly() {
     method: 'GET'
   })
 }
+
+/**
+ * 通过matchId查询视频会议的token 会议channel就是matchId
+ */
+export function enterMeeting(matchId: string) {
+  return fetch(`${API_PREFIX}/mtg/join?matchId=${matchId}`, {
+    method: 'POST'
+  })
+}

@@ -13,7 +13,7 @@ const { Title, Paragraph, Link } = Typography
 export interface IUserCardProps {
   userAvatarLink: string
   userName: string
-  location: string
+  matchSource: string
   userDetails: string
   type?: EHomeItemType
 }
@@ -46,7 +46,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
   }
 
   render() {
-    const { userAvatarLink, userName, location, userDetails } = this.props
+    const { userAvatarLink, userName, matchSource, userDetails } = this.props
 
     return (
       <div>
@@ -54,7 +54,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
           <Meta
             avatar={<Avatar size="large" src={userAvatarLink} />}
             title={userName}
-            description={location}
+            description={matchSource}
             className="cardMeta"
           />
           <Typography style={{ marginTop: 16 }}>
