@@ -3,18 +3,18 @@ import { Row, Col, Button, message } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { IObjCardItem, IObjectives } from '../model'
-import Advice from '../../../static/objectives/advice.svg'
-import Brainstorm from '../../../static/objectives/brainstorm.svg'
-import Business from '../../../static/objectives/business.svg'
-import Cofounder from '../../../static/objectives/cofounder.svg'
-import ExploreCompanies from '../../../static/objectives/exploreCompanies.svg'
-import ExploreProjects from '../../../static/objectives/exploreProjects.svg'
-import Funding from '../../../static/objectives/funding.svg'
-import Invest from '../../../static/objectives/invest.svg'
-import MeetPeople from '../../../static/objectives/meetPeople.svg'
-import Mentor from '../../../static/objectives/mentor.svg'
-import StartCompany from '../../../static/objectives/startCompany.svg'
-import Team from '../../../static/objectives/team.svg'
+import Advice from '../../../static/goals/advice.svg'
+import Brainstorm from '../../../static/goals/brainstorm.svg'
+import Business from '../../../static/goals/business.svg'
+import Cofounder from '../../../static/goals/cofounder.svg'
+import ExploreCompanies from '../../../static/goals/exploreCompanies.svg'
+import ExploreProjects from '../../../static/goals/exploreProjects.svg'
+import Funding from '../../../static/goals/funding.svg'
+import Invest from '../../../static/goals/invest.svg'
+import MeetPeople from '../../../static/goals/meetPeople.svg'
+import Mentor from '../../../static/goals/mentor.svg'
+import StartCompany from '../../../static/goals/startCompany.svg'
+import Team from '../../../static/goals/team.svg'
 import Interests from '../Interests'
 import SelfIntroduction from '../SelfIntroduction'
 import { getObjectivesList, register } from '../apis'
@@ -62,7 +62,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       key: 4,
       name: 'cofounder',
       src: Cofounder,
-      desc: '寻找联合创始人',
+      desc: '寻找合作伙伴',
       selected: false
     },
     {

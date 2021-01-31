@@ -81,6 +81,7 @@ export default class Usercardlist extends React.Component<
             </List.Item>
           )}
         />
+        <EndCard />
         {/* {type === EHomeItemType.Connection && <EndCard />} */}
       </div>
     )

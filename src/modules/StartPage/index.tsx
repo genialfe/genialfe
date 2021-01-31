@@ -16,7 +16,7 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
         <div className="logoHeader">
           <p className="logoTitle">Genial</p>
         </div>
-        <div className="startPageRow" style={{ marginBottom: '11em' }}>
+        <div className="startPageRow" style={{ marginBottom: '16em' }}>
           <div className="col-12">
             <div className="signUpBlock">
               <SignUp />

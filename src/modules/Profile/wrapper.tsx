@@ -1,7 +1,9 @@
+import { message } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
 import Profile, { IProfileProps } from '.'
+import { getUserProfile } from './api'
 
 import './style.less'
 
@@ -19,12 +21,19 @@ export default class ProfileWrapper extends React.Component {
     this.profile = profile
   }
 
-  componentDidMount() {
-    const rawUserProfile = sessionStorage.getItem('profile')
-    if (rawUserProfile) {
-      const { goalIds, interestIds, ...profile } = JSON.parse(rawUserProfile)
+  async getProfile() {
+    const profileRes = await getUserProfile()
+    if(profileRes.code === 200) {
+      const { data } = profileRes
+      const { goalIds, interestIds, ...profile} = data
       this.setProfile(profile)
+    }else {
+      message.info('出错了')
     }
+  }
+
+  componentDidMount() {
+    this.getProfile()
   }
 
   constructor(props: any) {

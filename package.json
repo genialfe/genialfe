@@ -21,6 +21,7 @@
     "@types/styled-components": "^5.1.7",
     "agora-rtc-sdk-ng": "^4.3.0",
     "antd": "^4.9.1",
+    "antd-img-crop": "^3.13.2",
     "craco-less": "^1.17.1",
     "lodash": "^4.17.20",
     "mobx": "^6.0.4",

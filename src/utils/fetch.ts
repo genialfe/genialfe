@@ -16,7 +16,7 @@ export enum EFetchType {
 export function getFetchHeaders() {
   const token = cookies.get('token')
   return {
-    'content-type': 'application/json',
+    // 'content-type': 'application/json',
     Authorization: token ? token : '',
     'X-Csrf-Token': localStorage.getItem('X-Csrf-Token') || ''
   }

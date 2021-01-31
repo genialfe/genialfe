@@ -40,6 +40,7 @@ export interface IProfileProps {
 @observer
 export default class Profile extends React.Component<IProfileProps, any> {
   isEditMode: boolean = false
+  // profile: 
 
   setEditMode(value: boolean) {
     this.isEditMode = value

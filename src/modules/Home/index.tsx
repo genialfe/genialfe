@@ -2,7 +2,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { observable, action, makeObservable } from 'mobx'
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 import Usercardlist, { IUserData } from './UsercardList'
 import { getAvailableTimes } from '../Meetings/api'
 import { getMatchedUserlist, getRecommendUserlist } from './api'
@@ -20,6 +20,7 @@ export enum EHomeItemType {
 export default class Home extends React.Component<IHomeProps, any> {
   selectedItem: EHomeItemType = EHomeItemType.Explore
   userlist: IUserData[] = []
+  isLoading: boolean = true
 
   setSelectedItem(value: EHomeItemType) {
     this.selectedItem = value
@@ -28,6 +29,10 @@ export default class Home extends React.Component<IHomeProps, any> {
 
   setUserlist(userlist: IUserData[]) {
     this.userlist = userlist
+  }
+
+  setIsLoading(value: boolean) {
+    this.isLoading = value
   }
 
   getButtonClassName(type: EHomeItemType) {
@@ -44,18 +49,17 @@ export default class Home extends React.Component<IHomeProps, any> {
   }
 
   async getHomeUserlist(type: EHomeItemType) {
-    let userlist = []
-    if (type === EHomeItemType.Connection) {
-      const connectionRes = await getMatchedUserlist()
-      console.log('connectionRes:', connectionRes)
-      userlist = connectionRes.data
-    } else if (type === EHomeItemType.Explore) {
-      const exploreRes = await getRecommendUserlist()
-      console.log('exploreRes:', exploreRes)
-      userlist = exploreRes.data
+    if(type === EHomeItemType.Explore) {
+      const matchRes = await getMatchedUserlist()
+      const matchUserlist = matchRes.data
+      const recommendRes = await getRecommendUserlist()
+      const recommendUserlist = recommendRes.data
+      this.setUserlist([...recommendUserlist, ...matchUserlist])
+      this.setIsLoading(false)
+    }else {
+      this.setUserlist([])
     }
 
-    this.setUserlist(userlist as IUserData[])
   }
 
   componentDidMount() {
@@ -67,8 +71,10 @@ export default class Home extends React.Component<IHomeProps, any> {
     makeObservable(this, {
       selectedItem: observable,
       userlist: observable.ref,
+      isLoading: observable,
       setSelectedItem: action,
-      setUserlist: action
+      setUserlist: action,
+      setIsLoading: action
     })
 
     // 查看用户是否选择过下一周的空闲时间段
@@ -116,6 +122,10 @@ export default class Home extends React.Component<IHomeProps, any> {
             className={isMobileScreen ? 'mobile-col-content' : 'col-content'}
           >
             <div className="userListContainer">
+              {
+                this.isLoading &&
+                <Spin style={{marginLeft: '50%'}}/>
+              }
               <Usercardlist type={this.selectedItem} userlist={this.userlist} />
             </div>
           </div>
