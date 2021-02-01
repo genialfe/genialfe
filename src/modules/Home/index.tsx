@@ -49,17 +49,16 @@ export default class Home extends React.Component<IHomeProps, any> {
   }
 
   async getHomeUserlist(type: EHomeItemType) {
-    if(type === EHomeItemType.Explore) {
+    if (type === EHomeItemType.Explore) {
       const matchRes = await getMatchedUserlist()
       const matchUserlist = matchRes.data
       const recommendRes = await getRecommendUserlist()
       const recommendUserlist = recommendRes.data
       this.setUserlist([...recommendUserlist, ...matchUserlist])
       this.setIsLoading(false)
-    }else {
+    } else {
       this.setUserlist([])
     }
-
   }
 
   componentDidMount() {
@@ -122,10 +121,7 @@ export default class Home extends React.Component<IHomeProps, any> {
             className={isMobileScreen ? 'mobile-col-content' : 'col-content'}
           >
             <div className="userListContainer">
-              {
-                this.isLoading &&
-                <Spin style={{marginLeft: '50%'}}/>
-              }
+              {this.isLoading && <Spin style={{ marginLeft: '50%' }} />}
               <Usercardlist type={this.selectedItem} userlist={this.userlist} />
             </div>
           </div>

@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import { Button, Timeline } from 'antd'
+import { Button, Empty, Timeline } from 'antd'
 import { makeObservable, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
@@ -50,10 +50,19 @@ export default class Times extends React.Component<ITimesProps, any> {
   }
 
   render() {
+    const noTime = this.times.length === 0
     return (
       <div>
-        <div className="timesContainer">{this.bookedTimes}</div>
-        <Button onClick={this.handleReSubmitTime}>修改时间</Button>
+        {!noTime && <div className="timesContainer">{this.bookedTimes}</div>}
+        {noTime && <Empty description={<span>没有为下周选择时间段</span>} />}
+
+        <Button
+          onClick={this.handleReSubmitTime}
+          block
+          style={{ marginTop: '10px' }}
+        >
+          {noTime ? '添加时间' : '修改时间'}
+        </Button>
       </div>
     )
   }

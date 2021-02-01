@@ -23,11 +23,11 @@ export default class ProfileWrapper extends React.Component {
 
   async getProfile() {
     const profileRes = await getUserProfile()
-    if(profileRes.code === 200) {
+    if (profileRes.code === 200) {
       const { data } = profileRes
-      const { goalIds, interestIds, ...profile} = data
+      const { goalIds, interestIds, ...profile } = data
       this.setProfile(profile)
-    }else {
+    } else {
       message.info('出错了')
     }
   }

@@ -1,37 +1,35 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Button, Row, Col, Upload, message } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
-import Cookies from 'universal-cookie'
-import { getUserProfile } from '../api'
-import { API_PREFIX } from '../../constants'
+import { editUserProfile, uploadUserAvatar } from '../api'
+import { IProfileProps } from '..'
 
 import './style.less'
 
-const cookies = new Cookies()
-
-export interface IEditProfileProps {
+export interface IEditProfileProps extends IProfileProps {
   onFinishEditting: (value: boolean) => void
 }
 
 function beforeUploadAvatar(file: any) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
   if (!isJpgOrPng) {
-    message.error('只能上传JPG/PNG格式的文件');
+    message.error('只能上传JPG/PNG格式的文件')
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt2M = file.size / 1024 / 1024 < 2
   if (!isLt2M) {
-    message.error('图片大小应小于2MB');
+    message.error('图片大小应小于2MB')
   }
-  return isJpgOrPng && isLt2M;
+  return isJpgOrPng && isLt2M
 }
 
 function getBase64(img: any, callback: (imgUrl: any) => void) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
 }
 
 @observer
@@ -41,8 +39,9 @@ export default class EditProfile extends React.Component<
 > {
   isLoading: boolean = false
   imgUrl?: string
+  ossUrl: string = ''
   userName: string = ''
-  selfIntroduction: string = ''
+  introduction: string = ''
 
   setIsLoading(value: boolean) {
     this.isLoading = value
@@ -52,12 +51,37 @@ export default class EditProfile extends React.Component<
     this.imgUrl = url
   }
 
-  handleSubmitProfile() {
-    // send request here
+  setOssUrl(url: string) {
+    this.ossUrl = url
+  }
 
-    const { onFinishEditting } = this.props
-    // 结束编辑后 把是否在编辑模式 设置为false
-    onFinishEditting(false)
+  setUserName(name: string) {
+    this.userName = name
+  }
+
+  setIntroduction(introduction: string) {
+    this.introduction = introduction
+  }
+
+  async handleSubmitProfile() {
+    const params = this.ossUrl.length ? {
+      headImg: this.ossUrl,
+      userName: this.userName,
+      introduction: this.introduction
+    } : {
+      userName: this.userName,
+      introduction: this.introduction
+    }
+
+    const editProfileRes = await editUserProfile(params)
+
+    if(editProfileRes.code === 200) {
+      const { onFinishEditting } = this.props
+      onFinishEditting(false)
+      location.reload()
+    } else {
+      message.info('出错了，请刷新重试')
+    }    
   }
 
   handleCancelEdit() {
@@ -72,27 +96,17 @@ export default class EditProfile extends React.Component<
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imgUrl) => {
+      getBase64(info.file.originFileObj, imgUrl => {
         this.setImgUrl(imgUrl)
         this.setIsLoading(false)
       })
     }
-  };
-
-  async getUserProfile() {
-    const profileRes = await getUserProfile()
-    console.log("profile:", profileRes)
-  }
-
-  get avatarUploadHeaders() {
-    const token = cookies.get('token')
-    return {
-      Authorization: token ? token : '',
-    }
   }
 
   componentDidMount() {
-    this.getUserProfile()
+    const { userName, introduction } = this.props
+    this.setIntroduction(introduction)
+    this.setUserName(userName)
   }
 
   constructor(props: IEditProfileProps) {
@@ -100,20 +114,44 @@ export default class EditProfile extends React.Component<
     makeObservable(this, {
       imgUrl: observable,
       userName: observable,
-      selfIntroduction: observable,
+      introduction: observable,
       isLoading: observable,
+      ossUrl: observable,
       setIsLoading: action,
-      setImgUrl: action
+      setImgUrl: action,
+      setUserName: action,
+      setIntroduction: action,
+      setOssUrl: action
     })
   }
 
   render() {
+    const { userName, introduction } = this.props
     const uploadButton = (
       <div>
         {this.isLoading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div style={{ marginTop: 8 }}>上传头像</div>
+        <div style={{ marginTop: 8 }}>换新头像</div>
       </div>
-    );
+    )
+
+    // 处理上传头像请求
+    const uploadAvatar = async (options: any) => {
+      const { file, onSuccess, onError } = options
+      const formData = new FormData()
+      formData.append('file', file)
+      try {
+        const avatarRes = await uploadUserAvatar(formData)
+        console.log('urL:', avatarRes.data)
+        onSuccess('Ok')
+        if (avatarRes.code === 200) {
+          this.setOssUrl(avatarRes.data)
+        }
+      } catch (err) {
+        console.log('upload avatar error: ', err)
+        onError({ err })
+      }
+    }
+
     return (
       <div className="editContainer">
         <div className="avatar">
@@ -123,12 +161,15 @@ export default class EditProfile extends React.Component<
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={false}
-              action={`${API_PREFIX}/info/head`}
-              headers={this.avatarUploadHeaders}
               beforeUpload={beforeUploadAvatar}
               onChange={this.handleAvatarChange}
+              customRequest={uploadAvatar}
             >
-              {this.imgUrl ? <img src={this.imgUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+              {this.imgUrl ? (
+                <img src={this.imgUrl} alt="avatar" style={{ width: '100%' }} />
+              ) : (
+                uploadButton
+              )}
             </Upload>
           </ImgCrop>
         </div>
@@ -136,13 +177,22 @@ export default class EditProfile extends React.Component<
           <Row gutter={[16, 16]}>
             <Col span={12}>
               <p className="inputTitle">姓名</p>
-              <input className="input" />
+              <input
+                className="input"
+                defaultValue={userName}
+                onChange={(e: any) => this.setUserName(e.target.value)}
+              />
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               <p className="inputTitle">自我介绍</p>
-              <textarea className="textAreaInput" rows={6} />
+              <textarea
+                className="textAreaInput"
+                rows={6}
+                defaultValue={introduction}
+                onChange={(e: any) => this.setIntroduction(e.target.value)}
+              />
             </Col>
           </Row>
         </div>

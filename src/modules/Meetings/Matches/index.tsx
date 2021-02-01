@@ -98,17 +98,27 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       return (
         <Timeline.Item color="green" dot={<CheckCircleOutlined />}>
           <div className="matchCard">
-            <div style={{ margin: '1em' }}>
-              <span>时间：{item.signTime}</span>
-              <br />
-              <span>会议id：{item.matchId}</span>
-              <Button
-                type="link"
-                style={{ float: 'right' }}
-                onClick={() => this.handleEnterMeeting(item.matchId)}
-              >
-                加入会议
-              </Button>
+            <div
+              style={{
+                margin: '1em',
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div>
+                <span>时间：{item.signTime}</span>
+                <br />
+                <span>会议id：{item.matchId}</span>
+              </div>
+              <div>
+                <Button
+                  type="link"
+                  style={{ float: 'right', height: '100%' }}
+                  onClick={() => this.handleEnterMeeting(item.matchId)}
+                >
+                  加入会议
+                </Button>
+              </div>
             </div>
           </div>
         </Timeline.Item>

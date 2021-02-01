@@ -203,7 +203,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   render() {
     return (
       <div className="weeklyContainer">
-        <p className="weeklyTitle">为你的会议安排时间</p>
+        <p className="weeklyTitle">为你下周的会议安排时间</p>
         <p className="weeklyExp">
           在下面的表格中选择下周你有空的时间段(最多选择七个)。
         </p>

@@ -14,6 +14,8 @@ import './style.less'
 
 const cookies = new Cookies()
 
+// be careful there is wrapper file for profile component
+
 export interface IProfileProps {
   /**
    * 头像url
@@ -40,7 +42,6 @@ export interface IProfileProps {
 @observer
 export default class Profile extends React.Component<IProfileProps, any> {
   isEditMode: boolean = false
-  // profile: 
 
   setEditMode(value: boolean) {
     this.isEditMode = value
@@ -74,14 +75,8 @@ export default class Profile extends React.Component<IProfileProps, any> {
   }
 
   render() {
-    const {
-      userName,
-      introduction,
-      interest,
-      headImg,
-      point,
-      ...restProps
-    } = this.props
+    const { userName, introduction, interest, headImg, point } = this.props
+    console.log("headIMg:", headImg)
     const pointsTootip = <span>我的积分数</span>
     return (
       <>
@@ -127,7 +122,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
             </>
           )}
           {this.isEditMode && (
-            <EditProfile onFinishEditting={this.setEditMode} />
+            <EditProfile onFinishEditting={this.setEditMode} {...this.props} />
           )}
         </Card>
       </>

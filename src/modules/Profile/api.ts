@@ -1,5 +1,8 @@
 import { API_PREFIX } from '../constants'
 import fetch from '../../utils/fetch'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 /**
  * 生成邀请码
@@ -19,13 +22,12 @@ export function getInvitationCode() {
   })
 }
 
-
 /**
  * 获取用户信息
  */
 export function getUserProfile() {
   return fetch(`${API_PREFIX}/info/detail`, {
-    method: 'GET',
+    method: 'GET'
   })
 }
 
@@ -38,33 +40,51 @@ export interface IBasicUserInfo {
 
 /**
  * 编辑用户信息
- * @param params 
+ * @param params
  */
 export function editUserProfile(params: IBasicUserInfo) {
+  const token = cookies.get('token')
   return fetch(`${API_PREFIX}/info/edit`, {
     method: 'POST',
-    body: JSON.stringify(params)
+    body: JSON.stringify(params),
+    headers: {
+      'content-type': 'application/json',
+      Authorization: token ? token : '',
+    }
   })
 }
 
 /**
  * 编辑用户目标
- * @param goalIds 
+ * @param goalIds
  */
 export function editUserGoals(goalIds: string) {
   return fetch(`${API_PREFIX}/info/goal?goalIds=${goalIds}`, {
-    method: 'POST',
+    method: 'POST'
   })
 }
 
 /**
  * 编辑用户兴趣
- * @param interest 
- * @param interestIds 
+ * @param interest
+ * @param interestIds
  */
 export function editUserInterests(interest: string, interestIds: string) {
-  return fetch(`${API_PREFIX}/info/interest?interest=${interest}&interestIds=${interestIds}`, {
+  return fetch(
+    `${API_PREFIX}/info/interest?interest=${interest}&interestIds=${interestIds}`,
+    {
+      method: 'POST'
+    }
+  )
+}
+
+/**
+ * 上传用户头像
+ */
+export function uploadUserAvatar(imgFile: FormData) {
+  return fetch(`${API_PREFIX}/info/head`, {
     method: 'POST',
+    body: imgFile
   })
 }
 
