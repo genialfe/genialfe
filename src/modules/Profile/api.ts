@@ -49,7 +49,7 @@ export function editUserProfile(params: IBasicUserInfo) {
     body: JSON.stringify(params),
     headers: {
       'content-type': 'application/json',
-      Authorization: token ? token : '',
+      Authorization: token ? token : ''
     }
   })
 }

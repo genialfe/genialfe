@@ -37,6 +37,8 @@ export interface IProfileProps {
    * 用户姓名
    */
   userName: string
+  goalIds: string
+  interestIds: string
 }
 
 @observer
@@ -75,8 +77,15 @@ export default class Profile extends React.Component<IProfileProps, any> {
   }
 
   render() {
-    const { userName, introduction, interest, headImg, point } = this.props
-    console.log("headIMg:", headImg)
+    const {
+      userName,
+      introduction,
+      interest,
+      headImg,
+      point,
+      interestIds,
+      goalIds
+    } = this.props
     const pointsTootip = <span>我的积分数</span>
     return (
       <>
@@ -89,11 +98,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
               <UserAvatar avatarUrl={headImg} />
               <div style={{ textAlign: 'center' }}>
                 <p style={{ fontSize: '16px', color: '#5b5b5b' }}>{userName}</p>
-                <Tooltip
-                  placement="right"
-                  title={pointsTootip}
-                  color="rgb(71, 168, 165)"
-                >
+                <Tooltip placement="right" title={pointsTootip}>
                   <div className="pointsContainer">
                     <p className="pointsNumber">{point}</p>
                     <svg
@@ -117,7 +122,11 @@ export default class Profile extends React.Component<IProfileProps, any> {
                 <p className="introTitle">简介</p>
                 <p className="introContent">{introduction}</p>
               </div>
-              <UserInterests interests={interest} />
+              <UserInterests
+                interests={interest}
+                interestsIds={interestIds}
+                goalIds={goalIds}
+              />
               <ConnectionBar />
             </>
           )}

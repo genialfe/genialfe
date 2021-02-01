@@ -64,24 +64,26 @@ export default class EditProfile extends React.Component<
   }
 
   async handleSubmitProfile() {
-    const params = this.ossUrl.length ? {
-      headImg: this.ossUrl,
-      userName: this.userName,
-      introduction: this.introduction
-    } : {
-      userName: this.userName,
-      introduction: this.introduction
-    }
+    const params = this.ossUrl.length
+      ? {
+          headImg: this.ossUrl,
+          userName: this.userName,
+          introduction: this.introduction
+        }
+      : {
+          userName: this.userName,
+          introduction: this.introduction
+        }
 
     const editProfileRes = await editUserProfile(params)
 
-    if(editProfileRes.code === 200) {
+    if (editProfileRes.code === 200) {
       const { onFinishEditting } = this.props
       onFinishEditting(false)
       location.reload()
     } else {
       message.info('出错了，请刷新重试')
-    }    
+    }
   }
 
   handleCancelEdit() {

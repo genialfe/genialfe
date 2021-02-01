@@ -14,7 +14,9 @@ export default class ProfileWrapper extends React.Component {
     interest: '',
     introduction: '',
     point: 0,
-    userName: ''
+    userName: '',
+    goalIds: '',
+    interestIds: ''
   }
 
   setProfile(profile: IProfileProps) {
@@ -25,8 +27,7 @@ export default class ProfileWrapper extends React.Component {
     const profileRes = await getUserProfile()
     if (profileRes.code === 200) {
       const { data } = profileRes
-      const { goalIds, interestIds, ...profile } = data
-      this.setProfile(profile)
+      this.setProfile(data)
     } else {
       message.info('出错了')
     }
