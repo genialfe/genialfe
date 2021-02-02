@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
 import Login from './modules/Login'
 import Register from './modules/Register'
 import MainApp from './modules/MainApp'
+import BlockPage from './modules/BlockPage'
 
 export interface IAppProps {}
 
@@ -20,6 +21,7 @@ export default class App extends React.Component<IAppProps, any> {
         <Router>
           <Route path="/" exact component={StartPage} />
           <Route path="/login" component={Login} />
+          <Route path="/oops" component={BlockPage} />
           <Route path="/register">
             {submittedPhoneNumber ? <Register /> : <Redirect to="/" />}
           </Route>

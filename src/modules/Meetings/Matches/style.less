@@ -4,3 +4,26 @@
   border-width: 1px;
   border-color: #dadcec;
 }
+
+.matchesContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em,
+}
+
+.enterMeetingButton {
+  float: right;
+  height: 100% !important;
+}
+
+@media screen and (max-width: 500px) {
+  .matchesContainer {
+    display: block;
+  }
+
+  .enterMeetingButton {
+    height: 100% !important;
+    margin-left: 25%;
+    float: none;
+  }
+}

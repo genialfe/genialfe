@@ -86,13 +86,6 @@ export default class Matches extends React.Component<IMatchesProps, any> {
         message.info('出错了：丢失视频通话token')
       }
     }
-
-    setVideoCallParams({
-      channel: matchId,
-      token: meetingToken,
-      appid: this.agoraAppId
-    })
-    setIsVideoCallMethod(true)
   }
 
   get matchesContent() {
@@ -101,11 +94,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
         <Timeline.Item color="green" dot={<CheckCircleOutlined />}>
           <div className="matchCard">
             <div
-              style={{
-                margin: '1em',
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
+              className='matchesContainer'
             >
               <div>
                 <span>时间：{item.signTime}</span>
@@ -115,7 +104,8 @@ export default class Matches extends React.Component<IMatchesProps, any> {
               <div>
                 <Button
                   type="link"
-                  style={{ float: 'right', height: '100%' }}
+                  className='enterMeetingButton'
+                  // style={{ float: 'right', height: '100%' }}
                   onClick={() => this.handleEnterMeeting(item.matchId)}
                 >
                   加入会议

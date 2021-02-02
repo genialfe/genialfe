@@ -8,7 +8,7 @@ import { getInterestsList } from '../../Register/apis'
 import { IInterest } from '../../Register/Interests'
 
 import './style.less'
-import { editUserInterests, getUserProfile } from '../api'
+import { editUserInterests } from '../api'
 
 const { Option } = Select
 
@@ -68,7 +68,7 @@ export default class UserInterests extends React.Component<
       this.setConfirmLoading(false)
       location.reload()
     } else {
-      message.info('请至少选择一项')
+      message.info('请至少修改或选择一项')
       this.setConfirmLoading(false)
     }
   }
@@ -171,6 +171,8 @@ export default class UserInterests extends React.Component<
           onOk={() => this.handleSubmitModalData()}
           confirmLoading={this.confirmLoading}
           onCancel={() => this.handleCancel()}
+          cancelText='取消'
+          okText='提交'
           title="修改我的兴趣"
         >
           <p className="introTitle">兴趣</p>

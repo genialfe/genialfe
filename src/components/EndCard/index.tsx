@@ -12,7 +12,14 @@ export default class EndCard extends React.Component {
           </p>
           <p>对于如何改进Genial有什么意见或建议吗？</p>
           <button className="feedbackBtn">
-            <p style={{ color: '#333366', margin: 0 }}>提供反馈</p>
+            <p style={{ color: '#333366', margin: 0 }}>
+              <a
+                href="mailto:simonmmm@126.com?cc=zhouhoushu@126.com"
+                rel="nofollow"
+              >
+                提供反馈
+              </a>
+            </p>
           </button>
         </div>
       </div>

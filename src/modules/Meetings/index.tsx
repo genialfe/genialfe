@@ -28,7 +28,7 @@ export interface IMeeting {
 @observer
 export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
-  isVideoCallMethod: boolean = true
+  isVideoCallMethod: boolean = false
   videoCallParams: IVideoCallProps = {
     token: '',
     channel: '',
@@ -121,6 +121,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
           </>
         )}
         {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />}
+        {/* {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />} */}
       </div>
     )
   }

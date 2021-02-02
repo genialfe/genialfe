@@ -87,6 +87,10 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     this.setDayHourSelectedState(day, formatDate, hour)
   }
 
+  handleSkipThisWeek() {
+    location.pathname = '/meetings'
+  }
+
   getButtonClassName(day: string, hour: string) {
     const isButtonSelected = this.selectedTimeMap.some(item => {
       return item.date === day && item.hour === hour
@@ -177,13 +181,14 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   get submitButton() {
+    const hasSelectedTime = (this.selectedTimeMap.length !== 0)
     return (
       <Button
         type="primary"
         size="large"
-        onClick={() => this.handleSubmitTime()}
+        onClick={() => {hasSelectedTime ? this.handleSubmitTime() : this.handleSkipThisWeek() } }
       >
-        {this.selectedTimeMap.length ? '提交' : '跳过这周'}
+        {hasSelectedTime ? '提交' : '跳过这周'}
       </Button>
     )
   }

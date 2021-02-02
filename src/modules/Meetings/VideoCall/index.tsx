@@ -1,8 +1,14 @@
+/* eslint-disable no-restricted-globals */
 import React, { useReducer, useState } from 'react'
-import { Button, message } from 'antd'
+import { Button, message, Collapse } from 'antd'
+import { PlusCircleTwoTone, PauseCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
 import StreamPlayer from 'agora-stream-player'
 import { useMediaStream } from './hooks'
 import AgoraRTC from './utils/AgoraEnhancer'
+
+import './style.less'
+
+const { Panel } = Collapse
 
 export interface IVideoCallProps {
   /**
@@ -103,9 +109,9 @@ function App(props: IVideoCallProps) {
       await agoraClient.leave()
       setIsPublished(false)
       setisJoined(false)
-      message.info('离开频道')
+      message.info('断开连接')
     } catch (err) {
-      message.error(`离开频道失败, 错误：${err}`)
+      message.error(`失败, 错误：${err}`)
     } finally {
       setIsLoading(false)
     }
@@ -153,7 +159,7 @@ function App(props: IVideoCallProps) {
       // Set the state appropriately
       setIsPublished(true)
       setisJoined(true)
-      message.info(`加入会议${state.channel}`)
+      message.info(`加入会议${channel}`)
     } catch (err) {
       message.info(`加入会议失败，错误：${err}`)
     } finally {
@@ -189,6 +195,10 @@ function App(props: IVideoCallProps) {
     }
   }
 
+  const leaveRoom = () => {
+    location.pathname = '/meetings'
+  }
+
   const JoinLeaveBtn = () => {
     return (
       <Button
@@ -199,7 +209,7 @@ function App(props: IVideoCallProps) {
         disabled={isLoading}
         style={{ margin: '0 12px' }}
       >
-        {isJoined ? '离开会议' : '加入会议'}
+        {isJoined ? '断开连接' : '加入会议'}
       </Button>
     )
   }
@@ -209,11 +219,21 @@ function App(props: IVideoCallProps) {
       <Button
         color={isPublished ? 'secondary' : 'default'}
         onClick={isPublished ? unpublish : publish}
-        // variant="contained"
         disabled={!isJoined || isLoading}
         style={{ margin: '0 12px' }}
       >
         {isPublished ? '暂停接入' : '恢复接入'}
+      </Button>
+    )
+  }
+
+  const LeaveButton = () => {
+    return (
+      <Button
+        onClick={leaveRoom}
+        style={{ margin: '0 12px' }}
+      >
+        完全离开
       </Button>
     )
   }
@@ -223,8 +243,21 @@ function App(props: IVideoCallProps) {
       <div style={{ textAlign: 'center', margin: '26px auto' }}>
         <JoinLeaveBtn />
         <PubUnpubBtn />
+        <LeaveButton />
+        
+        <div className='explainContainer'>
+          <Collapse defaultActiveKey='1'>
+            <Panel header="使用说明" key="1" style={{textAlign: 'start'}}>
+              <p><PlusCircleTwoTone twoToneColor='#52c41a' /> 点击加入会议按钮，并允许浏览器使用摄像头和麦克风，即可加入视频会议。</p>
+              <p><PauseCircleTwoTone /> 点击暂停接入按钮，你的视频和音频就会暂时不会被对方看到和听到。</p>
+              <p><CloseCircleTwoTone twoToneColor='#eb2f96' /> 会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。</p>
+              <p>双方都接入后，就开始和你的匹配对象打一声招呼吧！</p>
+            </Panel>
+          </Collapse>
+
+        </div>
       </div>
-      <div style={{ display: 'flex', height: '200px' }}>
+      <div className='videoMeetingContainer'>
         <div style={{ width: '50%' }}>
           {localStream && (
             <StreamPlayer stream={localStream} fit="contain" label="local" />
@@ -236,7 +269,7 @@ function App(props: IVideoCallProps) {
               key={stream.getId()}
               stream={stream}
               fit="contain"
-              label={stream.getId()}
+              label='remote'
             />
           ))}
         </div>

@@ -37,6 +37,7 @@ export default class InvitationCodeBar extends React.Component<
 
   async getInvitationCode() {
     const res = await getInvitationCode()
+    console.log("res:", res)
     const data = res.data
     if (data) {
       const { status, invitationUrl } = data
@@ -67,7 +68,6 @@ export default class InvitationCodeBar extends React.Component<
   }
 
   render() {
-    // const { connectionNum } = this.props
     return (
       <div className="connectionContainer">
         <Divider />
