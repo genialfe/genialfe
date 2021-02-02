@@ -3,14 +3,12 @@ import React from 'react'
 import { Row, Col } from 'antd'
 import LoginPic from '../../static/cities-graphic.svg'
 
-
 export default class BlockPage extends React.Component {
   redirectToStartPage() {
     location.pathname = '/'
   }
 
   render() {
-
     return (
       <div className="loginContainer">
         <Row gutter={[0, 36]}>

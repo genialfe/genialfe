@@ -179,12 +179,14 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   get submitButton() {
-    const hasSelectedTime = (this.selectedTimeMap.length !== 0)
+    const hasSelectedTime = this.selectedTimeMap.length !== 0
     return (
       <Button
         type="primary"
         size="large"
-        onClick={() => {hasSelectedTime ? this.handleSubmitTime() : this.handleSkipThisWeek() } }
+        onClick={() => {
+          hasSelectedTime ? this.handleSubmitTime() : this.handleSkipThisWeek()
+        }}
       >
         {hasSelectedTime ? '提交' : '跳过这周'}
       </Button>

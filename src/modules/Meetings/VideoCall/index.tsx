@@ -1,7 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import React, { useReducer, useState } from 'react'
 import { Button, message, Collapse } from 'antd'
-import { PlusCircleTwoTone, PauseCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
+import {
+  PlusCircleTwoTone,
+  PauseCircleTwoTone,
+  CloseCircleTwoTone
+} from '@ant-design/icons'
 import StreamPlayer from 'agora-stream-player'
 import { useMediaStream } from './hooks'
 import AgoraRTC from './utils/AgoraEnhancer'
@@ -229,10 +233,7 @@ function App(props: IVideoCallProps) {
 
   const LeaveButton = () => {
     return (
-      <Button
-        onClick={leaveRoom}
-        style={{ margin: '0 12px' }}
-      >
+      <Button onClick={leaveRoom} style={{ margin: '0 12px' }}>
         完全离开
       </Button>
     )
@@ -244,20 +245,28 @@ function App(props: IVideoCallProps) {
         <JoinLeaveBtn />
         <PubUnpubBtn />
         <LeaveButton />
-        
-        <div className='explainContainer'>
-          <Collapse defaultActiveKey='1'>
-            <Panel header="使用说明" key="1" style={{textAlign: 'start'}}>
-              <p><PlusCircleTwoTone twoToneColor='#52c41a' /> 点击加入会议按钮，并允许浏览器使用摄像头和麦克风，即可加入视频会议。</p>
-              <p><PauseCircleTwoTone /> 点击暂停接入按钮，你的视频和音频就会暂时不会被对方看到和听到。</p>
-              <p><CloseCircleTwoTone twoToneColor='#eb2f96' /> 会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。</p>
+
+        <div className="explainContainer">
+          <Collapse defaultActiveKey="1">
+            <Panel header="使用说明" key="1" style={{ textAlign: 'start' }}>
+              <p>
+                <PlusCircleTwoTone twoToneColor="#52c41a" />{' '}
+                点击加入会议按钮，并允许浏览器使用摄像头和麦克风，即可加入视频会议。
+              </p>
+              <p>
+                <PauseCircleTwoTone />{' '}
+                点击暂停接入按钮，你的视频和音频就会暂时不会被对方看到和听到。
+              </p>
+              <p>
+                <CloseCircleTwoTone twoToneColor="#eb2f96" />{' '}
+                会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。
+              </p>
               <p>双方都接入后，就开始和你的匹配对象打一声招呼吧！</p>
             </Panel>
           </Collapse>
-
         </div>
       </div>
-      <div className='videoMeetingContainer'>
+      <div className="videoMeetingContainer">
         <div style={{ width: '50%' }}>
           {localStream && (
             <StreamPlayer stream={localStream} fit="contain" label="local" />
@@ -269,7 +278,7 @@ function App(props: IVideoCallProps) {
               key={stream.getId()}
               stream={stream}
               fit="contain"
-              label='remote'
+              label="remote"
             />
           ))}
         </div>
@@ -279,6 +288,6 @@ function App(props: IVideoCallProps) {
 }
 
 export default function VideoCall(props: IVideoCallProps) {
-  console.log('videocallProps:', props)
+  // console.log('videocallProps:', props)
   return <App {...props} />
 }

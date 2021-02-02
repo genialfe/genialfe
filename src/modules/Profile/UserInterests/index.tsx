@@ -170,8 +170,8 @@ export default class UserInterests extends React.Component<
           onOk={() => this.handleSubmitModalData()}
           confirmLoading={this.confirmLoading}
           onCancel={() => this.handleCancel()}
-          cancelText='取消'
-          okText='提交'
+          cancelText="取消"
+          okText="提交"
           title="修改我的兴趣"
         >
           <p className="introTitle">兴趣</p>

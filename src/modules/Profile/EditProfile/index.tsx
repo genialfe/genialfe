@@ -143,13 +143,11 @@ export default class EditProfile extends React.Component<
       formData.append('file', file)
       try {
         const avatarRes = await uploadUserAvatar(formData)
-        console.log('urL:', avatarRes.data)
         onSuccess('Ok')
         if (avatarRes.code === 200) {
           this.setOssUrl(avatarRes.data)
         }
       } catch (err) {
-        console.log('upload avatar error: ', err)
         onError({ err })
       }
     }

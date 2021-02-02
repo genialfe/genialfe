@@ -51,7 +51,6 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   async getMatches() {
     const matchRes = await getMatchesMonthly()
-    console.log('matchResL:', matchRes)
     if (matchRes.code === 200) {
       const { data } = matchRes
       if (!data.length) {
@@ -93,9 +92,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       return (
         <Timeline.Item color="green" dot={<CheckCircleOutlined />}>
           <div className="matchCard">
-            <div
-              className='matchesContainer'
-            >
+            <div className="matchesContainer">
               <div>
                 <span>时间：{item.signTime}</span>
                 <br />
@@ -104,7 +101,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
               <div>
                 <Button
                   type="link"
-                  className='enterMeetingButton'
+                  className="enterMeetingButton"
                   // style={{ float: 'right', height: '100%' }}
                   onClick={() => this.handleEnterMeeting(item.matchId)}
                 >

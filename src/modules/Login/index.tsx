@@ -98,7 +98,6 @@ export default class Login extends React.Component<ILoginProps, any> {
   }
 
   async handleSubmitVerifyCode() {
-    console.log('verifyCode:', this.verifyCode)
     const code = this.verifyCode
     const phone = this.phoneNumber
     const loginRes = await login({ code, phone })

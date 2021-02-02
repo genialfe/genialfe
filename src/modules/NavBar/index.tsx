@@ -13,7 +13,7 @@ import './style.less'
 
 export default class Navbar extends React.Component {
   handleClickBars() {
-    console.log('123')
+    // console.log('123')
   }
 
   get dropdownMenu() {
