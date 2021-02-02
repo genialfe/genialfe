@@ -28,10 +28,11 @@ export interface IMeeting {
 @observer
 export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
-  isVideoCallMethod: boolean = false
+  isVideoCallMethod: boolean = true
   videoCallParams: IVideoCallProps = {
     token: '',
-    channel: ''
+    channel: '',
+    appid: ''
   }
 
   setIsVideoCallMethod(value: boolean) {
@@ -84,6 +85,12 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
   }
 
   render() {
+    const mockVideocallProps = {
+      token:
+        '00605b68aaaf43c49cdac56bbe0dd961cfbIACf2CHTDM+h5hKG2Z6ivyBcttR9wkHGLqYWTbz+Xew6fAx+f9gAAAAAEAAH/YchSBsaYAEAAQA8Gxpg',
+      channel: 'test',
+      appid: '05b68aaaf43c49cdac56bbe0dd961cfb'
+    }
     return (
       <div className="meetingsContainer">
         {/* <div className="meetingsCalendarContainer">
@@ -113,7 +120,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
             </div>
           </>
         )}
-        {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />}
+        {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />}
       </div>
     )
   }

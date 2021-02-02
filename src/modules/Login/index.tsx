@@ -68,7 +68,11 @@ export default class Login extends React.Component<ILoginProps, any> {
   async handleSendVerificationCode() {
     const phone = this.phoneNumber
     if (isPhoneNumber(phone)) {
-      const userStatus = await getUserStatus(phone)
+      const inviteCode = sessionStorage.getItem('inviteCode')
+      const userStatus = await getUserStatus(
+        phone,
+        inviteCode ? inviteCode : '-1'
+      )
       if (userStatus.data.userStatus !== 1) {
         // status为1 为已注册用户
         message.info('请先去注册')

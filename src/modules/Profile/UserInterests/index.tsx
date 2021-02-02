@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
@@ -57,14 +58,17 @@ export default class UserInterests extends React.Component<
     this.newInterestsIdList = list
   }
 
-  async handleOk() {
+  async handleSubmitModalData() {
     this.setConfirmLoading(true)
     const interest = this.newInterestsList.join(',')
     const interestIds = this.newInterestsIdList.join(',')
-    console.log(interest,interestIds)
     const res = await editUserInterests(interest, interestIds)
-    if(res.code === 200) {
+    if (res.code === 200) {
       this.setModalVisible(false)
+      this.setConfirmLoading(false)
+      location.reload()
+    } else {
+      message.info('请至少选择一项')
       this.setConfirmLoading(false)
     }
   }
@@ -88,10 +92,10 @@ export default class UserInterests extends React.Component<
 
   handleInterestsSelectChange(value: any) {
     this.setNewInterestsList(value)
-    const idArray = this.newInterestsList.map((item) => {
-      return (
-        this.baseInterestsList.find(baseItem => baseItem.interest === item)!.id
-      )
+    const idArray = this.newInterestsList.map(item => {
+      return this.baseInterestsList.find(
+        baseItem => baseItem.interest === item
+      )!.id
     })
     this.setNewInterestsIdList(idArray)
   }
@@ -164,10 +168,10 @@ export default class UserInterests extends React.Component<
         {/* modal中使用下拉框来增删用户的兴趣 */}
         <Modal
           visible={this.modalVisible}
-          onOk={() => this.handleOk()}
+          onOk={() => this.handleSubmitModalData()}
           confirmLoading={this.confirmLoading}
           onCancel={() => this.handleCancel()}
-          title="修改我的兴趣和目标"
+          title="修改我的兴趣"
         >
           <p className="introTitle">兴趣</p>
           <Select

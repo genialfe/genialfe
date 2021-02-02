@@ -51,9 +51,9 @@ export default class Home extends React.Component<IHomeProps, any> {
   async getHomeUserlist(type: EHomeItemType) {
     if (type === EHomeItemType.Explore) {
       const matchRes = await getMatchedUserlist()
-      const matchUserlist = matchRes.data
+      const matchUserlist = matchRes.data ? matchRes.data : []
       const recommendRes = await getRecommendUserlist()
-      const recommendUserlist = recommendRes.data
+      const recommendUserlist = recommendRes.data ? recommendRes.data : []
       this.setUserlist([...recommendUserlist, ...matchUserlist])
       this.setIsLoading(false)
     } else {

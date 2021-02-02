@@ -27,7 +27,7 @@ export interface IMatch {
 
 @observer
 export default class Matches extends React.Component<IMatchesProps, any> {
-  // agoraAppId: string = '2bdbb08e0cf743009ff6385d632b6417'
+  agoraAppId: string = '2bdbb08e0cf743009ff6385d632b6417'
   meetingToken: string = ''
   channel: string = ''
   hasNoMatch: boolean = false
@@ -78,7 +78,8 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       if (meetingToken) {
         setVideoCallParams({
           channel: matchId,
-          token: meetingToken
+          token: meetingToken,
+          appid: this.agoraAppId
         })
         setIsVideoCallMethod(true)
       } else {
@@ -88,7 +89,8 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
     setVideoCallParams({
       channel: matchId,
-      token: meetingToken
+      token: meetingToken,
+      appid: this.agoraAppId
     })
     setIsVideoCallMethod(true)
   }

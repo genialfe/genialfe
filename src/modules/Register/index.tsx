@@ -34,7 +34,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
    * 0: 短信验证码
    * 1: 姓名
    */
-  currentStep: number = 2
+  currentStep: number = 0
   verifyCode: string = ''
   userName: string = ''
   userId: string = ''
@@ -67,6 +67,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   getUserId() {
+    console.log('userStatus:', this.userStatus)
     if (this.userStatus) {
       const { id } = this.userStatus
       return id ? id : undefined
@@ -85,7 +86,9 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   async getUserStatus(phone: string) {
-    const res = await getUserStatus(phone)
+    const inviteCode = sessionStorage.getItem('inviteCode')
+    const res = await getUserStatus(phone, inviteCode ? inviteCode : '-1')
+    console.log('status Res:', res)
     const { data } = res
     this.setUserStatus(data as IUserStatus)
   }

@@ -61,10 +61,13 @@ export function checkVerificationCode(data: IVerificationCodeData) {
  * 获取用户状态(id及已填写信息等)
  * @param phone
  */
-export function getUserStatus(phone: string) {
-  return fetch(`${API_PREFIX}/user/status?phone=${phone}`, {
-    method: 'GET'
-  })
+export function getUserStatus(phone: string, inviteCode: string) {
+  return fetch(
+    `${API_PREFIX}/user/status?phone=${phone}&inviteCode=${inviteCode}`,
+    {
+      method: 'GET'
+    }
+  )
 }
 
 export interface IUserData {
@@ -97,7 +100,10 @@ export interface IUserData {
 export function register(data: IUserData) {
   return fetch(`${API_PREFIX}/user/register`, {
     method: 'POST',
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json'
+    }
   })
 }
 
