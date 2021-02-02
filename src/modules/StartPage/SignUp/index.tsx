@@ -38,7 +38,6 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
     const parsed = queryString.parse(location.search)
     const inviteCode = parsed.invitecode ? (parsed.invitecode as string) : '-1'
     const statusRes = await getUserStatus(number, inviteCode)
-    console.log('status', statusRes)
     const userStatus = statusRes.data.userStatus
     if (userStatus === 1) {
       message.info('已经是注册用户，请去登录')

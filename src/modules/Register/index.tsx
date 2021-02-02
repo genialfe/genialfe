@@ -67,7 +67,6 @@ export default class Register extends React.Component<IRegisterProps, any> {
   }
 
   getUserId() {
-    console.log('userStatus:', this.userStatus)
     if (this.userStatus) {
       const { id } = this.userStatus
       return id ? id : undefined
@@ -88,7 +87,6 @@ export default class Register extends React.Component<IRegisterProps, any> {
   async getUserStatus(phone: string) {
     const inviteCode = sessionStorage.getItem('inviteCode')
     const res = await getUserStatus(phone, inviteCode ? inviteCode : '-1')
-    console.log('status Res:', res)
     const { data } = res
     this.setUserStatus(data as IUserStatus)
   }
@@ -116,7 +114,6 @@ export default class Register extends React.Component<IRegisterProps, any> {
           userName
         }
         const res = await register(params)
-        console.log('register res:', res)
         if (res.data.status === 1) {
           // 用户正在注册流程中
           this.increCurrentStep()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Calendar } from 'antd'
+// import { Calendar } from 'antd'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import Times from './Times'
@@ -28,7 +28,10 @@ export interface IMeeting {
 @observer
 export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
+
+  // for testing video call
   isVideoCallMethod: boolean = false
+
   videoCallParams: IVideoCallProps = {
     token: '',
     channel: '',
@@ -120,8 +123,8 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
             </div>
           </>
         )}
-        {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />}
-        {/* {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />} */}
+        {/* {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />} */}
+        {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />}
       </div>
     )
   }

@@ -83,7 +83,6 @@ export default class UserInterests extends React.Component<
     if (res.code === 200) {
       const { data } = res
       interestsList = [...data[0].list, ...data[1].list, ...data[2].list]
-      console.log('intereLIST:', interestsList)
       this.setBaseInterestsList(interestsList)
     } else {
       message.info('获取列表数据失败，请重试')

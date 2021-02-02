@@ -103,7 +103,6 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
       return `${item.formatDate} ${item.hour}:00:00`
     })
     const times = selectedTimes.join()
-    console.log('times:', times)
     const res = await setAvailableTimes(times)
     if (res.code === 200) {
       location.pathname = '/meetings'
@@ -116,17 +115,17 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   get timeSelectTitle() {
-    const week = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-    const nextMonday = moment().startOf('isoWeek').add(1, 'week')
+    const week = ['星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+    const nextTuesday = moment().startOf('isoWeek').add(1, 'day').add(1, 'week')
     const weekdays = [
       {
-        date: nextMonday.format('MM月DD日'),
-        formatDate: nextMonday.format('YYYY-MM-DD')
+        date: nextTuesday.format('MM月DD日'),
+        formatDate: nextTuesday.format('YYYY-MM-DD')
       }
     ]
     for (let i = 0; i < 5; i++) {
       // 得到下周一至下周六的日期数组
-      const day = nextMonday.add(1, 'days')
+      const day = nextTuesday.add(1, 'days')
       const date = day.format('MM月DD日')
       const formatDate = day.format('YYYY-MM-DD')
       weekdays.push({ date, formatDate })
@@ -138,7 +137,6 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
         formatDate: item.formatDate
       }
     })
-    console.log('days:', days)
     this.setDays(days)
 
     return (

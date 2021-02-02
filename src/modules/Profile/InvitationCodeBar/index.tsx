@@ -32,14 +32,21 @@ export default class InvitationCodeBar extends React.Component<
 
   async handleGenerateInvitationCode() {
     const res = await generateInvitationCode()
-    console.log('res:', res)
+    const data = res.data
+    if (data.invitationUrl) {
+      const { status, invitationUrl } = data
+      this.setInvitationUrl({
+        status,
+        invitationUrl
+      })
+      this.setHasGeneratedInvitationCode(true)
+    }
   }
 
   async getInvitationCode() {
     const res = await getInvitationCode()
-    console.log("res:", res)
     const data = res.data
-    if (data) {
+    if (data.invitationUrl) {
       const { status, invitationUrl } = data
       this.setInvitationUrl({
         status,
@@ -83,7 +90,7 @@ export default class InvitationCodeBar extends React.Component<
           </div>
         )}
         {!this.hasGeneratedInvitationCode && (
-          <Button type="primary" onClick={this.handleGenerateInvitationCode}>
+          <Button type="ghost" onClick={this.handleGenerateInvitationCode}>
             生成我的邀请链接
           </Button>
         )}

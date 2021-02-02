@@ -205,7 +205,6 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
 
   async getObjectives() {
     const list = await getObjectivesList()
-    console.log('list:', list)
   }
 
   componentDidMount() {
