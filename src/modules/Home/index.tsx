@@ -52,9 +52,7 @@ export default class Home extends React.Component<IHomeProps, any> {
         }
       })
 
-      console.log("hasSKipped:", hasSkipped, 'hasData:', res.data.length === 0)
       const hasNoTimes = (res.data.length === 0)
-
       if((!hasSkipped) && hasNoTimes) {
         sessionStorage.setItem('need_time_selection', '1')
         location.pathname = 'weekly'

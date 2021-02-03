@@ -198,6 +198,14 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     )
   }
 
+  componentDidMount() {
+    const needSelectionFirst = sessionStorage.getItem('need_time_selection')
+    if(needSelectionFirst === '1') {
+      message.info('请先为下周的匹配选择适合你的时间')
+      sessionStorage.removeItem('need_time_selection')
+    }
+  }
+
   constructor(props: IWeeklyProps) {
     super(props)
     makeObservable(this, {
