@@ -4,7 +4,7 @@ import { Button, Col, message, Row } from 'antd'
 import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 import moment from 'moment'
-import { setAvailableTimes } from './api'
+import { setAvailableTimes, skipThisWeek } from './api'
 
 import './style.less'
 
@@ -87,8 +87,13 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     this.setDayHourSelectedState(day, formatDate, hour)
   }
 
-  handleSkipThisWeek() {
-    location.pathname = '/meetings'
+  async handleSkipThisWeek() {
+    const type = 1 
+    const res = await skipThisWeek(type)
+    if(res.code === 200) {
+      message.info('设置成功！本周将不会为你安排任何匹配')
+      setTimeout(()=>location.pathname='/home', 800)
+    }
   }
 
   getButtonClassName(day: string, hour: string) {

@@ -4,10 +4,11 @@ import { observer } from 'mobx-react'
 import { observable, action, makeObservable } from 'mobx'
 import { message, Spin } from 'antd'
 import Usercardlist, { IUserData } from './UsercardList'
-import { getAvailableTimes } from '../Meetings/api'
+// import { getAvailableTimes } from '../Meetings/api'
 import { getMatchedUserlist, getRecommendUserlist } from './api'
 
 import './style.less'
+import { getAvailableTimesAndMatchStatus } from '../Meetings/api'
 
 export interface IHomeProps {}
 
@@ -39,12 +40,25 @@ export default class Home extends React.Component<IHomeProps, any> {
     return type === this.selectedItem ? 'sideButtonSelected' : 'sideButton'
   }
 
+  // to be continued
   async checkMeetingReserved() {
-    const res = await getAvailableTimes()
-    if (!res.data.length) {
-      // 还没预约过会议
-      message.info('请先选择下周空闲的时间段')
-      location.pathname = 'weekly'
+    const res = await getAvailableTimesAndMatchStatus()
+    console.log("res:", res)
+    if(res.data) {
+      let hasSkipped = false
+      res.data.forEach((item: {signTime: string, signStatus: number}) => {
+        if(item.signStatus === 3) {
+          hasSkipped = true
+        }
+      })
+
+      console.log("hasSKipped:", hasSkipped, 'hasData:', res.data.length === 0)
+      const hasNoTimes = (res.data.length === 0)
+
+      if((!hasSkipped) && hasNoTimes) {
+        sessionStorage.setItem('need_time_selection', '1')
+        location.pathname = 'weekly'
+      }
     }
   }
 

@@ -2,9 +2,9 @@ import { API_PREFIX } from '../constants'
 import fetch from '../../utils/fetch'
 
 /**
- * 查询用户已选择的下周空闲时间
+ * 查询用户已选择的下周空闲时间 以及用户状态 包括是否跳过下周等
  */
-export function getAvailableTimes() {
+export function getAvailableTimesAndMatchStatus() {
   return fetch(`${API_PREFIX}/mtg/weekly`, {
     method: 'GET'
   })
