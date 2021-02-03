@@ -36,7 +36,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
 
   async handleSendMsg(number: string) {
     const parsed = queryString.parse(location.search)
-    const inviteCode = parsed.invitecode ? (parsed.invitecode as string) : '-1'
+    const inviteCode = parsed.inviteCode ? (parsed.inviteCode as string) : '-1'
     const statusRes = await getUserStatus(number, inviteCode)
     const userStatus = statusRes.data.userStatus
     if (userStatus === 1) {
@@ -66,7 +66,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
 
   componentDidMount() {
     const parsed = queryString.parse(location.search)
-    const inviteCode = parsed.invitecode as string
+    const inviteCode = parsed.inviteCode as string
     this.setInviteCode(inviteCode)
     sessionStorage.setItem('inviteCode', inviteCode)
   }
