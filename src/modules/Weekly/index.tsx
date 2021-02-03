@@ -88,11 +88,11 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   async handleSkipThisWeek() {
-    const type = 1 
+    const type = 1
     const res = await skipThisWeek(type)
-    if(res.code === 200) {
+    if (res.code === 200) {
       message.info('设置成功！本周将不会为你安排任何匹配')
-      setTimeout(()=>location.pathname='/home', 800)
+      setTimeout(() => (location.pathname = '/home'), 800)
     }
   }
 
@@ -200,7 +200,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
 
   componentDidMount() {
     const needSelectionFirst = sessionStorage.getItem('need_time_selection')
-    if(needSelectionFirst === '1') {
+    if (needSelectionFirst === '1') {
       message.info('请先为下周的匹配选择适合你的时间')
       sessionStorage.removeItem('need_time_selection')
     }

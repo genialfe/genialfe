@@ -7,7 +7,6 @@ import { ClockCircleOutlined } from '@ant-design/icons'
 import { getAvailableTimesAndMatchStatus } from '../api'
 import Skipped from '../../../static/skip-week.svg'
 
-
 import './style.less'
 
 const { Item } = Timeline
@@ -37,14 +36,14 @@ export default class Times extends React.Component<ITimesProps, any> {
   async getAvailableTimes() {
     const res = await getAvailableTimesAndMatchStatus()
     let hasSkipped = false
-    res.data.forEach((item: {signTime: string, signStatus: number}) => {
-      if(item.signStatus === 3) {
+    res.data.forEach((item: { signTime: string; signStatus: number }) => {
+      if (item.signStatus === 3) {
         hasSkipped = true
       }
     })
     this.setHasSkippedThisWeek(hasSkipped)
 
-    if(!hasSkipped) {
+    if (!hasSkipped) {
       const times = res.data.map((item: { signTime: string }) => item.signTime)
       this.setTimes(times)
     }
@@ -72,11 +71,17 @@ export default class Times extends React.Component<ITimesProps, any> {
     const noTime = this.times.length === 0
     return (
       <div>
-        {
-          !this.hasSkippedThisWeek &&
+        {!this.hasSkippedThisWeek && (
           <>
-            {!noTime && <div className="timesContainer">{this.bookedTimes}</div>}
-            {noTime && <Empty description={<span>没有为下周选择时间段</span>} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+            {!noTime && (
+              <div className="timesContainer">{this.bookedTimes}</div>
+            )}
+            {noTime && (
+              <Empty
+                description={<span>没有为下周选择时间段</span>}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              />
+            )}
             <Button
               onClick={this.handleReSubmitTime}
               block
@@ -85,9 +90,8 @@ export default class Times extends React.Component<ITimesProps, any> {
               {noTime ? '添加时间' : '修改时间'}
             </Button>
           </>
-        }
-        {
-          this.hasSkippedThisWeek &&
+        )}
+        {this.hasSkippedThisWeek && (
           <>
             <Empty
               image={Skipped}
@@ -96,15 +100,17 @@ export default class Times extends React.Component<ITimesProps, any> {
                 marginBottom: 24
               }}
               description={
-                <span style={{color: 'rgba(0, 0, 0, 0.25)'}}>
+                <span style={{ color: 'rgba(0, 0, 0, 0.25)' }}>
                   你已经选择跳过这周
                 </span>
               }
             >
-              <Button type="primary" onClick={this.handleReSubmitTime}>重新选择</Button>
+              <Button type="primary" onClick={this.handleReSubmitTime}>
+                重新选择
+              </Button>
             </Empty>
           </>
-        }
+        )}
       </div>
     )
   }

@@ -43,17 +43,16 @@ export default class Home extends React.Component<IHomeProps, any> {
   // to be continued
   async checkMeetingReserved() {
     const res = await getAvailableTimesAndMatchStatus()
-    console.log("res:", res)
-    if(res.data) {
+    if (res.data) {
       let hasSkipped = false
-      res.data.forEach((item: {signTime: string, signStatus: number}) => {
-        if(item.signStatus === 3) {
+      res.data.forEach((item: { signTime: string; signStatus: number }) => {
+        if (item.signStatus === 3) {
           hasSkipped = true
         }
       })
 
-      const hasNoTimes = (res.data.length === 0)
-      if((!hasSkipped) && hasNoTimes) {
+      const hasNoTimes = res.data.length === 0
+      if (!hasSkipped && hasNoTimes) {
         sessionStorage.setItem('need_time_selection', '1')
         location.pathname = 'weekly'
       }

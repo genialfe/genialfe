@@ -23,7 +23,7 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
 
   async checkHasLoggedIn() {
     const testApiRes = await getInvitationCode()
-    if(testApiRes.code === 200) {
+    if (testApiRes.code === 200) {
       this.setHasLoggedIn(true)
     }
   }
@@ -39,7 +39,9 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
 
   render() {
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
-    return this.hasLoggedIn ? <Redirect to="/home" /> : (
+    return this.hasLoggedIn ? (
+      <Redirect to="/home" />
+    ) : (
       <>
         <div className="logoHeader">
           <p className="logoTitle">Genial</p>

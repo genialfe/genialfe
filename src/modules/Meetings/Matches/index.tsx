@@ -138,7 +138,12 @@ export default class Matches extends React.Component<IMatchesProps, any> {
   render() {
     return (
       <div>
-        {this.hasNoMatch && <Empty description={<span>暂时还没有匹配</span>} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+        {this.hasNoMatch && (
+          <Empty
+            description={<span>暂时还没有匹配</span>}
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
+        )}
         {this.matchesContent}
       </div>
     )
