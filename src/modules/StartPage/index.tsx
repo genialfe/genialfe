@@ -1,6 +1,11 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Col, Row } from 'antd'
+import { Redirect } from 'react-router-dom'
+import { observer } from 'mobx-react'
+import { action, makeObservable, observable } from 'mobx'
 import startPageCover from '../../static/startPageCover.svg'
+import { getInvitationCode } from '../Profile/api'
 import SignUp from './SignUp'
 import Explain from './Explain'
 
@@ -8,10 +13,33 @@ import './style.less'
 
 export interface IStartPageProps {}
 
+@observer
 export default class StartPage extends React.Component<IStartPageProps, any> {
+  hasLoggedIn: boolean = false
+
+  setHasLoggedIn(value: boolean) {
+    this.hasLoggedIn = value
+  }
+
+  async checkHasLoggedIn() {
+    const testApiRes = await getInvitationCode()
+    if(testApiRes.code === 200) {
+      this.setHasLoggedIn(true)
+    }
+  }
+
+  constructor(props: IStartPageProps) {
+    super(props)
+    makeObservable(this, {
+      hasLoggedIn: observable,
+      setHasLoggedIn: action
+    })
+    this.checkHasLoggedIn()
+  }
+
   render() {
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
-    return (
+    return this.hasLoggedIn ? <Redirect to="/home" /> : (
       <>
         <div className="logoHeader">
           <p className="logoTitle">Genial</p>
