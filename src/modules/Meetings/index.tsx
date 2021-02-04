@@ -30,7 +30,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
 
   // for testing video call
-  isVideoCallMethod: boolean = true
+  isVideoCallMethod: boolean = false
 
   videoCallParams: IVideoCallProps = {
     token: '',
@@ -121,8 +121,8 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
             </div>
           </>
         )}
-        {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />}
-        {/* {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />} */}
+        {/* {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />} */}
+        {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />}
       </div>
     )
   }
