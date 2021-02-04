@@ -1,13 +1,19 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
-import { Button, Empty, message, Timeline } from 'antd'
-import { CheckCircleOutlined } from '@ant-design/icons'
-import { enterMeeting, getMatchesMonthly } from '../api'
+import { Button, Empty, message, Timeline, Modal, Avatar } from 'antd'
+import { CheckCircleOutlined, UserSwitchOutlined } from '@ant-design/icons'
+import { enterMeeting, getMatchDetail, getMatchesMonthly } from '../api'
 import { IVideoCallProps } from '../VideoCall'
 
 import './style.less'
+import UserAvatar from '../../Profile/UserAvatar'
 
+export interface IMatchUserProfile {
+  userName: string
+  headImg: string
+  introduction: string
+}
 export interface IMatchesProps {
   /**
    * 设置开始视频会议的回调函数
@@ -27,6 +33,7 @@ export interface IMatch {
 
 @observer
 export default class Matches extends React.Component<IMatchesProps, any> {
+  isMobileScreen: boolean = false
   agoraAppId: string = '2bdbb08e0cf743009ff6385d632b6417'
   meetingToken: string = ''
   channel: string = ''
@@ -47,6 +54,10 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   setChannel(channel: string) {
     this.channel = channel
+  }
+
+  setIsMobileScreen(value: boolean) {
+    this.isMobileScreen = value
   }
 
   async getMatches() {
@@ -87,6 +98,32 @@ export default class Matches extends React.Component<IMatchesProps, any> {
     }
   }
 
+  async handleGetMatchDetail(matchId: string) {
+    const res = await getMatchDetail(matchId)
+    console.log("detailRes:", res)
+    if(!res.data) {
+      message.info('已经无法查看')
+    } else {
+      const profile: IMatchUserProfile = res.data
+      Modal.info({
+        width: this.isMobileScreen ? '100%' : '40%',
+        title: '对方信息',
+        icon: <UserSwitchOutlined />,
+        closable: true,
+        okText: '关闭',
+        content: (
+          <div style={{textAlign: 'left'}}>
+            <UserAvatar avatarUrl={profile.headImg} name={profile.userName} size={49}  />
+            <div className="introContainer">
+              <p className="introTitle">简介</p>
+              <p className="introContent">{profile.introduction}</p>
+            </div>
+          </div>
+        )
+      })
+    }
+  }
+
   get matchesContent() {
     const content = this.matches.map(item => {
       return (
@@ -102,10 +139,18 @@ export default class Matches extends React.Component<IMatchesProps, any> {
                 <Button
                   type="link"
                   className="enterMeetingButton"
-                  // style={{ float: 'right', height: '100%' }}
+                  // style={{ color: 'blue'}}
                   onClick={() => this.handleEnterMeeting(item.matchId)}
                 >
                   加入会议
+                </Button>
+                <Button
+                  type="link"
+                  className="enterMeetingButton"
+                  style={{ color: 'grey'}}
+                  onClick={() => this.handleGetMatchDetail(item.matchId)}
+                >
+                  查看详情
                 </Button>
               </div>
             </div>
@@ -119,6 +164,9 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   componentDidMount() {
     this.getMatches()
+    const isMobileScreen = window.matchMedia('(max-width:500px)').matches
+    this.setIsMobileScreen(isMobileScreen)
+    
   }
 
   constructor(props: IMatchesProps) {
@@ -131,7 +179,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       setMatches: action,
       setHasNoMatch: action,
       setMeetingToken: action,
-      setChannel: action
+      setChannel: action,
     })
   }
 

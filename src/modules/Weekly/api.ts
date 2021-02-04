@@ -13,7 +13,18 @@ export function setAvailableTimes(times: string) {
 /**
  * 跳过本周
  */
-export function skipThisWeek(type: number) {
+export function skipThisWeek() {
+  const type = 1
+  return fetch(`${API_PREFIX}/mtg/pass?type=${type}`, {
+    method: 'POST'
+  })
+}
+
+/**
+ * 取消跳过本周
+ */
+export function cancelSkipThisWeek() {
+  const type = 2
   return fetch(`${API_PREFIX}/mtg/pass?type=${type}`, {
     method: 'POST'
   })

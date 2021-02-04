@@ -74,7 +74,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
       // 该日该时间段已经被选择过
       this.selectedTimeMap.splice(index, 1)
     } else {
-      if(this.selectedTimeMap.length < 7) {
+      if (this.selectedTimeMap.length < 7) {
         this.selectedTimeMap.push({ date, formatDate, hour })
       } else {
         message.info('最多选择七项')
@@ -92,8 +92,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   async handleSkipThisWeek() {
-    const type = 1
-    const res = await skipThisWeek(type)
+    const res = await skipThisWeek()
     if (res.code === 200) {
       message.info('设置成功！本周将不会为你安排任何匹配')
       setTimeout(() => (location.pathname = '/home'), 800)

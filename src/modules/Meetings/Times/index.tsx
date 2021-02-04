@@ -1,11 +1,12 @@
 /* eslint-disable no-restricted-globals */
-import { Button, Empty, Timeline } from 'antd'
+import { Button, Empty, message, Timeline } from 'antd'
 import { makeObservable, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { ClockCircleOutlined } from '@ant-design/icons'
-import { getAvailableTimesAndMatchStatus } from '../api'
 import Skipped from '../../../static/skip-week.svg'
+import { cancelSkipThisWeek } from '../../Weekly/api'
+import { getAvailableTimesAndMatchStatus } from '../api'
 
 import './style.less'
 
@@ -51,6 +52,15 @@ export default class Times extends React.Component<ITimesProps, any> {
 
   handleReSubmitTime() {
     location.pathname = '/weekly'
+  }
+
+  async handleCancelSkip() {
+    const res = await cancelSkipThisWeek()
+    if(res.code === 200) {
+      location.pathname = '/weekly'
+    } else {
+      message.info('出错了')
+    }
   }
 
   componentDidMount() {
@@ -105,7 +115,7 @@ export default class Times extends React.Component<ITimesProps, any> {
                 </span>
               }
             >
-              <Button type="primary" onClick={this.handleReSubmitTime}>
+              <Button type="primary" onClick={this.handleCancelSkip}>
                 重新选择
               </Button>
             </Empty>

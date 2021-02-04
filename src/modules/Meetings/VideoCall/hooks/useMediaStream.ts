@@ -7,7 +7,6 @@ const useMediaStream = (
   const [localStream, setLocalStream] = useState<any>(undefined)
   // const [remoteStreamList, setRemoteStreamList] = useState<any[]>([])
   const [remoteStream, setRemoteStream] = useState<any>(undefined)
-  
 
   useEffect(() => {
     let mounted = true
@@ -89,7 +88,6 @@ const useMediaStream = (
   }, [client, filter])
 
   return [localStream, remoteStream, [localStream, remoteStream]]
-
 
   // return [localStream, remoteStreamList, [localStream].concat(remoteStreamList)]
 }

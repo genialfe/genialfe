@@ -1,10 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import React, { useReducer, useState } from 'react'
-import { Button, message, Collapse } from 'antd'
+import { Button, message, Collapse, Modal } from 'antd'
 import {
   PlusCircleTwoTone,
   PauseCircleTwoTone,
-  CloseCircleTwoTone
+  CloseCircleTwoTone,
+  ExclamationCircleOutlined
 } from '@ant-design/icons'
 import StreamPlayer from 'agora-stream-player'
 import { useMediaStream } from './hooks'
@@ -13,6 +14,7 @@ import AgoraRTC from './utils/AgoraEnhancer'
 import './style.less'
 
 const { Panel } = Collapse
+const { confirm } = Modal
 
 export interface IVideoCallProps {
   /**
@@ -99,7 +101,6 @@ function App(props: IVideoCallProps) {
 
   // let [localStream, remoteStreamList] = useMediaStream(agoraClient)
   let [localStream, remoteStream] = useMediaStream(agoraClient)
-
 
   // Leaves the channel on invoking the function call.
   const leave = async () => {
@@ -202,7 +203,21 @@ function App(props: IVideoCallProps) {
   }
 
   const leaveRoom = () => {
-    location.pathname = '/meetings'
+    // const { channel } = props
+    confirm({
+      title: '你确定要完全离开会议吗？',
+      cancelText: '取消',
+      okText: '确认',
+      icon: <ExclamationCircleOutlined />,
+      content: '离开后可能无法重新加入会议。',
+      onOk() {
+        leave()
+        location.pathname = '/meetings'
+      },
+      onCancel() {
+        console.log('Cancel')
+      }
+    })
   }
 
   const JoinLeaveBtn = () => {
@@ -270,14 +285,10 @@ function App(props: IVideoCallProps) {
       </div>
       <div className="videoMeetingContainer">
         <div style={{ width: '50%' }}>
-          {localStream && (
-            <StreamPlayer stream={localStream} fit="contain" />
-          )}
+          {localStream && <StreamPlayer stream={localStream} fit="contain" />}
         </div>
         <div style={{ width: '50%' }}>
-          {remoteStream && (
-            <StreamPlayer stream={remoteStream} fit="contain" />
-          )}
+          {remoteStream && <StreamPlayer stream={remoteStream} fit="contain" />}
           {/* {remoteStreamList.map((stream: any) => (
             <StreamPlayer
               key={stream.getId()}

@@ -49,7 +49,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
     const { userAvatarLink, userName, matchSource, userDetails } = this.props
 
     return (
-      <div style={{width: '100%'}}>
+      <div style={{ width: '100%' }}>
         <Card className="card">
           <Meta
             avatar={<Avatar size="large" src={userAvatarLink} />}

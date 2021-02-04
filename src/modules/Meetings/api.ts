@@ -27,3 +27,22 @@ export function enterMeeting(matchId: string) {
     method: 'POST'
   })
 }
+
+/**
+ * 通过matchId查询对方信息
+ */
+export function getMatchDetail(matchId: string) {
+  return fetch(`${API_PREFIX}/mtg/partner?matchId=${matchId}`, {
+    method: 'GET'
+  })
+}
+
+
+/**
+ * 通过matchId结束会议
+ */
+export function endMeeting(matchId: string) {
+  return fetch(`${API_PREFIX}/mtg/end?matchId=${matchId}`, {
+    method: 'POST'
+  })
+}
