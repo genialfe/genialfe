@@ -100,7 +100,6 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   async handleGetMatchDetail(matchId: string) {
     const res = await getMatchDetail(matchId)
-    console.log('detailRes:', res)
     if (!res.data) {
       message.info('已经无法查看')
     } else {
