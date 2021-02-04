@@ -30,7 +30,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
   meetings: IMeeting[] = []
 
   // for testing video call
-  isVideoCallMethod: boolean = false
+  isVideoCallMethod: boolean = true
 
   videoCallParams: IVideoCallProps = {
     token: '',
@@ -88,8 +88,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
 
   render() {
     const mockVideocallProps = {
-      token:
-        '00605b68aaaf43c49cdac56bbe0dd961cfbIACf2CHTDM+h5hKG2Z6ivyBcttR9wkHGLqYWTbz+Xew6fAx+f9gAAAAAEAAH/YchSBsaYAEAAQA8Gxpg',
+      token: '00605b68aaaf43c49cdac56bbe0dd961cfbIADyMfqf69GAps+6O3sTNmgKNU4LgZpvdfFjE8TSE7cEIQx+f9gAAAAAEABFd1n88tkcYAEAAQDy2Rxg',
       channel: 'test',
       appid: '05b68aaaf43c49cdac56bbe0dd961cfb'
     }
@@ -122,8 +121,8 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
             </div>
           </>
         )}
-        {/* {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />} */}
-        {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />}
+        {this.isVideoCallMethod && <VideoCall {...mockVideocallProps} />}
+        {/* {this.isVideoCallMethod && <VideoCall {...this.videoCallParams} />} */}
       </div>
     )
   }

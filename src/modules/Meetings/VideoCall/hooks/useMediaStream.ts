@@ -5,7 +5,9 @@ const useMediaStream = (
   filter?: (streamId: number) => boolean
 ): any[] => {
   const [localStream, setLocalStream] = useState<any>(undefined)
-  const [remoteStreamList, setRemoteStreamList] = useState<any[]>([])
+  // const [remoteStreamList, setRemoteStreamList] = useState<any[]>([])
+  const [remoteStream, setRemoteStream] = useState<any>(undefined)
+  
 
   useEffect(() => {
     let mounted = true
@@ -15,20 +17,22 @@ const useMediaStream = (
         return
       }
       const { stream } = evt
-      setRemoteStreamList(streamList => [...streamList, stream])
+      setRemoteStream(stream)
+      // setRemoteStreamList(streamList => [...streamList, stream])
     }
     // remove stream
     const removeRemote = (evt: any) => {
       const { stream } = evt
       if (stream) {
-        const id = stream.getId()
-        const index = remoteStreamList.findIndex(item => item.getId() === id)
-        if (index !== -1) {
-          setRemoteStreamList(streamList => {
-            streamList.splice(index, 1)
-            return streamList
-          })
-        }
+        setRemoteStream(undefined)
+        // const id = stream.getId()
+        // const index = remoteStreamList.findIndex(item => item.getId() === id)
+        // if (index !== -1) {
+        //   setRemoteStreamList(streamList => {
+        //     streamList.splice(index, 1)
+        //     return streamList
+        //   })
+        // }
       }
     }
     // subscribe when added
@@ -84,7 +88,10 @@ const useMediaStream = (
     }
   }, [client, filter])
 
-  return [localStream, remoteStreamList, [localStream].concat(remoteStreamList)]
+  return [localStream, remoteStream, [localStream, remoteStream]]
+
+
+  // return [localStream, remoteStreamList, [localStream].concat(remoteStreamList)]
 }
 
 export default useMediaStream

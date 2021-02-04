@@ -69,7 +69,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
       key: 5,
       name: 'startCompany',
       src: StartCompany,
-      desc: '创建公司',
+      desc: '寻找创业比赛队友',
       selected: false
     },
     {

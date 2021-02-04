@@ -97,7 +97,9 @@ function App(props: IVideoCallProps) {
   const [state, dispatch] = useReducer(reducer, defaultState)
   const [isLoading, setIsLoading] = useState(false)
 
-  let [localStream, remoteStreamList] = useMediaStream(agoraClient)
+  // let [localStream, remoteStreamList] = useMediaStream(agoraClient)
+  let [localStream, remoteStream] = useMediaStream(agoraClient)
+
 
   // Leaves the channel on invoking the function call.
   const leave = async () => {
@@ -269,18 +271,21 @@ function App(props: IVideoCallProps) {
       <div className="videoMeetingContainer">
         <div style={{ width: '50%' }}>
           {localStream && (
-            <StreamPlayer stream={localStream} fit="contain" label="local" />
+            <StreamPlayer stream={localStream} fit="contain" />
           )}
         </div>
         <div style={{ width: '50%' }}>
-          {remoteStreamList.map((stream: any) => (
+          {remoteStream && (
+            <StreamPlayer stream={remoteStream} fit="contain" />
+          )}
+          {/* {remoteStreamList.map((stream: any) => (
             <StreamPlayer
               key={stream.getId()}
               stream={stream}
               fit="contain"
               label="remote"
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </>
@@ -288,6 +293,5 @@ function App(props: IVideoCallProps) {
 }
 
 export default function VideoCall(props: IVideoCallProps) {
-  // console.log('videocallProps:', props)
   return <App {...props} />
 }

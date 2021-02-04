@@ -34,7 +34,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
    * 0: 短信验证码
    * 1: 姓名
    */
-  currentStep: number = 0
+  currentStep: number = 2
   verifyCode: string = ''
   userName: string = ''
   userId: string = ''
