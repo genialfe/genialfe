@@ -18,9 +18,14 @@ export interface ITimesProps {}
 export default class Times extends React.Component<ITimesProps, any> {
   times: string[] = []
   hasSkippedThisWeek: boolean = false
+  disableEditTime: boolean = false
 
   setTimes(times: string[]) {
     this.times = times
+  }
+
+  setDisableEditTime(value: boolean) {
+    this.disableEditTime = value
   }
 
   setHasSkippedThisWeek(value: boolean) {
@@ -37,12 +42,19 @@ export default class Times extends React.Component<ITimesProps, any> {
   async getAvailableTimes() {
     const res = await getAvailableTimesAndMatchStatus()
     let hasSkipped = false
+    let disableEditTime = false
     res.data.forEach((item: { signTime: string; signStatus: number }) => {
       if (item.signStatus === 3) {
+        // 用户已经跳过下周匹配
         hasSkipped = true
+      } else if ( (item.signStatus === 1) || (item.signStatus === 2) ) {
+        // 如果已经完成匹配 就不允许用户修改下周预约的时间
+        disableEditTime = true
       }
     })
+
     this.setHasSkippedThisWeek(hasSkipped)
+    this.setDisableEditTime(disableEditTime)
 
     if (!hasSkipped) {
       const times = res.data.map((item: { signTime: string }) => item.signTime)
@@ -72,8 +84,10 @@ export default class Times extends React.Component<ITimesProps, any> {
     makeObservable(this, {
       times: observable,
       hasSkippedThisWeek: observable,
+      disableEditTime: observable,
       setTimes: action,
-      setHasSkippedThisWeek: action
+      setHasSkippedThisWeek: action,
+      setDisableEditTime: action
     })
   }
 
@@ -96,6 +110,7 @@ export default class Times extends React.Component<ITimesProps, any> {
               onClick={this.handleReSubmitTime}
               block
               style={{ marginTop: '10px' }}
+              disabled={this.disableEditTime}
             >
               {noTime ? '添加时间' : '修改时间'}
             </Button>
