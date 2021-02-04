@@ -16,7 +16,7 @@ export default class UserAvatar extends React.Component<IAvatarProps, any> {
     return (
       <div className="avatarContainer">
         <Avatar size={size ? size : 64} src={avatarUrl} />
-        
+
         <p className="userName">{name}</p>
         <p className="userLocation">{location}</p>
       </div>

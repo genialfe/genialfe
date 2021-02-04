@@ -56,7 +56,7 @@ export default class Times extends React.Component<ITimesProps, any> {
 
   async handleCancelSkip() {
     const res = await cancelSkipThisWeek()
-    if(res.code === 200) {
+    if (res.code === 200) {
       location.pathname = '/weekly'
     } else {
       message.info('出错了')

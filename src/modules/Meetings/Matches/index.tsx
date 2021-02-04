@@ -100,8 +100,8 @@ export default class Matches extends React.Component<IMatchesProps, any> {
 
   async handleGetMatchDetail(matchId: string) {
     const res = await getMatchDetail(matchId)
-    console.log("detailRes:", res)
-    if(!res.data) {
+    console.log('detailRes:', res)
+    if (!res.data) {
       message.info('已经无法查看')
     } else {
       const profile: IMatchUserProfile = res.data
@@ -112,8 +112,12 @@ export default class Matches extends React.Component<IMatchesProps, any> {
         closable: true,
         okText: '关闭',
         content: (
-          <div style={{textAlign: 'left'}}>
-            <UserAvatar avatarUrl={profile.headImg} name={profile.userName} size={49}  />
+          <div style={{ textAlign: 'left' }}>
+            <UserAvatar
+              avatarUrl={profile.headImg}
+              name={profile.userName}
+              size={49}
+            />
             <div className="introContainer">
               <p className="introTitle">简介</p>
               <p className="introContent">{profile.introduction}</p>
@@ -147,7 +151,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
                 <Button
                   type="link"
                   className="enterMeetingButton"
-                  style={{ color: 'grey'}}
+                  style={{ color: 'grey' }}
                   onClick={() => this.handleGetMatchDetail(item.matchId)}
                 >
                   查看详情
@@ -166,7 +170,6 @@ export default class Matches extends React.Component<IMatchesProps, any> {
     this.getMatches()
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     this.setIsMobileScreen(isMobileScreen)
-    
   }
 
   constructor(props: IMatchesProps) {
@@ -179,7 +182,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
       setMatches: action,
       setHasNoMatch: action,
       setMeetingToken: action,
-      setChannel: action,
+      setChannel: action
     })
   }
 

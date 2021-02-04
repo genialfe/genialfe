@@ -37,7 +37,6 @@ export function getMatchDetail(matchId: string) {
   })
 }
 
-
 /**
  * 通过matchId结束会议
  */

@@ -7,7 +7,7 @@ export const content: IQaContent[] = [
   {
     question: 'Genial是做什么的？',
     answer:
-      'Genial是1:1的职业社交平台，通过AI算法帮助你每周匹配一个想见的人，通过视频会议的方式见面，助力你的职业生涯。'
+      'Genial是1:1的职业社交平台，通过AI算法帮助你每周匹配一个想见的人，通过视频会议的方式见面，助力你的生涯发展。'
   },
   {
     question: 'Genial的使用流程具体是怎样的？',
