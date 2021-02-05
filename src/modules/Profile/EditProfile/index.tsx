@@ -64,6 +64,10 @@ export default class EditProfile extends React.Component<
   }
 
   async handleSubmitProfile() {
+    if(this.introduction.length < 30) {
+      message.info('自我介绍不能少于30个字')
+      return
+    }
     const params = this.ossUrl.length
       ? {
           headImg: this.ossUrl,
@@ -128,7 +132,7 @@ export default class EditProfile extends React.Component<
   }
 
   render() {
-    const { userName, introduction } = this.props
+    const { userName } = this.props
     const uploadButton = (
       <div>
         {this.isLoading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -190,9 +194,11 @@ export default class EditProfile extends React.Component<
               <textarea
                 className="textAreaInput"
                 rows={6}
-                defaultValue={introduction}
+                // defaultValue={introduction}
+                value={this.introduction}
                 onChange={(e: any) => this.setIntroduction(e.target.value)}
               />
+              <p style={{textAlign: 'right', color: 'grey'}}>当前字数:{this.introduction.length}</p>
             </Col>
           </Row>
         </div>
