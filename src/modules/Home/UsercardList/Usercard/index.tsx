@@ -32,7 +32,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
   async handleClickMeetButton(userId: string) {
     const hide = message.loading('提交中...')
     const meetRes = await meetPeopleLikeThis(userId)
-    if(meetRes.code === 200) {
+    if (meetRes.code === 200) {
       this.setButtonClicked(true)
       hide()
     } else if (meetRes.code === 401) {
@@ -49,7 +49,13 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
   }
 
   render() {
-    const { userAvatarLink, userName, matchSource, userDetails, userId } = this.props
+    const {
+      userAvatarLink,
+      userName,
+      matchSource,
+      userDetails,
+      userId
+    } = this.props
 
     return (
       <div style={{ width: '100%' }}>

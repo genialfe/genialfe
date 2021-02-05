@@ -29,9 +29,9 @@ export default class SelfIntroduction extends React.Component<
 
   async handleSubmitIntro() {
     // console.log("this.selfIntro:", this.selfIntroduction)
-    if(this.selfIntroduction.length < 30) {
+    if (this.selfIntroduction.length < 30) {
       message.info('自我介绍应该多于30字')
-    } else if ( this.selfIntroduction.length > 200) {
+    } else if (this.selfIntroduction.length > 200) {
       message.info('自我介绍应该少于200字')
     } else {
       sessionStorage.setItem('introduction', this.selfIntroduction)
@@ -93,7 +93,9 @@ export default class SelfIntroduction extends React.Component<
           onChange={(e: any) => this.handleTextAreaOnChange(e.target.value)}
           value={this.selfIntroduction}
         />
-        <p style={{textAlign:'right', color: '#acacac'}}>当前字数:{this.selfIntroduction.length}</p>
+        <p style={{ textAlign: 'right', color: '#acacac' }}>
+          当前字数:{this.selfIntroduction.length}
+        </p>
         <SampleIntros />
 
         <Button

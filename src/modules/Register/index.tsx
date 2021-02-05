@@ -169,7 +169,9 @@ export default class Register extends React.Component<IRegisterProps, any> {
               placeholder="输入你的名字"
               onChange={(e: any) => this.setUserName(e.target.value)}
             />
-            <p style={{textAlign: 'left', color: 'grey'}}>*建议使用真实姓名</p>
+            <p style={{ textAlign: 'left', color: 'grey' }}>
+              *建议使用真实姓名
+            </p>
           </>
         )}
         <Button

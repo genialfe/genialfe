@@ -47,7 +47,7 @@ export default class Times extends React.Component<ITimesProps, any> {
       if (item.signStatus === 3) {
         // 用户已经跳过下周匹配
         hasSkipped = true
-      } else if ( (item.signStatus === 1) || (item.signStatus === 2) ) {
+      } else if (item.signStatus === 1 || item.signStatus === 2) {
         // 如果已经完成匹配 就不允许用户修改下周预约的时间
         disableEditTime = true
       }

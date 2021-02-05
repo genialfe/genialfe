@@ -26,10 +26,10 @@ export default class Feedback extends React.Component<IFeedbackProps, any> {
   async handleSubmitFeedback() {
     if (this.feedback.length) {
       const res = await sendFeedback(this.feedback)
-      if(res.code === 200) {
+      if (res.code === 200) {
         message.info('感谢你的反馈')
         this.setFeedback('')
-      } else if(res.code === 401) {
+      } else if (res.code === 401) {
         location.pathname = '/'
       }
     }
@@ -47,11 +47,7 @@ export default class Feedback extends React.Component<IFeedbackProps, any> {
     return (
       <div className="feedbackContainer">
         你可以给我们
-        <a
-          href="mailto:genialtech@126.com"
-          rel="nofollow"
-          className="mailLink"
-        >
+        <a href="mailto:genialtech@126.com" rel="nofollow" className="mailLink">
           发送邮件
         </a>
         ，或者直接在下面创建你的反馈。

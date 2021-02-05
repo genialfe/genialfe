@@ -62,7 +62,7 @@ export default class Home extends React.Component<IHomeProps, any> {
   async getHomeUserlist(type: EHomeItemType) {
     if (type === EHomeItemType.Explore) {
       const matchRes = await getMatchedUserlist()
-      if( matchRes.code === 401) {
+      if (matchRes.code === 401) {
         location.pathname = '/'
       } else {
         const matchUserlist = matchRes.data ? matchRes.data : []
