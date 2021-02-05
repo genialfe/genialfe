@@ -1,7 +1,9 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Input, Button, message } from 'antd'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
+import { sendFeedback } from './api'
 
 import './style.less'
 
@@ -21,10 +23,15 @@ export default class Feedback extends React.Component<IFeedbackProps, any> {
     this.setFeedback(feedback)
   }
 
-  handleSubmitFeedback() {
+  async handleSubmitFeedback() {
     if (this.feedback.length) {
-      message.info('感谢你的反馈')
-      this.setFeedback('')
+      const res = await sendFeedback(this.feedback)
+      if(res.code === 200) {
+        message.info('感谢你的反馈')
+        this.setFeedback('')
+      } else if(res.code === 401) {
+        location.pathname = '/'
+      }
     }
   }
 
@@ -41,7 +48,7 @@ export default class Feedback extends React.Component<IFeedbackProps, any> {
       <div className="feedbackContainer">
         你可以给我们
         <a
-          href="mailto:simonmmm@126.com?cc=zhouhoushu@126.com"
+          href="mailto:genialtech@126.com"
           rel="nofollow"
           className="mailLink"
         >

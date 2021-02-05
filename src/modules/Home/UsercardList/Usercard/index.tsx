@@ -1,7 +1,9 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import { Typography, Card, Avatar, message } from 'antd'
+import { meetPeopleLikeThis } from '../../api'
 import { EHomeItemType } from '../..'
 
 import './style.less'
@@ -16,6 +18,7 @@ export interface IUserCardProps {
   matchSource: string
   userDetails: string
   type?: EHomeItemType
+  userId: string
 }
 
 @observer
@@ -26,15 +29,15 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
     this.isClicked = clicked
   }
 
-  handleClickMeetButton() {
+  async handleClickMeetButton(userId: string) {
     const hide = message.loading('提交中...')
-    // mock web request
-    setTimeout(() => {
+    const meetRes = await meetPeopleLikeThis(userId)
+    if(meetRes.code === 200) {
       this.setButtonClicked(true)
       hide()
-    }, 1000)
-
-    // push web request here...
+    } else if (meetRes.code === 401) {
+      location.pathname = '/'
+    }
   }
 
   constructor(props: IUserCardProps) {
@@ -46,7 +49,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
   }
 
   render() {
-    const { userAvatarLink, userName, matchSource, userDetails } = this.props
+    const { userAvatarLink, userName, matchSource, userDetails, userId } = this.props
 
     return (
       <div style={{ width: '100%' }}>
@@ -65,7 +68,7 @@ export default class Usercard extends React.Component<IUserCardProps, any> {
           </Typography>
           <button
             className={this.isClicked ? 'meetButtonClicked' : 'meetButton'}
-            onClick={() => this.handleClickMeetButton()}
+            onClick={() => this.handleClickMeetButton(userId)}
             disabled={this.isClicked}
           >
             {this.isClicked

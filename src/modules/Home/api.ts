@@ -18,3 +18,12 @@ export function getMatchedUserlist() {
     method: 'GET'
   })
 }
+
+/**
+ * 希望认识该用户
+ */
+export function meetPeopleLikeThis(userId: string) {
+  return fetch(`${API_PREFIX}/home/meet?userId=${userId}`, {
+    method: 'POST'
+  })
+}

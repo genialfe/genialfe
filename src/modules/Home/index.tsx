@@ -2,7 +2,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { observable, action, makeObservable } from 'mobx'
-import { message, Spin } from 'antd'
+import { Spin } from 'antd'
 import Usercardlist, { IUserData } from './UsercardList'
 // import { getAvailableTimes } from '../Meetings/api'
 import { getMatchedUserlist, getRecommendUserlist } from './api'
@@ -62,11 +62,15 @@ export default class Home extends React.Component<IHomeProps, any> {
   async getHomeUserlist(type: EHomeItemType) {
     if (type === EHomeItemType.Explore) {
       const matchRes = await getMatchedUserlist()
-      const matchUserlist = matchRes.data ? matchRes.data : []
-      const recommendRes = await getRecommendUserlist()
-      const recommendUserlist = recommendRes.data ? recommendRes.data : []
-      this.setUserlist([...recommendUserlist, ...matchUserlist])
-      this.setIsLoading(false)
+      if( matchRes.code === 401) {
+        location.pathname = '/'
+      } else {
+        const matchUserlist = matchRes.data ? matchRes.data : []
+        const recommendRes = await getRecommendUserlist()
+        const recommendUserlist = recommendRes.data ? recommendRes.data : []
+        this.setUserlist([...recommendUserlist, ...matchUserlist])
+        this.setIsLoading(false)
+      }
     } else {
       this.setUserlist([])
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
@@ -71,6 +72,8 @@ export default class Matches extends React.Component<IMatchesProps, any> {
         this.setHasNoMatch(false)
         this.setMatches(data)
       }
+    } else if (matchRes.code === 401) {
+      location.pathname = '/'
     }
   }
 

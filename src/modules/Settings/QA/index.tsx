@@ -83,7 +83,11 @@ export default class QA extends React.Component<IQAProps, any> {
           <Panel header={<p className="panelHeader">如何联系我们？</p>} key="6">
             <p className="panelContent">
               - 有任何问题或建议可
-              <a href="mailto:genialtech@126.com" rel="nofollow" style={{color: 'blue'}}>
+              <a
+                href="mailto:genialtech@126.com"
+                rel="nofollow"
+                style={{ color: 'blue' }}
+              >
                 发送邮件
               </a>
               到genialtech@126.com，并备注你的手机号。

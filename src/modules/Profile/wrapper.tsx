@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { message } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
@@ -28,6 +29,9 @@ export default class ProfileWrapper extends React.Component {
     if (profileRes.code === 200) {
       const { data } = profileRes
       this.setProfile(data)
+    } else if (profileRes.code === 401) {
+      location.pathname = '/'
+      // message.info('出错了')
     } else {
       message.info('出错了')
     }

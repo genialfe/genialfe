@@ -87,9 +87,10 @@ export default class Login extends React.Component<ILoginProps, any> {
           message.info(`已向 ${phone} 发送验证码`)
           this.setHasSentVerifyCode(true)
         } else if (status === 2) {
-          message.info('已发送过验证码，请勿重复操作')
+          message.info('发送验证码失败')
         } else if (status === 3) {
-          message.info('出错了，请稍后重试')
+          message.info('已发送过验证码，请直接填写')
+          this.setHasSentVerifyCode(true)
         }
       }
     } else {

@@ -77,12 +77,12 @@ export default class Usercardlist extends React.Component<
                 userName={item.userName}
                 matchSource={item.matchSource}
                 userDetails={item.introduction}
+                userId={item.id}
               />
             </List.Item>
           )}
         />
         <EndCard />
-        {/* {type === EHomeItemType.Connection && <EndCard />} */}
       </div>
     )
   }
