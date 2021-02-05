@@ -13,15 +13,15 @@ export interface IIntroExample {
 export default class SampleIntros extends React.Component {
   examples: IIntroExample[] = [
     {
-      introduction: '吕建君是微软的软件开发工程师，最近正在寻找新的工作机会。',
+      introduction: '李晓去年毕业于北京大学，现在在阿里担任后端开发工程师，他希望成长为一位优秀的架构师。除了在软件开发方面有浓厚的兴趣，他还对西方古典艺术了解颇多。',
       avatar: Avatar1
     },
     {
-      introduction: '高瀚熠是墨尔本大学的新生，对古典音乐有浓厚的兴趣。',
+      introduction: '尉迟英对MR/VR/AR和金融科技交叉的领域感兴趣。在过去5年中，他为定量房地产基金建立了ML交易系统以及全栈解决方案。目前，他正在从事金融科技/游戏/社交领域的项目。',
       avatar: Avatar2
     },
     {
-      introduction: '崔文正是七牛云Pandora数据分析平台的负责人。',
+      introduction: '张天泽是一位企业家，发起了一笔种子基金，用于投资阿根廷，智利，秘鲁，哥伦比亚和乌拉圭。她目前正在为自己的风投筹集资金，用于投资技术创业公司，使人们能够追求更有意义的生活，尤其是在金融科技，教育科技，食品科技和可持续发展方面。',
       avatar: Avatar3
     }
   ]
@@ -30,7 +30,7 @@ export default class SampleIntros extends React.Component {
     return this.examples.map(item => {
       return (
         <div className="example">
-          <img src={item.avatar} alt="" className="avatar" />
+          <img src={item.avatar} alt="" className="customAvatar" />
           {item.introduction}
         </div>
       )
