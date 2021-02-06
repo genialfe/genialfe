@@ -6,7 +6,7 @@ import React from 'react'
 import { ClockCircleOutlined } from '@ant-design/icons'
 import Skipped from '../../../static/skip-week.svg'
 import { cancelSkipThisWeek } from '../../Weekly/api'
-import { getAvailableTimesAndMatchStatus } from '../api'
+import { getReservedTimesAndMatchStatus } from '../api'
 
 import './style.less'
 
@@ -33,31 +33,32 @@ export default class Times extends React.Component<ITimesProps, any> {
   }
 
   get bookedTimes() {
-    const timesContent = this.times.map(time => {
-      return <Item dot={<ClockCircleOutlined />}>{time}</Item>
+    const timesContent = this.times.map((time, index) => {
+      return <Item key={index} dot={<ClockCircleOutlined />}>{time}</Item>
     })
     return <Timeline>{timesContent}</Timeline>
   }
 
-  async getAvailableTimes() {
-    const res = await getAvailableTimesAndMatchStatus()
+  // 获取已经预约的时间 以及用户状态：是否已经跳过下周 & 是否已经完成匹配 已经完成匹配则不能修改
+  async getReservedTimes() {
     let hasSkipped = false
     let disableEditTime = false
-    res.data.forEach((item: { signTime: string; signStatus: number }) => {
-      if (item.signStatus === 3) {
-        // 用户已经跳过下周匹配
+
+    const res = await getReservedTimesAndMatchStatus()
+    const { data } = res
+    if(data) {
+      if(data.status === 4) {  // 用户已经选择跳过这周
         hasSkipped = true
-      } else if (item.signStatus === 1 || item.signStatus === 2) {
-        // 如果已经完成匹配 就不允许用户修改下周预约的时间
+      } else if (data.status === 3) {  // 已经匹配成功
         disableEditTime = true
       }
-    })
+    }
 
     this.setHasSkippedThisWeek(hasSkipped)
     this.setDisableEditTime(disableEditTime)
 
     if (!hasSkipped) {
-      const times = res.data.map((item: { signTime: string }) => item.signTime)
+      const times = res.data.list.map((item: { signTime: string }) => item.signTime)
       this.setTimes(times)
     }
   }
@@ -76,7 +77,7 @@ export default class Times extends React.Component<ITimesProps, any> {
   }
 
   componentDidMount() {
-    this.getAvailableTimes()
+    this.getReservedTimes()
   }
 
   constructor(props: ITimesProps) {

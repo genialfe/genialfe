@@ -4,11 +4,10 @@ import { observer } from 'mobx-react'
 import { observable, action, makeObservable } from 'mobx'
 import { Spin } from 'antd'
 import Usercardlist, { IUserData } from './UsercardList'
-// import { getAvailableTimes } from '../Meetings/api'
+import { getReservedTimesAndMatchStatus } from '../Meetings/api'
 import { getMatchedUserlist, getRecommendUserlist } from './api'
 
 import './style.less'
-import { getAvailableTimesAndMatchStatus } from '../Meetings/api'
 
 export interface IHomeProps {}
 
@@ -40,25 +39,29 @@ export default class Home extends React.Component<IHomeProps, any> {
     return type === this.selectedItem ? 'sideButtonSelected' : 'sideButton'
   }
 
-  // to be continued
-  async checkMeetingReserved() {
-    const res = await getAvailableTimesAndMatchStatus()
-    if (res.data) {
-      let hasSkipped = false
-      res.data.forEach((item: { signTime: string; signStatus: number }) => {
-        if (item.signStatus === 3) {
-          hasSkipped = true
-        }
-      })
+  // 判断用户这周是否选择过时间段
+  async checkTimesReserved() {
+    let hasSkipped = false
 
-      const hasNoTimes = res.data.length === 0
-      if (!hasSkipped && hasNoTimes) {
+    const res = await getReservedTimesAndMatchStatus()
+    const { data } = res
+    console.log("checkStatusRes:", res)
+    if (data) {
+      // 判断该用户是否跳转
+      const { status } = data
+      if(status === 4) {
+        hasSkipped = true
+      }
+
+      // 用户没选择过时间 即data.list为null 并且没跳过这周 则需要跳转 
+      if (!hasSkipped && !data.list) {
         sessionStorage.setItem('need_time_selection', '1')
         location.pathname = 'weekly'
       }
     }
   }
 
+  // 获取首页展示用户列表
   async getHomeUserlist(type: EHomeItemType) {
     if (type === EHomeItemType.Explore) {
       const matchRes = await getMatchedUserlist()
@@ -92,7 +95,7 @@ export default class Home extends React.Component<IHomeProps, any> {
     })
 
     // 查看用户是否选择过下一周的空闲时间段
-    this.checkMeetingReserved()
+    this.checkTimesReserved()
   }
 
   render() {
