@@ -5,6 +5,7 @@ import { MenuUnfoldOutlined } from '@ant-design/icons'
 import { observable, action, makeObservable } from 'mobx'
 import { observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
+import { getObjectivesList } from '../Register/apis'
 import UserAvatar from './UserAvatar'
 import UserInterests from './UserInterests'
 import ConnectionBar from './InvitationCodeBar'
@@ -15,6 +16,11 @@ import './style.less'
 const cookies = new Cookies()
 
 // be careful there is wrapper file for profile component
+
+export interface IGoalIdMap {
+  goal: string
+  id: string
+}
 
 export interface IProfileProps {
   /**
@@ -44,9 +50,14 @@ export interface IProfileProps {
 @observer
 export default class Profile extends React.Component<IProfileProps, any> {
   isEditMode: boolean = false
+  goalsDefaultValue: string[] = []
 
   setEditMode(value: boolean) {
     this.isEditMode = value
+  }
+
+  setGoalsDefaultValue(value: string[]) {
+    this.goalsDefaultValue = value
   }
 
   onClickOperation(e: any) {
@@ -55,6 +66,25 @@ export default class Profile extends React.Component<IProfileProps, any> {
       location.pathname = '/'
     } else if (e.key === 'edit') {
       this.setEditMode(true)
+    }
+  }
+
+  async getGoalsDefaultValue() {
+    const { goalIds } = this.props
+    const res = await getObjectivesList()
+    if (res.data) {
+      const goalIdMap: IGoalIdMap[] = res.data.map(
+        (item: { id: string; goal: string }) => {
+          return {
+            id: item.id,
+            goal: item.goal
+          }
+        }
+      )
+      const goalsDefaultValue = goalIds.split(',').map(goalId => {
+        return goalIdMap.find(item => item.id === goalId)!.goal
+      })
+      this.setGoalsDefaultValue(goalsDefaultValue)
     }
   }
 
@@ -67,13 +97,21 @@ export default class Profile extends React.Component<IProfileProps, any> {
     )
   }
 
+  componentDidMount() {
+    // this.getGoalsDefaultValue()
+  }
+
   constructor(props: IProfileProps) {
     super(props)
     this.setEditMode = this.setEditMode.bind(this)
     makeObservable(this, {
       isEditMode: observable,
-      setEditMode: action
+      goalsDefaultValue: observable.ref,
+      setEditMode: action,
+      setGoalsDefaultValue: action
     })
+
+    // this.setGoalsDefaultValue()
   }
 
   render() {
@@ -126,6 +164,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
                 interests={interest}
                 interestsIds={interestIds}
                 goalIds={goalIds}
+                // goalsDefaultValue={this.goalsDefaultValue}
               />
               <ConnectionBar />
             </>

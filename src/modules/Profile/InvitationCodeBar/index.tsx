@@ -90,7 +90,10 @@ export default class InvitationCodeBar extends React.Component<
           </div>
         )}
         {!this.hasGeneratedInvitationCode && (
-          <Button type="ghost" onClick={() => this.handleGenerateInvitationCode()}>
+          <Button
+            type="ghost"
+            onClick={() => this.handleGenerateInvitationCode()}
+          >
             生成我的邀请链接
           </Button>
         )}

@@ -64,7 +64,7 @@ export default class EditProfile extends React.Component<
   }
 
   async handleSubmitProfile() {
-    if(this.introduction.length < 30) {
+    if (this.introduction.length < 30) {
       message.info('自我介绍不能少于30个字')
       return
     }
@@ -198,7 +198,9 @@ export default class EditProfile extends React.Component<
                 value={this.introduction}
                 onChange={(e: any) => this.setIntroduction(e.target.value)}
               />
-              <p style={{textAlign: 'right', color: 'grey'}}>当前字数:{this.introduction.length}</p>
+              <p style={{ textAlign: 'right', color: 'grey' }}>
+                当前字数:{this.introduction.length}
+              </p>
             </Col>
           </Row>
         </div>

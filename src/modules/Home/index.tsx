@@ -45,15 +45,15 @@ export default class Home extends React.Component<IHomeProps, any> {
 
     const res = await getReservedTimesAndMatchStatus()
     const { data } = res
-    console.log("checkStatusRes:", res)
+    console.log('checkStatusRes:', res)
     if (data) {
       // 判断该用户是否跳转
       const { status } = data
-      if(status === 4) {
+      if (status === 4) {
         hasSkipped = true
       }
 
-      // 用户没选择过时间 即data.list为null 并且没跳过这周 则需要跳转 
+      // 用户没选择过时间 即data.list为null 并且没跳过这周 则需要跳转
       if (!hasSkipped && !data.list) {
         sessionStorage.setItem('need_time_selection', '1')
         location.pathname = 'weekly'

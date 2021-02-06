@@ -34,7 +34,11 @@ export default class Times extends React.Component<ITimesProps, any> {
 
   get bookedTimes() {
     const timesContent = this.times.map((time, index) => {
-      return <Item key={index} dot={<ClockCircleOutlined />}>{time}</Item>
+      return (
+        <Item key={index} dot={<ClockCircleOutlined />}>
+          {time}
+        </Item>
+      )
     })
     return <Timeline>{timesContent}</Timeline>
   }
@@ -46,10 +50,12 @@ export default class Times extends React.Component<ITimesProps, any> {
 
     const res = await getReservedTimesAndMatchStatus()
     const { data } = res
-    if(data) {
-      if(data.status === 4) {  // 用户已经选择跳过这周
+    if (data) {
+      if (data.status === 4) {
+        // 用户已经选择跳过这周
         hasSkipped = true
-      } else if (data.status === 3) {  // 已经匹配成功
+      } else if (data.status === 3) {
+        // 已经匹配成功
         disableEditTime = true
       }
     }
@@ -58,7 +64,9 @@ export default class Times extends React.Component<ITimesProps, any> {
     this.setDisableEditTime(disableEditTime)
 
     if (!hasSkipped) {
-      const times = res.data.list.map((item: { signTime: string }) => item.signTime)
+      const times = res.data.list.map(
+        (item: { signTime: string }) => item.signTime
+      )
       this.setTimes(times)
     }
   }

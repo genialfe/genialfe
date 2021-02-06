@@ -4,11 +4,11 @@ import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import { Button, Tag, Tooltip, Modal, Select, message } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-import { getInterestsList } from '../../Register/apis'
+import { getInterestsList, getObjectivesList } from '../../Register/apis'
 import { IInterest } from '../../Register/Interests'
+import { editUserInterests } from '../api'
 
 import './style.less'
-import { editUserInterests } from '../api'
 
 const { Option } = Select
 
@@ -21,10 +21,19 @@ export interface IUserInterestProps {
    * 用户兴趣id
    */
   interestsIds?: string
-  /**
+  /**
    * 用户目标id
    */
-  goalIds?: string
+  goalIds: string
+  /**
+   * 用户目标数组 形如['','']
+   */
+  goalsDefaultValue?: string[]
+}
+
+export interface IGoalId {
+  goal: string
+  id: string
 }
 
 @observer
@@ -37,6 +46,12 @@ export default class UserInterests extends React.Component<
   baseInterestsList: IInterest[] = []
   newInterestsList: string[] = []
   newInterestsIdList: string[] = []
+
+  baseGoalsIdsList: IGoalId[] = []
+
+  setBaseGoalsIdsList(list: IGoalId[]) {
+    this.baseGoalsIdsList = list
+  }
 
   setModalVisible(visible: boolean) {
     this.modalVisible = visible
@@ -89,6 +104,20 @@ export default class UserInterests extends React.Component<
     }
   }
 
+  async getBaseGoalsList() {
+    let goalsIdList
+    const res = await getObjectivesList()
+    if (res.data) {
+      goalsIdList = res.data.map((item: { goal: string; id: string }) => {
+        return {
+          goal: item.goal,
+          id: item.id
+        }
+      })
+      this.setBaseGoalsIdsList(goalsIdList)
+    }
+  }
+
   handleInterestsSelectChange(value: any) {
     this.setNewInterestsList(value)
     const idArray = this.newInterestsList.map(item => {
@@ -97,6 +126,10 @@ export default class UserInterests extends React.Component<
       )!.id
     })
     this.setNewInterestsIdList(idArray)
+  }
+
+  handleGoalsSelectChange(value: any) {
+    console.log('goals value:', value)
   }
 
   get tagList() {
@@ -111,20 +144,29 @@ export default class UserInterests extends React.Component<
     })
   }
 
-  get interestsList() {
-    const interestsList: any[] = []
-    for (let i = 10; i < 36; i++) {
-      interestsList.push(
-        <Option value={i} key={i.toString(36) + i}>
-          {i.toString(36) + i}
+  get interestsSelectList() {
+    return this.baseInterestsList.map(item => {
+      return (
+        <Option value={item.interest} key={item.id}>
+          {item.interest}
         </Option>
       )
-    }
-    return interestsList
+    })
+  }
+
+  get goalsSelectList() {
+    return this.baseGoalsIdsList.map(item => {
+      return (
+        <Option value={item.goal} key={item.id}>
+          {item.goal}
+        </Option>
+      )
+    })
   }
 
   componentDidMount() {
     this.getBaseInterestsList()
+    this.getBaseGoalsList()
   }
 
   constructor(props: IUserInterestProps) {
@@ -132,30 +174,26 @@ export default class UserInterests extends React.Component<
     makeObservable(this, {
       modalVisible: observable,
       confirmLoading: observable,
+      baseGoalsIdsList: observable.ref,
       baseInterestsList: observable.ref,
       newInterestsList: observable.ref,
       setModalVisible: action,
       setConfirmLoading: action,
-      setNewInterestsList: action
+      setNewInterestsList: action,
+      setBaseGoalsIdsList: action
     })
   }
 
   render() {
-    const { interests, interestsIds, goalIds } = this.props
-    const interestsSelectList = this.baseInterestsList.map(item => {
-      return (
-        <Option value={item.interest} key={item.id}>
-          {item.interest}
-        </Option>
-      )
-    })
+    const { interests, interestsIds, goalIds, goalsDefaultValue } = this.props
+
     return (
       <div className="container">
         <p className="introTitle">兴趣</p>
         <div style={{ display: 'flex' }}>
           <div>{this.tagList}</div>
           <div style={{ flex: 1, textAlign: 'right' }}>
-            <Tooltip title="修改兴趣和目标">
+            <Tooltip title="修改兴趣">
               <Button
                 shape="round"
                 icon={<EditOutlined />}
@@ -164,7 +202,7 @@ export default class UserInterests extends React.Component<
             </Tooltip>
           </div>
         </div>
-        {/* modal中使用下拉框来增删用户的兴趣 */}
+        {/* modal中使用下拉框来增删用户的兴趣和目标 */}
         <Modal
           visible={this.modalVisible}
           onOk={() => this.handleSubmitModalData()}
@@ -179,13 +217,28 @@ export default class UserInterests extends React.Component<
             mode="multiple"
             allowClear
             style={{ width: '100%' }}
-            placeholder="Please select"
+            placeholder="请选择"
             showArrow
             defaultValue={interests.split(',')}
             onChange={(value: any) => this.handleInterestsSelectChange(value)}
           >
-            {interestsSelectList}
+            {this.interestsSelectList}
           </Select>
+
+          {/* here to be continued!!!!!!!! */}
+
+          {/* <p className="introTitle" style={{marginTop: '20px'}}>目标</p>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: '100%' }}
+            placeholder="请选择"
+            showArrow
+            defaultValue={goalsDefaultValue}
+            onChange={(value: any) => this.handleGoalsSelectChange(value)}
+          >
+            {this.goalsSelectList}
+          </Select> */}
         </Modal>
       </div>
     )
