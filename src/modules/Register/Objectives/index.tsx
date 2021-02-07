@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Button, message } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react'
-import { IObjCardItem, IObjectives } from '../model'
+import { IObjCardItem } from '../model'
 import Advice from '../../../static/goals/advice.svg'
 import Brainstorm from '../../../static/goals/brainstorm.svg'
 import Business from '../../../static/goals/business.svg'
@@ -123,15 +123,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     }
   ]
 
-  objectives: IObjectives = {
-    items: []
-  }
-
-  addObjective(objective: string) {
-    if (this.objectives.items.indexOf(objective) === -1) {
-      this.objectives.items.push(objective)
-    }
-  }
+  selectedGoalIds: number[] = []
 
   increCurrentSubStep() {
     this.currentSubStep++
@@ -147,16 +139,30 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     this.items[key - 1].selected = target
   }
 
-  async handleSubmitObjectives() {
-    let objectives: string[] = []
-    let ids: number[] = []
-    this.items.forEach(item => {
-      if (item.selected) {
-        objectives.push(item.name)
-        ids.push(item.key)
+  setSelectedGoalId(id: number) {
+    const index = this.selectedGoalIds.findIndex(goalId => goalId === id)
+    // console.log("index:", index)
+    if(index > -1) {  // 该id已经在列表中
+      this.selectedGoalIds.splice(index, 1)
+    } else {
+      if(this.selectedGoalIds.length < 3) {
+        this.selectedGoalIds.push(id)
+      } else {
+        message.info('最多选择三项')
       }
-    })
-    const goalIds = ids.join()
+    }
+  }
+
+  handleClickObjCard(goalId: number) {
+    this.setSelectedGoalId(goalId)
+  }
+
+  getObjCardClassName(id: number) {
+    return this.selectedGoalIds.includes(id) ? 'objCardSelected' : 'objCard'
+  }
+
+  async handleSubmitObjectives() {
+    const goalIds = this.selectedGoalIds.join()
     sessionStorage.setItem('goalIds', goalIds)
     const id = sessionStorage.getItem('id')
     if (id) {
@@ -170,8 +176,6 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     } else {
       message.info('出错了，请尝试重新注册')
     }
-
-    // sessionStorage.setItem('objectives', JSON.stringify(objectives))
   }
 
   returnPreviousStep() {
@@ -182,16 +186,12 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   get objectivesCardList() {
     const isMobileScreen = window.matchMedia('(max-width:500px)').matches
     return this.items.map((item, index) => {
-      const handleClickObjCard = () => {
-        this.addObjective(item.name)
-        this.switchObjectiveSelected(item.key)
-      }
       return (
         <>
           <Col span={isMobileScreen ? 12 : 6}>
             <div
-              className={item.selected ? 'objCardSelected' : 'objCard'}
-              onClick={handleClickObjCard}
+              className={this.getObjCardClassName(item.key)}
+              onClick={() => this.handleClickObjCard(item.key)}
               key={index}
             >
               <img src={item.src} alt={item.name} className="goalImg" />
@@ -218,13 +218,13 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
     this.decreCurrentSubStep = this.decreCurrentSubStep.bind(this)
 
     makeObservable(this, {
-      objectives: observable,
       items: observable,
       currentSubStep: observable,
+      selectedGoalIds: observable,
       increCurrentSubStep: action,
       decreCurrentSubStep: action,
-      addObjective: action,
-      switchObjectiveSelected: action
+      switchObjectiveSelected: action,
+      setSelectedGoalId: action
     })
   }
 
@@ -235,7 +235,7 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
           <div className="objectivesContainer">
             <p className="objectivesHeader">你的目标是什么?</p>
             <p className="objectivesExp">
-              你的目标不会展示给他人，但是能够帮助我们找到适合你的匹配对象。
+              最多选择三项。你的目标不会展示给他人，但是能够帮助我们找到适合你的匹配对象。
             </p>
             <Row gutter={[8, 8]}>{this.objectivesCardList}</Row>
 
