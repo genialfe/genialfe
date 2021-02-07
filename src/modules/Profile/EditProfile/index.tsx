@@ -68,6 +68,10 @@ export default class EditProfile extends React.Component<
       message.info('自我介绍不能少于30个字')
       return
     }
+    if (!this.userName.length) {
+      message.info('名字不能为空')
+      return
+    }
     const params = this.ossUrl.length
       ? {
           headImg: this.ossUrl,
