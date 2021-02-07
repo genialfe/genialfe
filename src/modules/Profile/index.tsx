@@ -87,6 +87,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
       async onOk() {
         const res = await deleteUser()
         if (res.code === 200) {
+          cookies.remove('token')
           location.pathname = '/'
         }
       },
