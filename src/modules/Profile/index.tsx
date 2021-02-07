@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
-import { Card, Dropdown, Menu, Tooltip } from 'antd'
-import { MenuUnfoldOutlined } from '@ant-design/icons'
+import { Card, Dropdown, Menu, Tooltip, Modal } from 'antd'
+import { MenuUnfoldOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { observable, action, makeObservable } from 'mobx'
 import { observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
@@ -10,9 +10,11 @@ import UserAvatar from './UserAvatar'
 import UserInterests from './UserInterests'
 import ConnectionBar from './InvitationCodeBar'
 import EditProfile from './EditProfile'
+import { deleteUser } from './api'
 
 import './style.less'
 
+const { confirm } = Modal
 const cookies = new Cookies()
 
 // be careful there is wrapper file for profile component
@@ -66,7 +68,27 @@ export default class Profile extends React.Component<IProfileProps, any> {
       location.pathname = '/'
     } else if (e.key === 'edit') {
       this.setEditMode(true)
+    } else if (e.key === 'delete') {
+      this.handleDeleteAccount()
+      console.log("delete")
     }
+  }
+
+  handleDeleteAccount() {
+    confirm({
+      title: '确认要注销账号吗？',
+      icon: <ExclamationCircleOutlined />,
+      cancelText: '我再想想',
+      okText: '确认注销',
+      content: '注销账号的操作不可撤销，你的一切数据都会被永久删除。我们欢迎你在任何时候重新注册，但是你使用过的邀请链接将会失效。',
+      async onOk() {
+        const res = await deleteUser()
+        if(res.code === 200) {
+          location.pathname = '/'
+        }
+      },
+      onCancel() {}
+    })
   }
 
   async getGoalsDefaultValue() {
@@ -93,6 +115,7 @@ export default class Profile extends React.Component<IProfileProps, any> {
       <Menu onClick={e => this.onClickOperation(e)}>
         <Menu.Item key="edit">修改信息</Menu.Item>
         <Menu.Item key="logout">退出登录</Menu.Item>
+        <Menu.Item key="delete" style={{color: 'grey'}}>注销账号</Menu.Item>
       </Menu>
     )
   }
