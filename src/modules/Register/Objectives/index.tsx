@@ -142,10 +142,11 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   setSelectedGoalId(id: number) {
     const index = this.selectedGoalIds.findIndex(goalId => goalId === id)
     // console.log("index:", index)
-    if(index > -1) {  // 该id已经在列表中
+    if (index > -1) {
+      // 该id已经在列表中
       this.selectedGoalIds.splice(index, 1)
     } else {
-      if(this.selectedGoalIds.length < 3) {
+      if (this.selectedGoalIds.length < 3) {
         this.selectedGoalIds.push(id)
       } else {
         message.info('最多选择三项')

@@ -169,7 +169,7 @@ export default class Register extends React.Component<IRegisterProps, any> {
               placeholder="输入你的名字"
               onChange={(e: any) => this.setUserName(e.target.value)}
             />
-            <p style={{ textAlign: 'left', color: 'grey' }}>
+            <p style={{ textAlign: 'left', color: 'grey', marginTop: '8px' }}>
               *建议使用真实姓名
             </p>
           </>
