@@ -44,63 +44,75 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   items: IGoal[] = [
     {
       id: '1',
-      goalImg: 'https://oss.genial.ltd/a8cfd/40067398c2f7ec938e51e4048ed88b14.svg',
-      goal: '寻求建议',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/40067398c2f7ec938e51e4048ed88b14.svg',
+      goal: '寻求建议'
     },
     {
       id: '2',
-      goalImg: 'https://oss.genial.ltd/a8cfd/ef729701181051036c435382ead26caa.svg',
-      goal: '头脑风暴',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/ef729701181051036c435382ead26caa.svg',
+      goal: '头脑风暴'
     },
     {
       id: '3',
-      goalImg: 'https://oss.genial.ltd/a8cfd/1d86f3c32e00691b46d2526de67cba6f.svg',
-      goal: '业务发展',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/1d86f3c32e00691b46d2526de67cba6f.svg',
+      goal: '业务发展'
     },
     {
       id: '4',
-      goalImg: 'https://oss.genial.ltd/a8cfd/889b9b43deecd4ae6f246d4aa5e91cf2.svg',
-      goal: '寻找合作伙伴',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/889b9b43deecd4ae6f246d4aa5e91cf2.svg',
+      goal: '寻找合作伙伴'
     },
     {
       id: '5',
-      goalImg: 'https://oss.genial.ltd/a8cfd/39e3bbba2da086acb0c023f7ad9600c1.svg',
-      goal: '寻找创业比赛队友',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/39e3bbba2da086acb0c023f7ad9600c1.svg',
+      goal: '寻找创业比赛队友'
     },
     {
       id: '6',
-      goalImg: 'https://oss.genial.ltd/a8cfd/9d67d06d30691718024b36be12931059.svg',
-      goal: '探索其他公司',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/9d67d06d30691718024b36be12931059.svg',
+      goal: '探索其他公司'
     },
     {
       id: '7',
-      goalImg: 'https://oss.genial.ltd/a8cfd/707e2056722500961a1d7534f9be08c5.svg',
-      goal: '探索新项目',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/707e2056722500961a1d7534f9be08c5.svg',
+      goal: '探索新项目'
     },
     {
       id: '8',
-      goalImg: 'https://oss.genial.ltd/a8cfd/93d3fca9d64c357377432ed138bf5f32.svg',
-      goal: '筹集资金',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/93d3fca9d64c357377432ed138bf5f32.svg',
+      goal: '筹集资金'
     },
     {
       id: '9',
-      goalImg: 'https://oss.genial.ltd/a8cfd/665bdd4be0b0476f71a31504ea0f30fd.svg',
-      goal: '投资',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/665bdd4be0b0476f71a31504ea0f30fd.svg',
+      goal: '投资'
     },
     {
       id: '10',
-      goalImg: 'https://oss.genial.ltd/a8cfd/c20ecad48ed187151eef7a649ba67676.svg',
-      goal: '遇见有趣的人',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/c20ecad48ed187151eef7a649ba67676.svg',
+      goal: '遇见有趣的人'
     },
     {
       id: '11',
-      goalImg: 'https://oss.genial.ltd/a8cfd/2a4b5c111c7083a34e09607585b2c953.svg',
-      goal: '指导别人',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/2a4b5c111c7083a34e09607585b2c953.svg',
+      goal: '指导别人'
     },
     {
       id: '12',
-      goalImg: 'https://oss.genial.ltd/a8cfd/c81f80aa9d3b53f22f3435e3a45aa36d.svg',
-      goal: '发展团队',
+      goalImg:
+        'https://oss.genial.ltd/a8cfd/c81f80aa9d3b53f22f3435e3a45aa36d.svg',
+      goal: '发展团队'
     }
   ]
 

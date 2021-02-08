@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
 import { isPhoneNumber } from '../../utils/validate'
 import LoginPic from '../../static/cities-graphic.svg'
+import { getInvitationCode } from '../Profile/api'
 import { getUserStatus, sendVerificationCode } from '../Register/apis'
 import { login } from './api'
 
@@ -118,6 +119,13 @@ export default class Login extends React.Component<ILoginProps, any> {
     }
   }
 
+  async checkHasLoggedIn() {
+    const testApiRes = await getInvitationCode()
+    if (testApiRes.code === 200) {
+      this.redirectToStartPage()
+    }
+  }
+
   redirectToStartPage() {
     location.pathname = '/'
   }
@@ -132,6 +140,8 @@ export default class Login extends React.Component<ILoginProps, any> {
       setHasSentVerifyCode: action,
       setVerifyCode: action
     })
+
+    this.checkHasLoggedIn()
   }
 
   render() {
