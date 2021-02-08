@@ -22,7 +22,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
   }
 
   isPhoneNumber(number: string) {
-    const reg = /^0?1[3|4|5|6|7|8][0-9]\d{8}$/
+    const reg = /^0?1[3|4|5|6|7|8|9][0-9]\d{8}$/
     return reg.test(number)
   }
 
