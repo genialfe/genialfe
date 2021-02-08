@@ -4,7 +4,7 @@ import { Col, Row } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
-import startPageCover from '../../static/startPageCover.svg'
+// import startPageCover from '../../static/startPageCover.svg'
 import { getInvitationCode } from '../Profile/api'
 import SignUp from './SignUp'
 import Explain from './Explain'
@@ -53,14 +53,25 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
             </div>
           </div>
           <div className="col-12">
-            <img className="startPageCover" src={startPageCover} alt=""></img>
+            {/* <img className="startPageCover" src={startPageCover} alt=""></img> */}
+            <img
+              className="startPageCover"
+              src="https://oss.genial.ltd/a8cfd/93f0ba99d661e14c66dc17be8c90c230.svg"
+              alt=""
+            ></img>
           </div>
         </div>
 
         {isMobileScreen && (
           <div className="mobileSignUpContainer">
             <SignUp />
-            <img src={startPageCover} width={330} height={250} alt=""></img>
+            {/* <img src={startPageCover} width={330} height={250} alt=""></img> */}
+            <img
+              src="https://oss.genial.ltd/a8cfd/93f0ba99d661e14c66dc17be8c90c230.svg"
+              width={330}
+              height={250}
+              alt=""
+            ></img>
           </div>
         )}
         {!isMobileScreen && (
