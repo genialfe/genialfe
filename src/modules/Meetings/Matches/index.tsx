@@ -2,7 +2,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
-import { Button, Empty, message, Timeline, Modal, Avatar } from 'antd'
+import { Button, Empty, message, Timeline, Modal } from 'antd'
 import { CheckCircleOutlined, UserSwitchOutlined } from '@ant-design/icons'
 import { enterMeeting, getMatchDetail, getMatchesMonthly } from '../api'
 import { IVideoCallProps } from '../VideoCall'
@@ -198,6 +198,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
           />
         )}
         {this.matchesContent}
+        <p style={{color: 'gray'}}>- 建议使用PC端Chrome浏览器开启会议</p>
       </div>
     )
   }
