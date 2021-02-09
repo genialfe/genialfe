@@ -153,6 +153,10 @@ export default class Objectives extends React.Component<IObjectivesProps, any> {
   }
 
   async handleSubmitObjectives() {
+    if(!this.selectedGoalIds.length) {
+      message.info('请至少选择一个目标')
+      return
+    }
     const goalIds = this.selectedGoalIds.join()
     sessionStorage.setItem('goalIds', goalIds)
     const id = sessionStorage.getItem('id')

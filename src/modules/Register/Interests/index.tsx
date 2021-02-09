@@ -1,6 +1,6 @@
 import React from 'react'
 import { action, makeObservable, observable } from 'mobx'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { observer } from 'mobx-react'
 import InterestsTagBox from './InterestsTagBox'
 import { business, sciTech, social } from './constants'
@@ -75,6 +75,11 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     this.stateArrayToList('business')
     this.stateArrayToList('sciTech')
     this.stateArrayToList('social')
+
+    if(!this.interests.length) {
+      message.info('请至少选择一项')
+      return
+    }
 
     const interest = this.interests.join()
     const interestIds = this.interestIds.join()

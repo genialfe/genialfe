@@ -59,7 +59,7 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
       } else if (status === 2) {
         message.info('验证码发送失败，请稍后重试')
       } else if (status === 3) {
-        message.info('发送过于频繁，请稍后再试')
+        location.pathname = '/register'
       }
     }
   }
