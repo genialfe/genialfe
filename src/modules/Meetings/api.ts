@@ -49,13 +49,11 @@ export function endMeeting(matchId: string) {
   })
 }
 
-
 export interface IMeetingFeedback {
   evaluation?: string
   matchId: string
   star: number
 }
-
 
 /**
  * 提交会议反馈

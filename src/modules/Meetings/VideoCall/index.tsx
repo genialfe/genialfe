@@ -5,7 +5,8 @@ import {
   PlusCircleTwoTone,
   PauseCircleTwoTone,
   CloseCircleTwoTone,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  MehOutlined
 } from '@ant-design/icons'
 import StreamPlayer from 'agora-stream-player'
 import { useMediaStream } from './hooks'
@@ -102,6 +103,7 @@ function App(props: IVideoCallProps) {
   const [feedbackModalVisible, setFeedbackModalVisible] = useState(false)
   const [rate, setRate] = useState(5)
   const [feedback, setFeedback] = useState('')
+  const [matchAbsentModalVisible, setMatchAbsentModalVisible] = useState(false)
 
   // let [localStream, remoteStreamList] = useMediaStream(agoraClient)
   let [localStream, remoteStream] = useMediaStream(agoraClient)
@@ -272,7 +274,7 @@ function App(props: IVideoCallProps) {
       evaluation: feedback
     }
     const res = await submitMeetingFeedback(params)
-    if(res.code === 200) {
+    if (res.code === 200) {
       const hide = message.success('感谢你的反馈', 0)
       setTimeout(() => {
         hide()
@@ -281,7 +283,40 @@ function App(props: IVideoCallProps) {
     }
   }
 
-  const desc = ['地狱级别的糟糕!', '非常糟糕', '糟糕', '普通', '良好', '非常好', '印象深刻的优秀!']
+  const handleMatcherAbsent = () => {
+    const { channel } = props
+    confirm({
+      title: '对方没有进入会议?',
+      icon: <MehOutlined />,
+      visible: matchAbsentModalVisible,
+      content:
+        '如果你确认现在是预定的会议时间，并且对方没有加入会议，那么请点击下方的确认按钮。Genial会在核实情况后对无故缺席会议的用户进行一定程度的惩罚。',
+      async onOk() {
+        const params = {
+          evaluation: '对方缺席会议',
+          star: -1,
+          matchId: channel
+        }
+        const res = await submitMeetingFeedback(params)
+        if (res.code) {
+          message.info('提交成功，感谢你的反馈')
+          setMatchAbsentModalVisible(false)
+        }
+      },
+      okText: '确认',
+      cancelText: '取消'
+    })
+  }
+
+  const desc = [
+    '地狱级别的糟糕!',
+    '非常糟糕',
+    '糟糕',
+    '普通',
+    '良好',
+    '非常好',
+    '印象深刻的优秀!'
+  ]
 
   return (
     <>
@@ -308,7 +343,9 @@ function App(props: IVideoCallProps) {
                     会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。
                   </p>
                   <p>双方都接入后，就开始和你的匹配对象打一声招呼吧！</p>
-                  <a>对方没有进入会议？</a>
+                  <p className="absentAlert" onClick={handleMatcherAbsent}>
+                    对方没有进入会议？
+                  </p>
                 </Panel>
               </Collapse>
             </div>
@@ -327,34 +364,30 @@ function App(props: IVideoCallProps) {
           </div>
         </>
       )}
-      {
-        feedbackModalVisible &&
-        <div className='meetingFeedbackContainer'>
-          <div style={{margin: '1.4em', textAlign: 'center'}}>
-            <p style={{fontSize: '18px', fontWeight: 400}}>给刚才的会议体验打个分吧!</p>
-            <Rate
-              count={7}
-              onChange={handleRateChange}
-              value={rate}
-            />
-            <p style={{color: 'gray', marginTop: '10px'}}>{ rate ? desc[rate - 1] : ''}</p>
+      {feedbackModalVisible && (
+        <div className="meetingFeedbackContainer">
+          <div style={{ margin: '1.4em', textAlign: 'center' }}>
+            <p style={{ fontSize: '18px', fontWeight: 400 }}>
+              给刚才的会议体验打个分吧!
+            </p>
+            <Rate count={7} onChange={handleRateChange} value={rate} />
+            <p style={{ color: 'gray', marginTop: '10px' }}>
+              {rate ? desc[rate - 1] : ''}
+            </p>
             <textarea
               className="textAreaInput"
               rows={6}
-              placeholder='有什么想要反馈的吗？'
+              placeholder="有什么想要反馈的吗？"
               value={feedback}
               onChange={(e: any) => setFeedback(e.target.value)}
             />
 
-            <Button
-              type='primary'
-              onClick={handleSubmitMeetingFeedback}
-            >
+            <Button type="primary" onClick={handleSubmitMeetingFeedback}>
               提交
             </Button>
           </div>
         </div>
-      }
+      )}
     </>
   )
 }
