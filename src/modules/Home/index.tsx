@@ -45,7 +45,6 @@ export default class Home extends React.Component<IHomeProps, any> {
 
     const res = await getReservedTimesAndMatchStatus()
     const { data } = res
-    console.log('checkStatusRes:', res)
     if (data) {
       // 判断该用户是否跳转
       const { status } = data

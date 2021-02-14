@@ -57,7 +57,7 @@ export default class InvitationCodeBar extends React.Component<
   }
 
   get tootipContent() {
-    return '将你的邀请链接复制粘贴给你的朋友,他能够通过访问这个链接来加入Genial.不过你最多只能邀请三个朋友入驻.'
+    return '将你的邀请链接复制粘贴给你的朋友,他能够通过访问这个链接来加入Genial.你最多能邀请20个朋友入驻.'
   }
 
   componentDidMount() {

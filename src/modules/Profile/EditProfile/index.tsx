@@ -64,8 +64,8 @@ export default class EditProfile extends React.Component<
   }
 
   async handleSubmitProfile() {
-    if (this.introduction.length < 30) {
-      message.info('自我介绍不能少于30个字')
+    if (this.introduction.length < 15) {
+      message.info('自我介绍不能少于15个字')
       return
     }
     if (!this.userName.length) {

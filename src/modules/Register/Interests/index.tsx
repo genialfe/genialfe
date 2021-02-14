@@ -76,7 +76,7 @@ export default class Interests extends React.Component<IInterestsProps, any> {
     this.stateArrayToList('sciTech')
     this.stateArrayToList('social')
 
-    if(!this.interests.length) {
+    if (!this.interests.length) {
       message.info('请至少选择一项')
       return
     }

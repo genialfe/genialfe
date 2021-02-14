@@ -6,9 +6,9 @@ import { Button, Empty, message, Timeline, Modal } from 'antd'
 import { CheckCircleOutlined, UserSwitchOutlined } from '@ant-design/icons'
 import { enterMeeting, getMatchDetail, getMatchesMonthly } from '../api'
 import { IVideoCallProps } from '../VideoCall'
+import UserAvatar from '../../Profile/UserAvatar'
 
 import './style.less'
-import UserAvatar from '../../Profile/UserAvatar'
 
 export interface IMatchUserProfile {
   userName: string
@@ -198,7 +198,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
           />
         )}
         {this.matchesContent}
-        <p style={{color: 'gray'}}>- 建议使用PC端Chrome浏览器开启会议</p>
+        <p style={{ color: 'gray' }}>- 建议使用PC端Chrome浏览器开启会议</p>
       </div>
     )
   }

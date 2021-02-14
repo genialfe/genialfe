@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useReducer, useState } from 'react'
-import { Button, message, Collapse, Modal } from 'antd'
+import { Button, message, Collapse, Modal, Drawer, Rate } from 'antd'
 import {
   PlusCircleTwoTone,
   PauseCircleTwoTone,
@@ -12,6 +12,7 @@ import { useMediaStream } from './hooks'
 import AgoraRTC from './utils/AgoraEnhancer'
 
 import './style.less'
+import { submitMeetingFeedback } from '../api'
 
 const { Panel } = Collapse
 const { confirm } = Modal
@@ -98,6 +99,9 @@ function App(props: IVideoCallProps) {
   const [isPublished, setIsPublished] = useState(false)
   const [state, dispatch] = useReducer(reducer, defaultState)
   const [isLoading, setIsLoading] = useState(false)
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false)
+  const [rate, setRate] = useState(5)
+  const [feedback, setFeedback] = useState('')
 
   // let [localStream, remoteStreamList] = useMediaStream(agoraClient)
   let [localStream, remoteStream] = useMediaStream(agoraClient)
@@ -212,7 +216,7 @@ function App(props: IVideoCallProps) {
       content: '离开后可能无法重新加入会议。',
       onOk() {
         leave()
-        location.pathname = '/meetings'
+        setFeedbackModalVisible(true)
       },
       onCancel() {
         console.log('Cancel')
@@ -256,49 +260,101 @@ function App(props: IVideoCallProps) {
     )
   }
 
+  const handleRateChange = (value: number) => {
+    setRate(value)
+  }
+
+  const handleSubmitMeetingFeedback = async () => {
+    const { channel } = props
+    const params = {
+      matchId: channel,
+      star: rate,
+      evaluation: feedback
+    }
+    const res = await submitMeetingFeedback(params)
+    if(res.code === 200) {
+      const hide = message.success('感谢你的反馈', 0)
+      setTimeout(() => {
+        hide()
+        location.pathname = '/home'
+      }, 600)
+    }
+  }
+
+  const desc = ['地狱级别的糟糕!', '非常糟糕', '糟糕', '普通', '良好', '非常好', '印象深刻的优秀!']
+
   return (
     <>
-      <div style={{ textAlign: 'center', margin: '26px auto' }}>
-        <JoinLeaveBtn />
-        <PubUnpubBtn />
-        <LeaveButton />
+      {!feedbackModalVisible && (
+        <>
+          <div style={{ textAlign: 'center', margin: '26px auto' }}>
+            <JoinLeaveBtn />
+            <PubUnpubBtn />
+            <LeaveButton />
 
-        <div className="explainContainer">
-          <Collapse defaultActiveKey="1">
-            <Panel header="使用说明" key="1" style={{ textAlign: 'start' }}>
-              <p>
-                <PlusCircleTwoTone twoToneColor="#52c41a" />{' '}
-                点击加入会议按钮，并允许浏览器使用摄像头和麦克风，即可加入视频会议。
-              </p>
-              <p>
-                <PauseCircleTwoTone />{' '}
-                点击暂停接入按钮，你的视频和音频就会暂时不会被对方看到和听到。
-              </p>
-              <p>
-                <CloseCircleTwoTone twoToneColor="#eb2f96" />{' '}
-                会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。
-              </p>
-              <p>双方都接入后，就开始和你的匹配对象打一声招呼吧！</p>
-            </Panel>
-          </Collapse>
-        </div>
-      </div>
-      <div className="videoMeetingContainer">
-        <div style={{ width: '50%' }}>
-          {localStream && <StreamPlayer stream={localStream} fit="contain" />}
-        </div>
-        <div style={{ width: '50%' }}>
-          {remoteStream && <StreamPlayer stream={remoteStream} fit="contain" />}
-          {/* {remoteStreamList.map((stream: any) => (
-            <StreamPlayer
-              key={stream.getId()}
-              stream={stream}
-              fit="contain"
-              label="remote"
+            <div className="explainContainer">
+              <Collapse defaultActiveKey="1">
+                <Panel header="使用说明" key="1" style={{ textAlign: 'start' }}>
+                  <p>
+                    <PlusCircleTwoTone twoToneColor="#52c41a" />{' '}
+                    点击加入会议按钮，并允许浏览器使用摄像头和麦克风，即可加入视频会议。
+                  </p>
+                  <p>
+                    <PauseCircleTwoTone />{' '}
+                    点击暂停接入按钮，你的视频和音频就会暂时不会被对方看到和听到。
+                  </p>
+                  <p>
+                    <CloseCircleTwoTone twoToneColor="#eb2f96" />{' '}
+                    会议结束后点击完全离开按钮，所有的连接都会被断开，你也会离开会议页面。
+                  </p>
+                  <p>双方都接入后，就开始和你的匹配对象打一声招呼吧！</p>
+                  <a>对方没有进入会议？</a>
+                </Panel>
+              </Collapse>
+            </div>
+          </div>
+          <div className="videoMeetingContainer">
+            <div style={{ width: '50%' }}>
+              {localStream && (
+                <StreamPlayer stream={localStream} fit="contain" />
+              )}
+            </div>
+            <div style={{ width: '50%' }}>
+              {remoteStream && (
+                <StreamPlayer stream={remoteStream} fit="contain" />
+              )}
+            </div>
+          </div>
+        </>
+      )}
+      {
+        feedbackModalVisible &&
+        <div className='meetingFeedbackContainer'>
+          <div style={{margin: '1.4em', textAlign: 'center'}}>
+            <p style={{fontSize: '18px', fontWeight: 400}}>给刚才的会议体验打个分吧!</p>
+            <Rate
+              count={7}
+              onChange={handleRateChange}
+              value={rate}
             />
-          ))} */}
+            <p style={{color: 'gray', marginTop: '10px'}}>{ rate ? desc[rate - 1] : ''}</p>
+            <textarea
+              className="textAreaInput"
+              rows={6}
+              placeholder='有什么想要反馈的吗？'
+              value={feedback}
+              onChange={(e: any) => setFeedback(e.target.value)}
+            />
+
+            <Button
+              type='primary'
+              onClick={handleSubmitMeetingFeedback}
+            >
+              提交
+            </Button>
+          </div>
         </div>
-      </div>
+      }
     </>
   )
 }

@@ -29,8 +29,8 @@ export default class SelfIntroduction extends React.Component<
 
   async handleSubmitIntro() {
     // console.log("this.selfIntro:", this.selfIntroduction)
-    if (this.selfIntroduction.length < 30) {
-      message.info('自我介绍应该多于30字')
+    if (this.selfIntroduction.length < 15) {
+      message.info('自我介绍应该多于15字')
     } else if (this.selfIntroduction.length > 200) {
       message.info('自我介绍应该少于200字')
     } else {
@@ -84,7 +84,7 @@ export default class SelfIntroduction extends React.Component<
       <div className="selfIntroContainer">
         <p className="selfIntroHeader">你想怎么样描述你自己?</p>
         <p className="selfIntroExp">
-          告诉我们任何你想要和你的匹配对象分享的话，最少30个字。
+          告诉我们任何你想要和你的匹配对象分享的话，最少15个字。
         </p>
         <textarea
           // defaultValue={`${userName}是`}

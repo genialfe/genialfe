@@ -91,7 +91,7 @@ export default class Meetings extends React.Component<IMeetingsProps, any> {
     const mockVideocallProps = {
       token:
         '00605b68aaaf43c49cdac56bbe0dd961cfbIADyMfqf69GAps+6O3sTNmgKNU4LgZpvdfFjE8TSE7cEIQx+f9gAAAAAEABFd1n88tkcYAEAAQDy2Rxg',
-      channel: 'test',
+      channel: '1358439129204142082',
       appid: '05b68aaaf43c49cdac56bbe0dd961cfb'
     }
     return (
