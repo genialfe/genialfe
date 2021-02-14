@@ -1,8 +1,8 @@
 import React from 'react'
 import { Collapse, Typography } from 'antd'
-// import {
-//   PrinterTwoTone
-// } from '@ant-design/icons'
+import {
+  ArrowRightOutlined
+} from '@ant-design/icons'
 import { content } from './constants'
 
 import './style.less'
@@ -27,11 +27,16 @@ export default class QA extends React.Component<IQAProps, any> {
   render() {
     return (
       <div className="qaContainer">
-        <Title level={3} style={{ marginLeft: '6px' }}>
-          FAQ
-        </Title>
-        {/* {this.qaContent} */}
-
+        <div style={{marginBottom: '14px'}}>
+          <p className='faqTitle'>FAQ</p>
+          <a 
+            className='videoLink'
+            href="https://www.bilibili.com/video/BV1MK4y1H7tp?from=search&seid=1363153614780086618"
+            target='blank'
+          >
+            使用流程视频演示<ArrowRightOutlined />
+          </a>
+        </div>
         <Collapse bordered={false} defaultActiveKey={['1']}>
           <Panel
             header={<p className="panelHeader">Genial是做什么的？</p>}

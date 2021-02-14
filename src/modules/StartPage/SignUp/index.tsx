@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Input, message } from 'antd'
+import { ArrowRightOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
 import { action, makeObservable, observable } from 'mobx'
 import queryString from 'query-string'
@@ -106,10 +107,15 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
         <p className="memberTip">
           已经是Genial会员？
           <a href="/login">点击登录</a>
-          {/* <Button>
-            点击登陆
-          </Button> */}
         </p>
+        <a
+          style={{ color: 'grey' }}
+          href="https://www.bilibili.com/video/BV1MK4y1H7tp?from=search&seid=1363153614780086618"
+          target='blank'
+        >
+          使用教程
+          <ArrowRightOutlined />
+        </a>
       </div>
     )
   }

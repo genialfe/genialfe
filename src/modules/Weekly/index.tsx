@@ -125,9 +125,9 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   get timeSelectTitle() {
     const week = ['星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 
-    // 如果当前时间是周日下午 则显示下下周的时间表
-    const isSundayAfteroon = moment().weekday() === 0 && moment().hour() >= 12
-    const nextTuesday = isSundayAfteroon
+    // 如果当前时间是周日晚上九点之后 则显示下下周的时间表
+    const isSundayEvening = moment().weekday() === 0 && moment().hour() >= 21
+    const nextTuesday = isSundayEvening
       ? moment().startOf('isoWeek').add(1, 'day').add(2, 'week')
       : moment().startOf('isoWeek').add(1, 'day').add(1, 'week')
     const weekdays = [
