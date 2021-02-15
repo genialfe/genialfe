@@ -141,7 +141,7 @@ export default class Matches extends React.Component<IMatchesProps, any> {
                 <br />
                 <span>会议id：{item.matchId}</span>
               </div>
-              <div className='buttonLine'>
+              <div className="buttonLine">
                 <Button
                   type="link"
                   className="enterMeetingButton"

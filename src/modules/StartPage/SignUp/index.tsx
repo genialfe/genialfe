@@ -109,9 +109,9 @@ export default class SignUp extends React.Component<ISignUpProps, any> {
           <a href="/login">点击登录</a>
         </p>
         <a
-          style={{ color: 'grey' }}
+          style={{ color: 'grey', float: 'left' }}
           href="https://www.bilibili.com/video/BV1MK4y1H7tp?from=search&seid=1363153614780086618"
-          target='blank'
+          target="blank"
         >
           使用教程
           <ArrowRightOutlined />
