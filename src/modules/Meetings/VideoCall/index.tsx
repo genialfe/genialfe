@@ -350,6 +350,7 @@ function App(props: IVideoCallProps) {
               </Collapse>
             </div>
           </div>
+          
           <div className="videoMeetingContainer">
             <div style={{ width: '50%' }}>
               {localStream && (
