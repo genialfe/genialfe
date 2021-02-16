@@ -290,7 +290,7 @@ function App(props: IVideoCallProps) {
       icon: <MehOutlined />,
       visible: matchAbsentModalVisible,
       content:
-        '如果你确认现在是预定的会议时间，并且对方没有加入会议，那么请点击下方的确认按钮。Genial会在核实情况后对无故缺席会议的用户进行一定程度的惩罚。',
+        '如果你确认现在是预定的会议时间，并且对方没有加入会议，那么你可以联系13661498269反馈情况。你也可以点击下方的提交按钮，Genial会在核实情况后对无故缺席会议的用户进行一定程度的惩罚。',
       async onOk() {
         const params = {
           evaluation: '对方缺席会议',
@@ -303,7 +303,7 @@ function App(props: IVideoCallProps) {
           setMatchAbsentModalVisible(false)
         }
       },
-      okText: '确认',
+      okText: '提交',
       cancelText: '取消'
     })
   }
@@ -381,7 +381,6 @@ function App(props: IVideoCallProps) {
               value={feedback}
               onChange={(e: any) => setFeedback(e.target.value)}
             />
-
             <Button type="primary" onClick={handleSubmitMeetingFeedback}>
               提交
             </Button>
