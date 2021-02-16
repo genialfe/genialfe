@@ -174,7 +174,7 @@ function App(props: IVideoCallProps) {
       setisJoined(true)
       message.info(`加入会议${channel}`)
     } catch (err) {
-      message.info(`加入会议失败，错误：${err}`)
+      message.info(`加入会议失败，请使用pc端浏览器或Safari浏览器访问`)
     } finally {
       setIsLoading(false)
     }
