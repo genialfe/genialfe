@@ -78,6 +78,19 @@ export default class Matches extends React.Component<IMatchesProps, any> {
   }
 
   async handleEnterMeeting(matchId: string) {
+    let isMobileDevice = false
+    const mobileAgents = ['iphone', 'ipad', 'ipod', 'android', 'windows phone']
+    const userAgent = navigator.userAgent.toLowerCase()
+    for (let i = 0; i < mobileAgents.length; i++) {
+      if (userAgent.indexOf(mobileAgents[i]) !== -1) {
+        isMobileDevice = true
+      }
+    }
+    if (isMobileDevice) {
+      message.info('请使用PC端加入视频会议')
+      return
+    }
+
     // matchId是匹配id 也是会议的channel
     const { setIsVideoCallMethod, setVideoCallParams } = this.props
     const enterMeetingRes = await enterMeeting(matchId)
@@ -198,7 +211,9 @@ export default class Matches extends React.Component<IMatchesProps, any> {
           />
         )}
         {this.matchesContent}
-        <p style={{ color: 'gray' }}>- 建议使用PC端Chrome浏览器开启会议</p>
+        <p style={{ color: 'gray' }}>
+          - 请使用PC端进入会议, 推荐使用Chrome浏览器
+        </p>
       </div>
     )
   }
