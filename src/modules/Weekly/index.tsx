@@ -1,12 +1,15 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
-import { Button, Col, message, Row } from 'antd'
+import { Button, Col, message, Row, Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { makeObservable, computed, observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 import moment from 'moment'
 import { setAvailableTimes, skipThisWeek } from './api'
 
 import './style.less'
+
+const { confirm } = Modal
 
 export interface IWeeklyProps {}
 
@@ -44,9 +47,6 @@ export interface IWeekday {
 export default class Weekly extends React.Component<IWeeklyProps, any> {
   // days: string[] = ['1', '2', '3', '4', '5', '6']
   hours: string[] = [
-    '09',
-    // '10',
-    '11',
     // '12',
     '13',
     // '14',
@@ -74,10 +74,10 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
       // 该日该时间段已经被选择过
       this.selectedTimeMap.splice(index, 1)
     } else {
-      if (this.selectedTimeMap.length < 7) {
+      if (this.selectedTimeMap.length < 1) {
         this.selectedTimeMap.push({ date, formatDate, hour })
       } else {
-        message.info('最多选择七项')
+        message.info('最多选择一个时间段')
       }
     }
   }
@@ -106,20 +106,34 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     return isButtonSelected ? 'timeButtonSelected' : 'timeButton'
   }
 
-  async handleSubmitTime() {
-    const selectedTimes = this.selectedTimeMap.map(item => {
-      return `${item.formatDate} ${item.hour}:00:00`
-    })
-    const times = selectedTimes.join()
-    const res = await setAvailableTimes(times)
-    if (res.code === 200) {
-      location.pathname = '/meetings'
-    } else if (res.code === 401) {
-      message.info('登录过期，请重新登录')
-      location.pathname = '/'
-    } else {
-      message.info('出错了，请检查后重试')
+  handleSubmitTime() {
+
+    const submitTime = async () => {
+      const selectedTimes = this.selectedTimeMap.map(item => {
+        return `${item.formatDate} ${item.hour}:00:00`
+      })
+      const times = selectedTimes.join()
+      const res = await setAvailableTimes(times)
+      if (res.code === 200) {
+        location.pathname = '/meetings'
+      } else if (res.code === 401) {
+        message.info('登录过期，请重新登录')
+        location.pathname = '/'
+      } else {
+        message.info('出错了，请检查后重试')
+      }
     }
+
+    confirm({
+      title: '确认提交该时间段？',
+      icon: <ExclamationCircleOutlined />,
+      content: '请确保该时间段可以使用电脑上线参加会议。如果暂时无法确定下周的空闲时间段，可以先选择\'跳过这周\'，当能够确定时间段后，再前往会议页面选择时间段。',
+      onOk() {
+        submitTime()
+      },
+      okText: '确认提交',
+      cancelText: '取消提交'
+    })
   }
 
   get timeSelectTitle() {
@@ -231,9 +245,9 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
       <div className="weeklyContainer">
         <p className="weeklyTitle">为你下周的会议安排时间</p>
         <p className="weeklyExp">
-          在下面的表格中选择下周你有空的时间段(最多选择七个)。
+          在下面的表格中选择一个下周你有空的时间段。
         </p>
-        <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p>
+        {/* <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p> */}
         <div className="timePickerContainer">
           {this.timeSelectTitle}
           {this.timeSelectArea}

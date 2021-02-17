@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../NavBar'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import NavBar from '../NavBar'
 import Home from '../Home'
 import Meetings from '../Meetings'
 import ProfileWrapper from '../Profile/wrapper'
