@@ -131,8 +131,8 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
       onOk() {
         submitTime()
       },
-      okText: '确认提交',
-      cancelText: '取消提交'
+      okText: '确认',
+      cancelText: '取消'
     })
   }
 
