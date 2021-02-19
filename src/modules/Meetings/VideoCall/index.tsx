@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useReducer, useState } from 'react'
-import { Button, message, Collapse, Modal, Drawer, Rate } from 'antd'
+import { Button, message, Collapse, Modal, Rate } from 'antd'
 import {
   PlusCircleTwoTone,
   PauseCircleTwoTone,
@@ -174,7 +174,7 @@ function App(props: IVideoCallProps) {
       setisJoined(true)
       message.info(`加入会议${channel}`)
     } catch (err) {
-      message.info(`加入会议失败，请使用pc端浏览器或Safari浏览器访问`)
+      message.info(`加入会议失败，请检查设备是否正常以及摄像头麦克风权限是否开启`)
     } finally {
       setIsLoading(false)
     }
