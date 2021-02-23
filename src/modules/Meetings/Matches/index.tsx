@@ -14,6 +14,7 @@ export interface IMatchUserProfile {
   userName: string
   headImg: string
   introduction: string
+  phone: string
 }
 export interface IMatchesProps {
   /**
@@ -133,6 +134,10 @@ export default class Matches extends React.Component<IMatchesProps, any> {
               name={profile.userName}
               size={49}
             />
+            <div className="introContainer">
+              <p className="introTitle">联系方式</p>
+              <p className="introContent">{profile.phone}</p>
+            </div>
             <div className="introContainer">
               <p className="introTitle">简介</p>
               <p className="introContent">{profile.introduction}</p>
