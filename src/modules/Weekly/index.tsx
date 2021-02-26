@@ -107,7 +107,6 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
   }
 
   handleSubmitTime() {
-
     const submitTime = async () => {
       const selectedTimes = this.selectedTimeMap.map(item => {
         return `${item.formatDate} ${item.hour}:00:00`
@@ -127,7 +126,8 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     confirm({
       title: '确认提交该时间段？',
       icon: <ExclamationCircleOutlined />,
-      content: '请确保该时间段可以使用电脑上线参加会议。如果暂时无法确定下周的空闲时间段，可以先选择\'跳过这周\'，当能够确定时间段后，再前往会议页面选择时间段。',
+      content:
+        "请确保该时间段可以使用电脑上线参加会议。如果暂时无法确定下周的空闲时间段，可以先选择'跳过这周'，当能够确定时间段后，再前往会议页面选择时间段。",
       onOk() {
         submitTime()
       },
@@ -244,9 +244,7 @@ export default class Weekly extends React.Component<IWeeklyProps, any> {
     return (
       <div className="weeklyContainer">
         <p className="weeklyTitle">为你下周的会议安排时间</p>
-        <p className="weeklyExp">
-          在下面的表格中选择一个下周你有空的时间段。
-        </p>
+        <p className="weeklyExp">在下面的表格中选择一个下周你有空的时间段。</p>
         {/* <p className="weeklyExp">我们会从中选择一个时间段为你安排会议。</p> */}
         <div className="timePickerContainer">
           {this.timeSelectTitle}

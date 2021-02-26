@@ -174,7 +174,9 @@ function App(props: IVideoCallProps) {
       setisJoined(true)
       message.info(`加入会议${channel}`)
     } catch (err) {
-      message.info(`加入会议失败，请检查设备是否正常以及摄像头麦克风权限是否开启`)
+      message.info(
+        `加入会议失败，请检查设备是否正常以及摄像头麦克风权限是否开启`
+      )
     } finally {
       setIsLoading(false)
     }
@@ -350,7 +352,7 @@ function App(props: IVideoCallProps) {
               </Collapse>
             </div>
           </div>
-          
+
           <div className="videoMeetingContainer">
             <div style={{ width: '50%' }}>
               {localStream && (

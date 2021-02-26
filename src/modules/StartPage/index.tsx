@@ -61,7 +61,6 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
             ></img>
           </div>
         </div>
-
         {isMobileScreen && (
           <div className="mobileSignUpContainer">
             <SignUp />
@@ -75,11 +74,20 @@ export default class StartPage extends React.Component<IStartPageProps, any> {
           </div>
         )}
         {!isMobileScreen && (
-          <Row gutter={[0, 68]}>
-            <Col span={24}>
-              <Explain />
-            </Col>
-          </Row>
+          <>
+            <Row gutter={[0, 68]}>
+              <Col span={24}>
+                <Explain />
+              </Col>
+            </Row>
+            <div className="footer">
+              <span>
+                Copyright© 2020-2021上海世环信息科技有限公司 版权所有 <br />
+                <a href=" ">沪ICP备2021001090号</a> &nbsp; 联系方式:13661498269
+                &nbsp; 联系地址:上海市聚丰园路88号
+              </span>
+            </div>
+          </>
         )}
       </>
     )
