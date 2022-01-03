@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/genial/static/css/main.e8c3b2d7.chunk.css",
+    "main.js": "/genial/static/js/main.26a4a922.chunk.js",
+    "runtime-main.js": "/genial/static/js/runtime-main.1c19a0f2.js",
+    "static/css/2.0de2b306.chunk.css": "/genial/static/css/2.0de2b306.chunk.css",
+    "static/js/2.d1829abe.chunk.js": "/genial/static/js/2.d1829abe.chunk.js",
+    "static/js/3.e557674e.chunk.js": "/genial/static/js/3.e557674e.chunk.js",
+    "index.html": "/genial/index.html",
+    "static/js/2.d1829abe.chunk.js.LICENSE.txt": "/genial/static/js/2.d1829abe.chunk.js.LICENSE.txt",
+    "static/media/avatar1.a53eca2b.svg": "/genial/static/media/avatar1.a53eca2b.svg",
+    "static/media/avatar2.85ccae14.svg": "/genial/static/media/avatar2.85ccae14.svg",
+    "static/media/avatar3.639b459e.svg": "/genial/static/media/avatar3.639b459e.svg",
+    "static/media/cities-graphic.6b7525b2.svg": "/genial/static/media/cities-graphic.6b7525b2.svg",
+    "static/media/intro.260e728c.svg": "/genial/static/media/intro.260e728c.svg",
+    "static/media/skip-week.1a43aefa.svg": "/genial/static/media/skip-week.1a43aefa.svg",
+    "static/media/weekly.e39b3af9.svg": "/genial/static/media/weekly.e39b3af9.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1c19a0f2.js",
+    "static/css/2.0de2b306.chunk.css",
+    "static/js/2.d1829abe.chunk.js",
+    "static/css/main.e8c3b2d7.chunk.css",
+    "static/js/main.26a4a922.chunk.js"
+  ]
+}
