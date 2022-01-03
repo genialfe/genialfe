@@ -1,5 +1,6 @@
 {
   "name": "talentd",
+  "homepage": "https://izzy1647.github.io/genial/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "antd": "^4.9.1",
     "antd-img-crop": "^3.13.2",
     "craco-less": "^1.17.1",
+    "gh-pages": "^3.2.3",
     "lodash": "^4.17.20",
     "mobx": "^6.0.4",
     "mobx-react": "^7.0.5",
@@ -45,6 +47,8 @@
   },
   "scripts": {
     "start": "craco start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
