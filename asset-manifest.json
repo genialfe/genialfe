@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/genialfe/static/css/main.e8c3b2d7.chunk.css",
-    "main.js": "/genialfe/static/js/main.c6926f3d.chunk.js",
-    "runtime-main.js": "/genialfe/static/js/runtime-main.2c31a0df.js",
-    "static/css/2.0de2b306.chunk.css": "/genialfe/static/css/2.0de2b306.chunk.css",
-    "static/js/2.5208cda3.chunk.js": "/genialfe/static/js/2.5208cda3.chunk.js",
-    "static/js/3.e557674e.chunk.js": "/genialfe/static/js/3.e557674e.chunk.js",
-    "index.html": "/genialfe/index.html",
-    "static/js/2.5208cda3.chunk.js.LICENSE.txt": "/genialfe/static/js/2.5208cda3.chunk.js.LICENSE.txt",
-    "static/media/avatar1.a53eca2b.svg": "/genialfe/static/media/avatar1.a53eca2b.svg",
-    "static/media/avatar2.85ccae14.svg": "/genialfe/static/media/avatar2.85ccae14.svg",
-    "static/media/avatar3.639b459e.svg": "/genialfe/static/media/avatar3.639b459e.svg",
-    "static/media/cities-graphic.6b7525b2.svg": "/genialfe/static/media/cities-graphic.6b7525b2.svg",
-    "static/media/intro.260e728c.svg": "/genialfe/static/media/intro.260e728c.svg",
-    "static/media/skip-week.1a43aefa.svg": "/genialfe/static/media/skip-week.1a43aefa.svg",
-    "static/media/weekly.e39b3af9.svg": "/genialfe/static/media/weekly.e39b3af9.svg"
+    "main.css": "/static/css/main.e8c3b2d7.chunk.css",
+    "main.js": "/static/js/main.0036f813.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.75b22017.js",
+    "static/css/2.0de2b306.chunk.css": "/static/css/2.0de2b306.chunk.css",
+    "static/js/2.0597b5a6.chunk.js": "/static/js/2.0597b5a6.chunk.js",
+    "static/js/3.e557674e.chunk.js": "/static/js/3.e557674e.chunk.js",
+    "index.html": "/index.html",
+    "static/js/2.0597b5a6.chunk.js.LICENSE.txt": "/static/js/2.0597b5a6.chunk.js.LICENSE.txt",
+    "static/media/avatar1.a53eca2b.svg": "/static/media/avatar1.a53eca2b.svg",
+    "static/media/avatar2.85ccae14.svg": "/static/media/avatar2.85ccae14.svg",
+    "static/media/avatar3.639b459e.svg": "/static/media/avatar3.639b459e.svg",
+    "static/media/cities-graphic.6b7525b2.svg": "/static/media/cities-graphic.6b7525b2.svg",
+    "static/media/intro.260e728c.svg": "/static/media/intro.260e728c.svg",
+    "static/media/skip-week.1a43aefa.svg": "/static/media/skip-week.1a43aefa.svg",
+    "static/media/weekly.e39b3af9.svg": "/static/media/weekly.e39b3af9.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.2c31a0df.js",
+    "static/js/runtime-main.75b22017.js",
     "static/css/2.0de2b306.chunk.css",
-    "static/js/2.5208cda3.chunk.js",
+    "static/js/2.0597b5a6.chunk.js",
     "static/css/main.e8c3b2d7.chunk.css",
-    "static/js/main.c6926f3d.chunk.js"
+    "static/js/main.0036f813.chunk.js"
   ]
 }
